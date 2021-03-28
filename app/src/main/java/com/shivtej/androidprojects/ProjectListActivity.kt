@@ -31,7 +31,6 @@ class ProjectListActivity : AppCompatActivity() {
     private lateinit var adapter: ProjectListRVAdapter
     private lateinit var db: FirebaseFirestore
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProjectListBinding.inflate(layoutInflater)
@@ -41,7 +40,9 @@ class ProjectListActivity : AppCompatActivity() {
         projectList = ArrayList()
         db = Firebase.firestore
         binding.progressBar.visibility = View.VISIBLE
-
+        setSupportActionBar(binding.materialToolbar2)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         Log.i("List", projectList.toString())
 
         val layoutManager = LinearLayoutManager(this)
@@ -77,8 +78,7 @@ class ProjectListActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
-                Toast.makeText(this@ProjectListActivity, "Can't get Data", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this@ProjectListActivity, "Can't get Data", Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.INVISIBLE
             }
         }

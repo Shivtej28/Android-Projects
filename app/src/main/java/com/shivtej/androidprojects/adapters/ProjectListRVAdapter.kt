@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.models.Project
 
@@ -24,6 +25,8 @@ class ProjectListRVAdapter(private var projectList : List<Project>, private val 
         holder.itemView.setOnClickListener {
             onCLickedProject.onProjectClicked(currentItem)
         }
+        Glide.with(holder.itemView).load(currentItem.image).into(holder.ivProjectImage)
+
 
     }
 

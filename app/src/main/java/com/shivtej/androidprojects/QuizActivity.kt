@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -46,7 +47,8 @@ class QuizActivity : AppCompatActivity() {
 
         questionList = ArrayList()
 
-        binding.boardView.layoutManager = GridLayoutManager(this, 2)
+
+        binding.boardView.layoutManager = LinearLayoutManager(this)
         adapter = QuizBoardAdapter(this, list, object :BoxClicked{
             override fun onBoxClicked(string: String) {
                 startQuiz(string)
@@ -56,9 +58,6 @@ class QuizActivity : AppCompatActivity() {
         binding.boardView.setHasFixedSize(true)
 
         fetchData()
-
-
-
     }
 
    private fun fetchData() {
@@ -94,6 +93,7 @@ class QuizActivity : AppCompatActivity() {
 
     fun startQuiz(string: String) {
         val intent = Intent(this, QuestionActivity::class.java)
+        //binding.boardView.visibility = View.GONE
         binding.simpleLoader.visibility = View.VISIBLE
         binding.simpleLoader.start()
         questionList.clear()

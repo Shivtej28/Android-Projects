@@ -8,4 +8,5 @@ data class Project(
     val title : String = "",
     val description : String = "",
     val apk : String = "",
-    val zipfile : String = "") : Parcelable
+    val zipfile : String = "",
+    val image : String = "") : Parcelable

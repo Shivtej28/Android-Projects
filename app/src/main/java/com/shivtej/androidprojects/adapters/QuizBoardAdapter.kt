@@ -16,7 +16,7 @@ class QuizBoardAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.quiz_card_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.quiz_item_no, parent, false)
         return ViewHolder(view)
     }
 

@@ -1,10 +1,16 @@
 package com.shivtej.androidprojects
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
+import com.bumptech.glide.request.target.Target
 import com.shivtej.androidprojects.databinding.ActivityProjectBinding
 import com.shivtej.androidprojects.models.Project
+
 
 class ProjectActivity : AppCompatActivity() {
 
@@ -19,12 +25,22 @@ class ProjectActivity : AppCompatActivity() {
         val project = bundle?.get("project") as Project
 
         Log.i("Project", project.toString())
-        val title = project.title
+        val apptitle = project.title
         val description = project.description
         val apk = project.apk
         val zipfile = project.zipfile
+        val image = project.image
+        Glide.with(this).load(image).into(binding.ivProjectImage)
 
-//        binding.tvProjectTitle.text = title
+        binding.toolbar1.title = apptitle
+        setSupportActionBar(binding.toolbar1)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+
+        binding.tvProjectTitle.text = apptitle
+        binding.descriptionText.text = description
 //        binding.descriptionText.settings.allowContentAccess = true
 //        binding.descriptionText.settings.allowFileAccess = true
 //        binding.descriptionText.settings.allowUniversalAccessFromFileURLs = true

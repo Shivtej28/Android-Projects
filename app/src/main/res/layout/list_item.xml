@@ -6,14 +6,16 @@
     android:layout_height="200dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/white"
     >
 
     <ImageView
         android:id="@+id/ivProjectImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@drawable/ic_launcher_background"
+        />
 
     <TextView
         android:id="@+id/tvProjectTitle"
@@ -21,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="Project Name"
-        android:layout_margin="15dp"
-        android:textSize="30sp" />
+        android:layout_margin="5dp"
+        android:textSize="30sp"
+        android:textColor="@color/black"/>
 
 </androidx.cardview.widget.CardView>

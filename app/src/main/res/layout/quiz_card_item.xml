@@ -2,18 +2,18 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
     android:layout_height="120dp"
-    xmlns:tools="http://schemas.android.com/tools"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:layout_margin="20dp"
     android:padding="20dp"
+    app:cardElevation="8dp"
+    android:elevation="8dp"
+    android:outlineSpotShadowColor="@color/white"
     app:cardCornerRadius="10dp"
     app:cardBackgroundColor="@color/blue">
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="150dp"-->
-<!--        android:layout_height="120dp"-->
-<!--        android:padding="20dp">-->
+
 
     <TextView
         android:id="@+id/tvQuizNumber"
@@ -29,6 +29,6 @@
         android:textSize="20sp"
 
        />
-<!--</androidx.cardview.widget.CardView>-->
+
 
 </androidx.cardview.widget.CardView>

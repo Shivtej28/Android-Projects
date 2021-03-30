@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="submit">Submit</string>
+    <string name="less_score_string">Sorry You Failed!</string>
+    <string name="you_have_to_practice_more">You have to practice more</string>
+    <string name="kotlin_quiz">Kotlin Quiz</string>
+    <string name="question">Question</string>
 </resources>

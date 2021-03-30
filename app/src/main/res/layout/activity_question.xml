@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Kotlin Quiz"
+                android:text="@string/kotlin_quiz"
                 android:textColor="@color/blue"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Question"
+                android:text="@string/question"
                 android:textColor="@color/white"
                 android:textSize="23sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -114,7 +114,7 @@
 
                     <TextView
                         android:id="@+id/tvOption1"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Option 1"
@@ -210,7 +210,7 @@
 
                     <TextView
                         android:id="@+id/tvOption3"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Option 1"
@@ -254,7 +254,7 @@
 
                     <TextView
                         android:id="@+id/tvOption4"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Option 1"
@@ -276,8 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.80"
-                />
+                app:layout_constraintGuide_percent="0.80" />
 
             <TextView
                 android:id="@+id/tvQuit"

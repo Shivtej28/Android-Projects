@@ -1,6 +1,6 @@
 package com.shivtej.androidprojects.adapters
 
-import android.content.Context
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shivtej.androidprojects.R
 
 class QuizBoardAdapter(
-    private val context : Context,
+
     private val list : List<String>,
     private val onClickListener: BoxClicked) : RecyclerView.Adapter<QuizBoardAdapter.ViewHolder>() {
 
@@ -31,7 +31,7 @@ class QuizBoardAdapter(
     override fun getItemCount(): Int = list.size
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val tvQuizNumber = itemView.findViewById<TextView>(R.id.tvQuizNumber)
+        val tvQuizNumber : TextView = itemView.findViewById(R.id.tvQuizNumber)
     }
 
 }

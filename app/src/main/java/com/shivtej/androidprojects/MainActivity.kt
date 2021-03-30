@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shivtej.androidprojects.adapters.ItemClicked
 import com.shivtej.androidprojects.adapters.ProjectsRVAdapter
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
+import com.shivtej.androidprojects.utils.Constants
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,9 +26,9 @@ class MainActivity : AppCompatActivity() {
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         binding.rvProjects.layoutManager = linearLayoutManager
         val projectsRVAdapter = ProjectsRVAdapter(list, object : ItemClicked{
-            override fun onItemClicked(level: String) {
+            override fun onItemClicked(string: String) {
                 val intent = Intent(this@MainActivity, ProjectListActivity::class.java)
-                intent.putExtra("level", level)
+                intent.putExtra(Constants.PROJECT_LEVEL, string)
                 startActivity(intent)
             }
         })
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val quizAdapter = ProjectsRVAdapter(quizList, object : ItemClicked{
             override fun onItemClicked(string: String) {
                 val intent = Intent(this@MainActivity, QuizActivity::class.java)
-                intent.putExtra("quizName", string)
+                intent.putExtra(Constants.QUIZ_NAME, string)
                 startActivity(intent)
             }
 
@@ -48,12 +49,5 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvQuizzes.layoutManager = quizManager
         binding.rvQuizzes.adapter = quizAdapter
-
-
-
-
-
     }
-
-
 }

@@ -1,10 +1,12 @@
 package com.shivtej.androidprojects
 
+import android.Manifest
 import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -12,13 +14,15 @@ import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.shivtej.androidprojects.adapters.SSRvAdapter
 import com.shivtej.androidprojects.databinding.ActivityProjectBinding
 import com.shivtej.androidprojects.models.Project
+import com.shivtej.androidprojects.utils.Constants
 import java.io.File
 
 
@@ -30,9 +34,10 @@ class ProjectActivity : AppCompatActivity() {
     private lateinit var adapter: SSRvAdapter
     private var downloadId: Long = 0
     private lateinit var snackbar: Snackbar
-    lateinit var apptitle: String
+    private lateinit var apptitle: String
     lateinit var appname: String
     private lateinit var dm: DownloadManager
+    private lateinit var apk : String
 
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,15 +45,14 @@ class ProjectActivity : AppCompatActivity() {
         binding = ActivityProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val bundle = intent.getBundleExtra("bundle")
-        project = bundle?.get("project") as Project
+        val bundle = intent.getBundleExtra(Constants.BUNDLE)
+        project = bundle?.get(Constants.PROJECT) as Project
 
         Log.i("Project", project.toString())
         apptitle = project.title
         val description = project.description
-        val apk = project.apk
+        apk = project.apk
         val zipfile = project.zipfile
-        val image = project.image
 
         imageUrlList = ArrayList()
         adapter = SSRvAdapter(imageUrlList)
@@ -66,64 +70,96 @@ class ProjectActivity : AppCompatActivity() {
 
         binding.btnSourceCode.setOnClickListener {
             val intent = Intent(this, WebViewActivity::class.java)
-            intent.putExtra("url", zipfile)
-            intent.putExtra("title", apptitle)
+            intent.putExtra(Constants.SOURCE_CODE_URL, zipfile)
+            intent.putExtra(Constants.TITLE, apptitle)
             startActivity(intent)
         }
 
         binding.btnAPk.setOnClickListener {
             snackbar = Snackbar.make(it, "Download Complete", Snackbar.LENGTH_LONG)
-            appname = apptitle.lowercase().replace(" ", "")
-            val request = DownloadManager.Request(
-                Uri.parse(apk)
-            ).setTitle("Android Projects And Quizzes")
-                .setDescription("$apptitle Downloading..")
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setDestinationInExternalPublicDir(
-                    Environment.DIRECTORY_DOWNLOADS,
-                    appname + ".apk"
-                )
 
-                .setAllowedOverMetered(true)
-
-            Toast.makeText(this, "Downloading Started..", Toast.LENGTH_SHORT).show()
-            dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-            downloadId = dm.enqueue(request)
+            checkPermissions()
 
         }
 
         val broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if (id == downloadId) {
-                    snackbar.setActionTextColor(Color.GREEN)
-                        .setAction("Open", object : View.OnClickListener {
-                            override fun onClick(v: View?) {
-                                val builder = VmPolicy.Builder()
-                                StrictMode.setVmPolicy(builder.build())
-                                val install = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                                install.setDataAndType(
-                                    Uri.fromFile(
-                                        File(
-                                            Environment.getExternalStorageDirectory().path,
-                                            "/download/" + appname + ".apk"
-                                        )
-                                    ),
-                                    dm.getMimeTypeForDownloadedFile(id)
-                                )
-                                startActivity(Intent.createChooser(install, "Open File with"))
-                            }
-                        })
-                        .setBackgroundTint(Color.WHITE)
-                        .setTextColor(Color.BLACK)
+                    snackbar.setActionTextColor(Color.BLUE)
+                        .setAction("Open") {
+                            val builder = VmPolicy.Builder()
+                            StrictMode.setVmPolicy(builder.build())
+                            val install = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                            install.setDataAndType(
+                                Uri.fromFile(
+                                    File(
+                                        Environment.getExternalStorageDirectory().path,
+                                        "/download/$appname.apk"
+                                    )
+                                ),
+                                dm.getMimeTypeForDownloadedFile(id)
+                            )
+                            startActivity(Intent.createChooser(install, "Open File with"))
+                        }
+                        .setBackgroundTint(Color.BLACK)
+                        .setTextColor(Color.WHITE)
                     snackbar.show()
-                    // Toast.makeText(this@ProjectActivity, "Complete", Toast.LENGTH_SHORT).show()
+
                 }
             }
         }
         registerReceiver(broadcastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
+
+    @ExperimentalStdlibApi
+    private fun checkPermissions() {
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+        }else{
+            downloadApk()
+        }
+    }
+
+    @ExperimentalStdlibApi
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+
+        when(requestCode){
+            1 -> {
+                if(grantResults.isNotEmpty() || grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    downloadApk()
+                }
+            }
+        }
+    }
+
+    @ExperimentalStdlibApi
+    fun downloadApk(){
+        appname = apptitle.lowercase().replace(" ", "")
+        val request = DownloadManager.Request(
+            Uri.parse(apk)
+        ).setTitle("Android Projects And Quizzes")
+            .setDescription("$apptitle Downloading..")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "$appname.apk"
+            )
+
+            .setAllowedOverMetered(true)
+
+        Toast.makeText(this, "Downloading Started..", Toast.LENGTH_SHORT).show()
+        dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadId = dm.enqueue(request)
+
+    }
+
 
     private fun addUrlToList() {
         val ss1 = project.ss1
@@ -132,19 +168,19 @@ class ProjectActivity : AppCompatActivity() {
         val ss4 = project.ss4
         val ss5 = project.ss5
 
-        if (!ss1.equals("")) {
+        if (ss1 != "") {
             imageUrlList.add(ss1)
         }
-        if (!ss2.equals("")) {
+        if (ss2 != "") {
             imageUrlList.add(ss2)
         }
-        if (!ss3.equals("")) {
+        if (ss3 != "") {
             imageUrlList.add(ss3)
         }
-        if (!ss4.equals("")) {
+        if (ss4 != "") {
             imageUrlList.add(ss4)
         }
-        if (!ss5.equals("")) {
+        if (ss5 != "") {
             imageUrlList.add(ss4)
         }
 

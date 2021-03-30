@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shivtej.androidprojects.R
 
-class SSRvAdapter(val imageUrlList : List<String>) : RecyclerView.Adapter<SSRvAdapter.ViewHolder>() {
+class SSRvAdapter(private val imageUrlList : List<String>) : RecyclerView.Adapter<SSRvAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val imageView : ImageView = itemView.findViewById(R.id.imageView)

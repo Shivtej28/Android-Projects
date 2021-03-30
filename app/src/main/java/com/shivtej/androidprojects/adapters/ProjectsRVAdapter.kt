@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.shivtej.androidprojects.MainActivity
+
 import com.shivtej.androidprojects.R
 
 class ProjectsRVAdapter(private var list: List<String>, private val onClickListener: ItemClicked) : RecyclerView.Adapter<ProjectsRVAdapter.ViewHolder>() {
@@ -28,7 +28,7 @@ class ProjectsRVAdapter(private var list: List<String>, private val onClickListe
     override fun getItemCount(): Int = list.size
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val textView = itemView.findViewById<TextView>(R.id.textView)
+        val textView : TextView = itemView.findViewById(R.id.textView)
     }
 }
 

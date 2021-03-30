@@ -11,13 +11,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.shivtej.androidprojects.utils.Constants
 
 class AfterQuizFragment : Fragment() {
 
     private lateinit var tvScore : TextView
     private lateinit var tvTotalScore : TextView
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +33,6 @@ class AfterQuizFragment : Fragment() {
         val btnShare : Button = view.findViewById(R.id.btnShare)
 
         val quizname = (activity as QuestionActivity).quizName
-
-//        ivClose.setOnClickListener {
-//            startActivity(Intent(context, MainActivity::class.java))
-//        }
 
         btnRestart.setOnClickListener {
             (activity as QuestionActivity).finish()
@@ -59,15 +54,15 @@ class AfterQuizFragment : Fragment() {
         }
 
         val bundle = arguments
-        val score = bundle?.getInt("score")
-        val totalQuestion = bundle?.getInt("TotalScore")
+        val score = bundle?.getInt(Constants.SCORE)
+        val totalQuestion = bundle?.getInt(Constants.TOTAL_SCORE)
         val percent = (score!! * 100)/ totalQuestion!!
         Log.i("Percent", percent.toString())
         Log.i("Score", score.toString())
         if(percent <= 50){
             tvScore.setTextColor(Color.RED)
-            tvCongrats.text = "Sorry You Failed!"
-            tvMastered.text = "You have to practice more"
+            tvCongrats.text = getString(R.string.less_score_string)
+            tvMastered.text = getString(R.string.you_have_to_practice_more)
             ivwinLose.setImageResource(R.drawable.lessscore)
         }else {
             tvScore.setTextColor(Color.GREEN)
@@ -75,9 +70,6 @@ class AfterQuizFragment : Fragment() {
         }
         tvScore.text = "$score "
         tvTotalScore.text = "/ $totalQuestion"
-
-
-
         return view
     }
 

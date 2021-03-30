@@ -1,5 +1,6 @@
 package com.shivtej.androidprojects
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.card.MaterialCardView
 import com.shivtej.androidprojects.databinding.ActivityQuestionBinding
 import com.shivtej.androidprojects.models.Question
+import com.shivtej.androidprojects.utils.Constants
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_question.*
 
@@ -21,7 +23,7 @@ class QuestionActivity : AppCompatActivity() {
 
     var questionNum = 0
     var totalQuestion = 0
-    var score = 0
+    private var score = 0
 
     private lateinit var selectedAnswer: String
     private var question = Question()
@@ -30,6 +32,7 @@ class QuestionActivity : AppCompatActivity() {
     lateinit var quizName : String
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionBinding.inflate(layoutInflater)
@@ -55,10 +58,10 @@ class QuestionActivity : AppCompatActivity() {
 
             builder.setTitle("Quit Quiz")
             builder.setMessage("Want to quit Quiz?\nYou will lose your score!")
-            builder.setPositiveButton("Yes"){ dialogInterface: DialogInterface, i: Int ->
+            builder.setPositiveButton("Yes"){ _: DialogInterface, i: Int ->
                 finish()
             }
-            builder.setNegativeButton("No"){ dialogInterface: DialogInterface, i: Int -> }
+            builder.setNegativeButton("No"){ _: DialogInterface, i: Int -> }
 
             builder.show()
         }
@@ -200,22 +203,27 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     private fun showCorrectAnswer() {
-        if(tvOption1.text.toString() == question.answer){
-            cvOption1.strokeColor = Color.GREEN
-            ivOption1.visibility = View.VISIBLE
-            ivOption1.setImageResource(R.drawable.ic_correct)
-        }else if(tvOption2.text.toString() == question.answer){
-            cvOption2.strokeColor = Color.GREEN
-            ivOption2.visibility = View.VISIBLE
-            ivOption2.setImageResource(R.drawable.ic_correct)
-        }else if(tvOption3.text.toString() == question.answer){
-            cvOption3.strokeColor = Color.GREEN
-            ivOption3.visibility = View.VISIBLE
-            ivOption3.setImageResource(R.drawable.ic_correct)
-        }else if(tvOption4.text.toString() == question.answer){
-            cvOption4.strokeColor = Color.GREEN
-            ivOption4.visibility = View.VISIBLE
-            ivOption4.setImageResource(R.drawable.ic_correct)
+        when (question.answer) {
+            tvOption1.text.toString() -> {
+                cvOption1.strokeColor = Color.GREEN
+                ivOption1.visibility = View.VISIBLE
+                ivOption1.setImageResource(R.drawable.ic_correct)
+            }
+            tvOption2.text.toString() -> {
+                cvOption2.strokeColor = Color.GREEN
+                ivOption2.visibility = View.VISIBLE
+                ivOption2.setImageResource(R.drawable.ic_correct)
+            }
+            tvOption3.text.toString() -> {
+                cvOption3.strokeColor = Color.GREEN
+                ivOption3.visibility = View.VISIBLE
+                ivOption3.setImageResource(R.drawable.ic_correct)
+            }
+            tvOption4.text.toString() -> {
+                cvOption4.strokeColor = Color.GREEN
+                ivOption4.visibility = View.VISIBLE
+                ivOption4.setImageResource(R.drawable.ic_correct)
+            }
         }
     }
 
@@ -228,12 +236,11 @@ class QuestionActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Quiz Completed", Toast.LENGTH_SHORT).show()
             binding.cl.visibility = View.GONE
-//            binding.fl.visibility = View.VISIBLE
             val fragment = AfterQuizFragment()
             val bundle = Bundle()
             Log.i("Score", score.toString())
-            bundle.putInt("score", score)
-            bundle.putInt("TotalScore", totalQuestion + 1)
+            bundle.putInt(Constants.SCORE, score)
+            bundle.putInt(Constants.TOTAL_SCORE, totalQuestion + 1)
             fragment.arguments = bundle
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()

@@ -6,17 +6,16 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.leo.simplearcloader.ArcConfiguration
-import com.leo.simplearcloader.SimpleArcDialog
 import com.shivtej.androidprojects.adapters.BoxClicked
 import com.shivtej.androidprojects.adapters.QuizBoardAdapter
 import com.shivtej.androidprojects.databinding.ActivityQuizBinding
 import com.shivtej.androidprojects.models.Question
+import com.shivtej.androidprojects.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +38,7 @@ class QuizActivity : AppCompatActivity() {
 
         binding.boardView.visibility = View.VISIBLE
         list = ArrayList()
-         quizName = intent.getStringExtra("quizName").toString()
+         quizName = intent.getStringExtra(Constants.QUIZ_NAME).toString()
         binding.toolbar.title = quizName
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -49,7 +48,7 @@ class QuizActivity : AppCompatActivity() {
 
 
         binding.boardView.layoutManager = LinearLayoutManager(this)
-        adapter = QuizBoardAdapter(this, list, object :BoxClicked{
+        adapter = QuizBoardAdapter( list, object :BoxClicked{
             override fun onBoxClicked(string: String) {
                 startQuiz(string)
             }
@@ -69,14 +68,13 @@ class QuizActivity : AppCompatActivity() {
         myRef = FirebaseDatabase.getInstance().getReference(quizName)
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
-                val value: List<String> = snapshot.getValue() as List<String>
+                val value: List<String> = snapshot.value as List<String>
                 Log.i("Value", value.toString())
                 for (i in value) {
                     if (i == null) {
                         Log.i("Null", "Null")
                     } else {
-                        Log.i("Item", i.toString())
+                        Log.i("Item", i)
                         list.add(i)
                         Log.i("List", list.toString())
                     }
@@ -84,30 +82,24 @@ class QuizActivity : AppCompatActivity() {
                     binding.simpleLoader.stop()
                     binding.simpleLoader.visibility = View.GONE
                 }
-
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
-//        binding.progressBar.visibility = View.VISIBLE
-
-//
  }
 
     fun startQuiz(string: String) {
         val intent = Intent(this, QuestionActivity::class.java)
-        //binding.boardView.visibility = View.GONE
         binding.simpleLoader.visibility = View.VISIBLE
         binding.simpleLoader.start()
         questionList.clear()
         binding.boardView.visibility = View.GONE
-
         var quizname = ""
-        if(quizName == "Kotlin Quiz"){
-            quizname = "Kotlin $string"
+        quizname = if(quizName == "Kotlin Quiz"){
+            "Kotlin $string"
         }else{
-            quizname = "Android $string"
+            "Android $string"
         }
         CoroutineScope(Dispatchers.IO).launch {
             val refer = Firebase.firestore.collection(quizname)
@@ -119,7 +111,6 @@ class QuizActivity : AppCompatActivity() {
                         questionList.add(question)
                     }
                 }
-                //Log.i("QuestionList", questionList.toString())
                 withContext(Dispatchers.Main){
                     Log.i("QuestionList", questionList.toString())
                     binding.simpleLoader.stop()
@@ -134,7 +125,6 @@ class QuizActivity : AppCompatActivity() {
                     Toast.makeText(this@QuizActivity, e.message, Toast.LENGTH_SHORT).show()
                     binding.simpleLoader.stop()
                     binding.simpleLoader.visibility = View.GONE
-
                 }
             }
        }

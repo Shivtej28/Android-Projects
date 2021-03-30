@@ -12,7 +12,6 @@ import com.shivtej.androidprojects.models.Project
 
 class ProjectListRVAdapter(private var projectList : List<Project>, private val onCLickedProject : ProjectItemClicked) : RecyclerView.Adapter<ProjectListRVAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
 
@@ -33,8 +32,8 @@ class ProjectListRVAdapter(private var projectList : List<Project>, private val 
     override fun getItemCount(): Int = projectList.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle = itemView.findViewById<TextView>(R.id.tvProjectTitle)
-        val ivProjectImage = itemView.findViewById<ImageView>(R.id.ivProjectImage)
+        val tvTitle: TextView = itemView.findViewById(R.id.tvProjectTitle)
+        val ivProjectImage : ImageView = itemView.findViewById(R.id.ivProjectImage)
     }
 }
 

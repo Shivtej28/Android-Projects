@@ -22,11 +22,10 @@
 
     <ImageView
         android:id="@+id/ivhappysad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/loser"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Good! You are the mastered"
+        android:text="Good! You are the master"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="italic"

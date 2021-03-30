@@ -14,8 +14,6 @@ class ProjectsRVAdapter(private var list: List<String>, private val onClickListe
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.project_item, parent, false)
-
-
         return ViewHolder(view)
     }
 
@@ -31,9 +29,6 @@ class ProjectsRVAdapter(private var list: List<String>, private val onClickListe
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textView = itemView.findViewById<TextView>(R.id.textView)
-
-
-
     }
 }
 

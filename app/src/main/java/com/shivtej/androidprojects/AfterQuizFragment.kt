@@ -33,19 +33,21 @@ class AfterQuizFragment : Fragment() {
         val btnRestart : Button = view.findViewById(R.id.btnRestart)
         val btnShare : Button = view.findViewById(R.id.btnShare)
 
+        val quizname = (activity as QuestionActivity).quizName
+
 //        ivClose.setOnClickListener {
 //            startActivity(Intent(context, MainActivity::class.java))
 //        }
 
         btnRestart.setOnClickListener {
-            startActivity(Intent(context, MainActivity::class.java))
+            (activity as QuestionActivity).finish()
         }
 
         btnShare.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name")
-            var shareMessage = "Hey Check Out My Score of Kotlin Quiz on this App\n\n"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name)
+            var shareMessage = "Hey Check Out My Score of $quizname on this App\n\n"
             shareMessage =
                 """
                 ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}
@@ -66,10 +68,10 @@ class AfterQuizFragment : Fragment() {
             tvScore.setTextColor(Color.RED)
             tvCongrats.text = "Sorry You Failed!"
             tvMastered.text = "You have to practice more"
-            ivwinLose.setImageResource(R.drawable.loser)
+            ivwinLose.setImageResource(R.drawable.lessscore)
         }else {
             tvScore.setTextColor(Color.GREEN)
-            ivwinLose.setImageResource(R.drawable.winner)
+            ivwinLose.setImageResource(R.drawable.highscore)
         }
         tvScore.text = "$score "
         tvTotalScore.text = "/ $totalQuestion"

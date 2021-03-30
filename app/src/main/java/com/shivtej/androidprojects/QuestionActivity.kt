@@ -27,6 +27,7 @@ class QuestionActivity : AppCompatActivity() {
     private var question = Question()
     private lateinit var selectedBtn: MaterialCardView
     private lateinit var selectedImg : CircleImageView
+    lateinit var quizName : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +38,11 @@ class QuestionActivity : AppCompatActivity() {
         questionList = ArrayList()
         selectedAnswer = ""
 
+
+
         questionList =
             intent.getParcelableArrayListExtra<Question>("QuestionList") as ArrayList<Question>
-        val quizName = intent.getStringExtra("quizName").toString()
+        quizName = intent.getStringExtra("quizName").toString()
         binding.tvQuizName.text = quizName
         totalQuestion = questionList.size - 1
 

@@ -37,7 +37,7 @@ class QuizActivity : AppCompatActivity() {
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        binding.boardView.visibility = View.VISIBLE
         list = ArrayList()
          quizName = intent.getStringExtra("quizName").toString()
         binding.toolbar.title = quizName
@@ -60,6 +60,10 @@ class QuizActivity : AppCompatActivity() {
         fetchData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.boardView.visibility = View.VISIBLE
+    }
    private fun fetchData() {
        binding.simpleLoader.start()
         myRef = FirebaseDatabase.getInstance().getReference(quizName)
@@ -97,6 +101,7 @@ class QuizActivity : AppCompatActivity() {
         binding.simpleLoader.visibility = View.VISIBLE
         binding.simpleLoader.start()
         questionList.clear()
+        binding.boardView.visibility = View.GONE
 
         var quizname = ""
         if(quizName == "Kotlin Quiz"){

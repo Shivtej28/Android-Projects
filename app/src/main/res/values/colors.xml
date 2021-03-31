@@ -30,4 +30,11 @@
     <color name="darkblue">#131830</color>
     <color name="textColor">#464c64</color>
     <color name="green">#128d78</color>
+
+    <color name="color1">#F2167D</color>
+    <color name="color2">#0C1440</color>
+    <color name="color3">#080C26</color>
+    <color name="color4">#1AD993</color>
+    <color name="color5">#F2B035</color>
+
 </resources>

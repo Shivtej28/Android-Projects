@@ -1,6 +1,6 @@
 package com.shivtej.androidprojects
 
-import android.content.Intent
+ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -45,7 +45,7 @@ class AfterQuizFragment : Fragment() {
             var shareMessage = "Hey Check Out My Score of $quizname on this App\n\n"
             shareMessage =
                 """
-                ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}
+                ${shareMessage}https://play.google.com/store/apps/details?id=${com.shivtej.androidprojects.BuildConfig.APPLICATION_ID}
                 
                 
                  """.trimIndent()

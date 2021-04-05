@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        android:iconTint="@color/navyblue"/>
+
+    <item
+        android:id="@+id/donate"
+        android:title="Donate"
+        android:icon="@drawable/ic_donate"
+        android:iconTint="@color/navyblue"/>
+
+
+
+    <item
+        android:id="@+id/rate"
+        android:title="Rate Us"
+        android:icon="@drawable/ic_rate_us"
+        android:iconTint="@color/navyblue"/>
+
+    <item
+        android:id="@+id/feedback"
+        android:title="Feedback or Contact Us"
+        android:iconTint="@color/navyblue"
+        android:icon="@drawable/ic_feedback"/>
+
+    <item
+        android:id="@+id/about"
+        android:title="About"
+        android:icon="@drawable/ic_about"
+        android:iconTint="@color/navyblue"/>
+
+</menu>

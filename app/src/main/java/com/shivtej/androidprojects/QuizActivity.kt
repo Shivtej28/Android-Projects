@@ -41,9 +41,10 @@ class QuizActivity : AppCompatActivity() {
          quizName = intent.getStringExtra(Constants.QUIZ_NAME).toString()
         binding.toolbar.title = quizName
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         questionList = ArrayList()
 
 

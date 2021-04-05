@@ -18,8 +18,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.shivtej.androidprojects.adapters.SSRvAdapter
+import com.shivtej.androidprojects.ads.ShowAd
 import com.shivtej.androidprojects.databinding.ActivityProjectBinding
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.utils.Constants
@@ -37,7 +42,12 @@ class ProjectActivity : AppCompatActivity() {
     private lateinit var apptitle: String
     lateinit var appname: String
     private lateinit var dm: DownloadManager
-    private lateinit var apk : String
+    private lateinit var apk: String
+    private lateinit var zipfile : String
+    lateinit var mInterstitialAd : InterstitialAd
+    lateinit var mInterstitialad2 : InterstitialAd
+
+
 
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +58,44 @@ class ProjectActivity : AppCompatActivity() {
         val bundle = intent.getBundleExtra(Constants.BUNDLE)
         project = bundle?.get(Constants.PROJECT) as Project
 
+      //  projectshowAd.loadInterstitialAd(this)
+        loadAd()
+        loadAd2()
+            // runadevent()
+        mInterstitialAd.adListener = object : AdListener(){
+            override fun onAdClicked() {
+                super.onAdClicked()
+                mInterstitialAd.adListener.onAdClosed()
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+                Log.i("Closed", "Closed")
+                gotoWebView()
+
+            }
+
+        }
+        mInterstitialad2.adListener = object : AdListener(){
+            override fun onAdClicked() {
+                super.onAdClicked()
+                mInterstitialad2.adListener.onAdClosed()
+            }
+
+            override fun onAdClosed() {
+                super.onAdClosed()
+                Log.i("Closed", "Closed")
+                checkPermissions()
+
+            }
+
+        }
+
         Log.i("Project", project.toString())
         apptitle = project.title
         val description = project.description
         apk = project.apk
-        val zipfile = project.zipfile
+        zipfile = project.zipfile
 
         imageUrlList = ArrayList()
         adapter = SSRvAdapter(imageUrlList)
@@ -61,24 +104,32 @@ class ProjectActivity : AppCompatActivity() {
         addUrlToList()
 
         binding.toolbar1.title = apptitle
-        binding.toolbar1.setNavigationIcon(R.drawable.ic_back_arrow)
+        setSupportActionBar(binding.toolbar1)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
+        //binding.toolbar1.setNavigationIcon(R.drawable.ic_back_arrow)
         binding.toolbar1.setNavigationOnClickListener {
-            onBackPressed()
+           onBackPressed()
+
         }
 
         binding.tvDescription.text = description
 
         binding.btnSourceCode.setOnClickListener {
-            val intent = Intent(this, WebViewActivity::class.java)
-            intent.putExtra(Constants.SOURCE_CODE_URL, zipfile)
-            intent.putExtra(Constants.TITLE, apptitle)
-            startActivity(intent)
+            if(mInterstitialAd.isLoaded){
+                mInterstitialAd.show()
+            }else{
+                gotoWebView()
+            }
         }
 
         binding.btnAPk.setOnClickListener {
             snackbar = Snackbar.make(it, "Download Complete", Snackbar.LENGTH_LONG)
-
-            checkPermissions()
+            if (mInterstitialad2.isLoaded){
+                mInterstitialad2.show()
+            }else{
+                checkPermissions()
+            }
 
         }
 
@@ -112,12 +163,58 @@ class ProjectActivity : AppCompatActivity() {
         registerReceiver(broadcastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
+    private fun loadAd2() {
+        mInterstitialad2 = InterstitialAd(this)
+        MobileAds.initialize(this, Constants.mAPPUnitId)
+        mInterstitialad2.adUnitId = Constants.mInterstitialAdUnitId
+        mInterstitialad2.loadAd(AdRequest.Builder().build())
+    }
+
+    private fun loadAd() {
+
+        mInterstitialAd = InterstitialAd(this)
+        MobileAds.initialize(this, Constants.mAPPUnitId)
+        mInterstitialAd.adUnitId = Constants.mInterstitialAdUnitId
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+    }
+
+//    private fun runadevent() {
+//
+//        showAd.mInterstitialAd.adListener = object : AdListener(){
+//            override fun onAdClicked() {
+//                super.onAdOpened()
+//                showAd.mInterstitialAd.adListener.onAdClosed()
+//            }
+//
+//            override fun onAdClosed() {
+//                super.onAdClosed()
+//                gotoWebView()
+//                Log.i("Closed", "Closed")
+//            }
+//        }
+//    }
+
+    private fun gotoWebView() {
+        val intent = Intent(this, WebViewActivity::class.java)
+        intent.putExtra(Constants.SOURCE_CODE_URL, zipfile)
+        intent.putExtra(Constants.TITLE, apptitle)
+        startActivity(intent)
+    }
+
     @ExperimentalStdlibApi
     private fun checkPermissions() {
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-        }else{
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                1
+            )
+        } else {
             downloadApk()
         }
     }
@@ -129,9 +226,9 @@ class ProjectActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
 
-        when(requestCode){
+        when (requestCode) {
             1 -> {
-                if(grantResults.isNotEmpty() || grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.isNotEmpty() || grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     downloadApk()
                 }
             }
@@ -139,7 +236,7 @@ class ProjectActivity : AppCompatActivity() {
     }
 
     @ExperimentalStdlibApi
-    fun downloadApk(){
+    fun downloadApk() {
         appname = apptitle.lowercase().replace(" ", "")
         val request = DownloadManager.Request(
             Uri.parse(apk)
@@ -188,6 +285,13 @@ class ProjectActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
+
 
 
 }

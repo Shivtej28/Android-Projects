@@ -10,7 +10,19 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarcolor</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ExpandedAppBar" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Collapsed" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/navyblue</item>
+        <item name="android:textStyle">normal</item>
     </style>
 </resources>

@@ -14,5 +14,6 @@ package com.shivtej.androidprojects.utils
 
         const val mAPPUnitId : String = "ca-app-pub-4560966471221757~8079393668"
         const val mInterstitialAdUnitId : String = "ca-app-pub-3940256099942544/1033173712"
+        const val mRewardAdUnitId : String = "ca-app-pub-3940256099942544/5224354917"
     }
  }

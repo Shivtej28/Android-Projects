@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "194264901699",
-    "project_id": "android-projects-and-quizzes",
-    "storage_bucket": "android-projects-and-quizzes.appspot.com"
+    "project_number": "698695118564",
+    "project_id": "android-projects-and-qui-c56c0",
+    "storage_bucket": "android-projects-and-qui-c56c0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:194264901699:android:daa1ebaa4e9babdf6c4cf6",
+        "mobilesdk_app_id": "1:698695118564:android:8d2af184172cf007b8c6f1",
         "android_client_info": {
           "package_name": "com.shivtej.androidprojects"
         }
       },
       "oauth_client": [
         {
-          "client_id": "194264901699-iuso4jq0domh357gsinlkv6s9jsrjoj5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.shivtej.androidprojects",
-            "certificate_hash": "fafe1c7fd3a9fdfa04a2b0e9c1893959f649603b"
-          }
-        },
-        {
-          "client_id": "194264901699-d6kmna633vr5nb0nk0qsoeu8iqrec5pv.apps.googleusercontent.com",
+          "client_id": "698695118564-rs0msbaptsr1npntejosvnkpsuhhv87i.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDsDmQZHpVeZfDWrvWLNaArvhYUCVd2NAc"
+          "current_key": "AIzaSyD-UM9m3MU-XWSG1wCJLN2zYLTx2BrpbeU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "194264901699-d6kmna633vr5nb0nk0qsoeu8iqrec5pv.apps.googleusercontent.com",
+              "client_id": "698695118564-rs0msbaptsr1npntejosvnkpsuhhv87i.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

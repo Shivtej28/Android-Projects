@@ -7,4 +7,7 @@
     <string name="you_have_to_practice_more">You have to practice more</string>
     <string name="kotlin_quiz">Kotlin Quiz</string>
     <string name="question">Question</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="emoji">😂😂</string>
 </resources>

@@ -19,6 +19,7 @@ import com.google.firebase.firestore.ktx.*
 import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.adapters.ProjectItemClicked
 import com.shivtej.androidprojects.adapters.ProjectListRVAdapter
+import com.shivtej.androidprojects.ads.ShowAd
 import com.shivtej.androidprojects.databinding.ActivityProjectListBinding
 
 
@@ -36,55 +37,21 @@ class ProjectListActivity : AppCompatActivity() {
     private lateinit var adapter: ProjectListRVAdapter
     private lateinit var db: FirebaseFirestore
 
-    private lateinit var mInterstitialAd: InterstitialAd
+
     var project1 = Project()
+    val showAd = ShowAd()
+    lateinit var mInterstitialAd : InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProjectListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         mInterstitialAd = InterstitialAd(this)
-        initializeInterstitialAd(Constants.mAPPUnitId)
-        loadInterstitialAd(Constants.mInterstitialAdUnitId)
-        runAdEvents()
-
-        level = intent.getStringExtra(Constants.PROJECT_LEVEL).toString()
-        projectList = ArrayList()
-        db = Firebase.firestore
-        binding.progressBar.visibility = View.VISIBLE
-        setSupportActionBar(binding.materialToolbar2)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        MobileAds.initialize(this, Constants.mAPPUnitId)
+        mInterstitialAd.adUnitId = Constants.mInterstitialAdUnitId
 
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.rvProjectList.layoutManager = layoutManager
-
-        adapter = ProjectListRVAdapter(projectList, object : ProjectItemClicked {
-            override fun onProjectClicked(project: Project) {
-                project1 = project
-                  if(mInterstitialAd.isLoaded){
-                      mInterstitialAd.show()
-                  }else {
-                      gotoProjectActivity(project1)
-                  }
-                 }
-        })
-        binding.rvProjectList.adapter = adapter
-        getProjectList()
-    }
-
-    private fun gotoProjectActivity(project: Project) {
-        val intent = Intent(this@ProjectListActivity, ProjectActivity::class.java)
-        val bundle = Bundle()
-        bundle.putParcelable(Constants.PROJECT, project)
-        intent.putExtra(Constants.BUNDLE, bundle)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun runAdEvents() {
+        loadAd()
         mInterstitialAd.adListener = object : AdListener(){
             override fun onAdClicked() {
                 super.onAdOpened()
@@ -96,16 +63,67 @@ class ProjectListActivity : AppCompatActivity() {
                 gotoProjectActivity(project1)
             }
         }
+
+
+        level = intent.getStringExtra(Constants.PROJECT_LEVEL).toString()
+        projectList = ArrayList()
+        db = Firebase.firestore
+        binding.progressBar.start()
+       setSupportActionBar(binding.materialToolbar1)
+        binding.materialToolbar1.title = level
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+      //  binding.materialToolbar2.setNavigationIconTint(R.drawable.ic_back_arrow)
+        binding.materialToolbar1.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvProjectList.layoutManager = layoutManager
+
+        adapter = ProjectListRVAdapter(projectList, object : ProjectItemClicked {
+            override fun onProjectClicked(project: Project) {
+                project1 = project
+                  if(mInterstitialAd.isLoaded){
+                      mInterstitialAd.show()
+
+                  }else {
+                      gotoProjectActivity(project1)
+                 }
+                loadAd()
+                 }
+        })
+        binding.rvProjectList.adapter = adapter
+        getProjectList()
     }
 
-    private fun loadInterstitialAd(mInterstitialAdUnitId: String) {
-            mInterstitialAd.adUnitId = mInterstitialAdUnitId
-            mInterstitialAd.loadAd(AdRequest.Builder().build())
+    private fun loadAd() {
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 
-    private fun initializeInterstitialAd(mAPPUnitId: String) {
-            MobileAds.initialize(this, mAPPUnitId)
+    private fun gotoProjectActivity(project: Project) {
+        val intent = Intent(this@ProjectListActivity, ProjectActivity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.PROJECT, project)
+        intent.putExtra(Constants.BUNDLE, bundle)
+        startActivity(intent)
+
     }
+
+    private fun runAdEvents() {
+
+    }
+
+//    private fun loadInterstitialAd(mInterstitialAdUnitId: String) {
+//            mInterstitialAd.adUnitId = mInterstitialAdUnitId
+//            mInterstitialAd.loadAd(AdRequest.Builder().build())
+//    }
+//
+//    private fun initializeInterstitialAd(mAPPUnitId: String) {
+//            MobileAds.initialize(this, mAPPUnitId)
+//    }
 
     private fun getProjectList() = CoroutineScope(Dispatchers.IO).launch {
         val refer = db.collection(level)
@@ -119,6 +137,7 @@ class ProjectListActivity : AppCompatActivity() {
             }
             withContext(Dispatchers.Main) {
                 adapter.notifyDataSetChanged()
+                binding.progressBar.stop()
                 binding.progressBar.visibility = View.INVISIBLE
 
             }
@@ -126,10 +145,13 @@ class ProjectListActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@ProjectListActivity, "Can't get Data", Toast.LENGTH_SHORT)
                     .show()
+                binding.progressBar.stop()
                 binding.progressBar.visibility = View.INVISIBLE
+
             }
         }
     }
+
 }
 
 

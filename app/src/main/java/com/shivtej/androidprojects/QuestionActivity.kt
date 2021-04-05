@@ -28,11 +28,11 @@ class QuestionActivity : AppCompatActivity() {
     private lateinit var selectedAnswer: String
     private var question = Question()
     private lateinit var selectedBtn: MaterialCardView
-    private lateinit var selectedImg : CircleImageView
-    lateinit var quizName : String
+    private lateinit var selectedImg: CircleImageView
+    lateinit var quizName: String
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionBinding.inflate(layoutInflater)
@@ -53,15 +53,19 @@ class QuestionActivity : AppCompatActivity() {
 
         showQuestion()
 
+        binding.questionToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
         binding.tvQuit.setOnClickListener {
             val builder = AlertDialog.Builder(it.context)
 
             builder.setTitle("Quit Quiz")
             builder.setMessage("Want to quit Quiz?\nYou will lose your score!")
-            builder.setPositiveButton("Yes"){ _: DialogInterface, i: Int ->
+            builder.setPositiveButton("Yes") { _: DialogInterface, i: Int ->
                 finish()
             }
-            builder.setNegativeButton("No"){ _: DialogInterface, i: Int -> }
+            builder.setNegativeButton("No") { _: DialogInterface, i: Int -> }
 
             builder.show()
         }
@@ -77,7 +81,7 @@ class QuestionActivity : AppCompatActivity() {
                     btnNext.text = "Next"
                     checkAnswer(selectedBtn, selectedImg)
                 }
-                if(text == "Next" ){
+                if (text == "Next") {
                     btnNext.text = "Submit"
                     nextQuestion()
                 }
@@ -95,15 +99,18 @@ class QuestionActivity : AppCompatActivity() {
             ivOption3.visibility = View.INVISIBLE
             ivOption4.visibility = View.INVISIBLE
 
-            cvOption2.strokeColor = Color.GRAY
-            cvOption2.setCardBackgroundColor(Color.GRAY)
-            cvOption3.strokeColor = Color.GRAY
-            cvOption3.setCardBackgroundColor(Color.GRAY)
-            cvOption4.strokeColor = Color.GRAY
-            cvOption4.setCardBackgroundColor(Color.GRAY)
+            cvOption2.strokeColor = Color.BLACK
+            cvOption3.strokeColor = Color.BLACK
+            cvOption4.strokeColor = Color.BLACK
 
-            cvOption1.strokeColor = Color.WHITE
+
+            cvOption2.setCardBackgroundColor(Color.BLACK)
+            cvOption3.setCardBackgroundColor(Color.BLACK)
+            cvOption4.setCardBackgroundColor(Color.BLACK)
+
+            cvOption1.strokeColor = Color.parseColor("#06d3f6")
             cvOption1.setCardBackgroundColor(Color.WHITE)
+
 
         }
 
@@ -117,16 +124,21 @@ class QuestionActivity : AppCompatActivity() {
             ivOption3.visibility = View.INVISIBLE
             ivOption4.visibility = View.INVISIBLE
 
-            cvOption1.strokeColor = Color.GRAY
-            cvOption1.setCardBackgroundColor(Color.GRAY)
-            cvOption3.strokeColor = Color.GRAY
-            cvOption3.setCardBackgroundColor(Color.GRAY)
-            cvOption4.strokeColor = Color.GRAY
-            cvOption4.setCardBackgroundColor(Color.GRAY)
+            cvOption1.strokeColor = Color.BLACK
 
-            cvOption2.strokeColor = Color.WHITE
+            cvOption3.strokeColor = Color.BLACK
+
+            cvOption4.strokeColor = Color.BLACK
+
+            cvOption1.setCardBackgroundColor(Color.BLACK)
+            cvOption3.setCardBackgroundColor(Color.BLACK)
+            cvOption4.setCardBackgroundColor(Color.BLACK)
+
+
+
+
+            cvOption2.strokeColor = Color.parseColor("#06d3f6")
             cvOption2.setCardBackgroundColor(Color.WHITE)
-
 
 
         }
@@ -142,13 +154,18 @@ class QuestionActivity : AppCompatActivity() {
             ivOption4.visibility = View.INVISIBLE
 
 
-            cvOption1.strokeColor = Color.GRAY
-            cvOption1.setCardBackgroundColor(Color.GRAY)
-            cvOption2.strokeColor = Color.GRAY
-            cvOption2.setCardBackgroundColor(Color.GRAY)
-            cvOption4.strokeColor = Color.GRAY
-            cvOption4.setCardBackgroundColor(Color.GRAY)
-            cvOption3.strokeColor = Color.WHITE
+            cvOption1.strokeColor = Color.BLACK
+
+            cvOption2.strokeColor = Color.BLACK
+
+            cvOption4.strokeColor = Color.BLACK
+            cvOption4.setCardBackgroundColor(Color.BLACK)
+
+            cvOption1.setCardBackgroundColor(Color.BLACK)
+            cvOption2.setCardBackgroundColor(Color.BLACK)
+            cvOption4.setCardBackgroundColor(Color.BLACK)
+
+            cvOption3.strokeColor = Color.parseColor("#06d3f6")
             cvOption3.setCardBackgroundColor(Color.WHITE)
 
 
@@ -165,14 +182,14 @@ class QuestionActivity : AppCompatActivity() {
             ivOption3.visibility = View.INVISIBLE
 
 
-            cvOption1.strokeColor = Color.GRAY
-            cvOption1.setCardBackgroundColor(Color.GRAY)
-            cvOption2.strokeColor = Color.GRAY
-            cvOption2.setCardBackgroundColor(Color.GRAY)
-            cvOption3.strokeColor = Color.GRAY
-            cvOption3.setCardBackgroundColor(Color.GRAY)
+            cvOption1.strokeColor = Color.BLACK
+            cvOption1.setCardBackgroundColor(Color.BLACK)
+            cvOption2.strokeColor = Color.BLACK
+            cvOption2.setCardBackgroundColor(Color.BLACK)
+            cvOption3.strokeColor = Color.BLACK
+            cvOption3.setCardBackgroundColor(Color.BLACK)
 
-            cvOption4.strokeColor = Color.WHITE
+            cvOption4.strokeColor = Color.parseColor("#06d3f6")
             cvOption4.setCardBackgroundColor(Color.WHITE)
 
 
@@ -185,8 +202,9 @@ class QuestionActivity : AppCompatActivity() {
         } else {
             if (selectedAnswer == question.answer) {
                 selectedBtn.strokeColor = Color.GREEN
-                selectedBtn.setCardBackgroundColor(Color.GREEN)
+                // selectedBtn.setCardBackgroundColor(Color.GREEN)
                 selectedImg.setImageResource(R.drawable.ic_correct)
+
                 score++
                 disabledCV()
 
@@ -232,9 +250,10 @@ class QuestionActivity : AppCompatActivity() {
             Log.i("Count", questionNum.toString())
             Log.i("Size", questionList.size.toString())
             questionNum++
+
             showQuestion()
         } else {
-            Toast.makeText(this, "Quiz Completed", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Quiz Completed", Toast.LENGTH_SHORT).show()
             binding.cl.visibility = View.GONE
             val fragment = AfterQuizFragment()
             val bundle = Bundle()
@@ -262,15 +281,15 @@ class QuestionActivity : AppCompatActivity() {
         binding.tvOption3.text = question.option3
         binding.tvOption4.text = question.option4
 
-        cvOption1.setCardBackgroundColor(Color.GRAY)
-        cvOption3.setCardBackgroundColor(Color.GRAY)
-        cvOption2.setCardBackgroundColor(Color.GRAY)
-        cvOption4.setCardBackgroundColor(Color.GRAY)
+        cvOption1.setCardBackgroundColor(Color.BLACK)
+        cvOption3.setCardBackgroundColor(Color.BLACK)
+        cvOption2.setCardBackgroundColor(Color.BLACK)
+        cvOption4.setCardBackgroundColor(Color.BLACK)
 
-        cvOption1.strokeColor = Color.GRAY
-        cvOption2.strokeColor = Color.GRAY
-        cvOption3.strokeColor = Color.GRAY
-        cvOption4.strokeColor = Color.GRAY
+        cvOption1.strokeColor = Color.BLACK
+        cvOption2.strokeColor = Color.BLACK
+        cvOption3.strokeColor = Color.BLACK
+        cvOption4.strokeColor = Color.BLACK
 
         ivOption1.visibility = View.INVISIBLE
         ivOption2.visibility = View.INVISIBLE
@@ -285,14 +304,14 @@ class QuestionActivity : AppCompatActivity() {
         binding.tvQuestionNum.text = countString
     }
 
-    private fun disabledCV(){
+    private fun disabledCV() {
         cvOption1.isEnabled = false
         cvOption2.isEnabled = false
         cvOption3.isEnabled = false
         cvOption4.isEnabled = false
     }
 
-    private fun enabledCV(){
+    private fun enabledCV() {
         cvOption1.isEnabled = true
         cvOption2.isEnabled = true
         cvOption3.isEnabled = true

@@ -22,7 +22,7 @@ class ProjectsRVAdapter(private var list: List<ListGradient>, private val onClic
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem  = list[position]
         holder.textView.text = currentItem.item
-        holder.linearlayout.setBackgroundResource(currentItem.gradientDrawable)
+      //  holder.linearlayout.setBackgroundResource(currentItem.gradientDrawable)
         holder.itemView.setOnClickListener {
             onClickListener.onItemClicked(list[position])
         }

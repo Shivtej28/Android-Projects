@@ -37,4 +37,10 @@
     <color name="color4">#1AD993</color>
     <color name="color5">#F2B035</color>
 
+    <color name="navyblue">#103876</color>
+    <color name="androidbg">#D8EFFF</color>
+    <color name="textBlue">#103876</color>
+
+    <color name="statusBarcolor">#a6bdcc</color>
+
 </resources>

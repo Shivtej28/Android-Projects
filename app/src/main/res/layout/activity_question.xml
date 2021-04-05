@@ -110,7 +110,7 @@
                     android:layout_height="0dp"
                     android:text="Question..."
                     android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:textColor="@color/navyblue"
                     android:textSize="22sp"
                     android:textStyle="bold"

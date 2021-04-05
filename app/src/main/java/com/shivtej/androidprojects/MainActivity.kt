@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 return true
             }
             R.id.feedback -> {
-               // Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show()
                 sendEmail()
                 return true
             }
@@ -134,8 +134,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showVideoAd() {
 
-        if(showAd.rewardedAd.isLoaded){
-            showAd.rewardedAd.show(this, object : RewardedAdCallback(){
+        if (showAd.rewardedAd.isLoaded) {
+            showAd.rewardedAd.show(this, object : RewardedAdCallback() {
                 override fun onUserEarnedReward(p0: RewardItem) {
                     super.onUserEarnedReward(p0)
                     Toast.makeText(this@MainActivity, "Thank You", Toast.LENGTH_SHORT).show()
@@ -151,7 +151,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         builder.setTitle("Please Rate Us")
         builder.setIcon(R.drawable.ic_rate)
-        builder.setMessage("Thanks for using the application. If you like ${applicationInfo.loadLabel(packageManager)} please rate us! Your feedback is important for us!")
+        builder.setMessage(
+            "Thanks for using the application. If you like ${
+                applicationInfo.loadLabel(
+                    packageManager
+                )
+            } please rate us! Your feedback is important for us!"
+        )
         builder.setPositiveButton("Rate it") { _: DialogInterface, i: Int ->
             val url = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
             val intent = Intent(Intent.ACTION_VIEW)
@@ -164,8 +170,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         builder.show()
     }
 
-    fun sendEmail(){
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "asdevelopers1428@gmail.com", null))
+    fun sendEmail() {
+        val emailIntent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.fromParts("mailto", "asdevelopers1428@gmail.com", null)
+        )
         startActivity(Intent.createChooser(emailIntent, "Contact Us"))
     }
 }

@@ -61,7 +61,9 @@ class ProjectActivity : AppCompatActivity() {
       //  projectshowAd.loadInterstitialAd(this)
         loadAd()
         loadAd2()
-            // runadevent()
+
+        binding.tvDescription.loadUrl(project.description)
+
         mInterstitialAd.adListener = object : AdListener(){
             override fun onAdClicked() {
                 super.onAdClicked()
@@ -113,7 +115,7 @@ class ProjectActivity : AppCompatActivity() {
 
         }
 
-        binding.tvDescription.text = description
+
 
         binding.btnSourceCode.setOnClickListener {
             if(mInterstitialAd.isLoaded){
@@ -123,15 +125,15 @@ class ProjectActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnAPk.setOnClickListener {
-            snackbar = Snackbar.make(it, "Download Complete", Snackbar.LENGTH_LONG)
-            if (mInterstitialad2.isLoaded){
-                mInterstitialad2.show()
-            }else{
-                checkPermissions()
-            }
-
-        }
+//        binding.btnAPk.setOnClickListener {
+//            snackbar = Snackbar.make(it, "Download Complete", Snackbar.LENGTH_LONG)
+//            if (mInterstitialad2.isLoaded){
+//                mInterstitialad2.show()
+//            }else{
+//                checkPermissions()
+//            }
+//
+//        }
 
         val broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -166,7 +168,7 @@ class ProjectActivity : AppCompatActivity() {
     private fun loadAd2() {
         mInterstitialad2 = InterstitialAd(this)
         MobileAds.initialize(this, Constants.mAPPUnitId)
-        mInterstitialad2.adUnitId = Constants.mInterstitialAdUnitId
+        mInterstitialad2.adUnitId = Constants.testInterstitialId
         mInterstitialad2.loadAd(AdRequest.Builder().build())
     }
 
@@ -174,7 +176,7 @@ class ProjectActivity : AppCompatActivity() {
 
         mInterstitialAd = InterstitialAd(this)
         MobileAds.initialize(this, Constants.mAPPUnitId)
-        mInterstitialAd.adUnitId = Constants.mInterstitialAdUnitId
+        mInterstitialAd.adUnitId = Constants.testInterstitialId
         mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 

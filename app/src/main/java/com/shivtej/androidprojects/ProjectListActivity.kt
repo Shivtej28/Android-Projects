@@ -48,8 +48,7 @@ class ProjectListActivity : AppCompatActivity() {
         setContentView(binding.root)
         mInterstitialAd = InterstitialAd(this)
         MobileAds.initialize(this, Constants.mAPPUnitId)
-        mInterstitialAd.adUnitId = Constants.mInterstitialAdUnitId
-
+        mInterstitialAd.adUnitId = Constants.testInterstitialId
 
         loadAd()
         mInterstitialAd.adListener = object : AdListener(){
@@ -71,6 +70,7 @@ class ProjectListActivity : AppCompatActivity() {
         binding.progressBar.start()
        setSupportActionBar(binding.materialToolbar1)
         binding.materialToolbar1.title = level
+        binding.tvHeading.text = level
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setDisplayShowHomeEnabled(true)
 

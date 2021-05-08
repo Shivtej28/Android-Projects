@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-
     tools:context=".QuestionActivity">
 
 
@@ -20,9 +16,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-           >
-
+            android:layout_height="match_parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/questionToolbar"
@@ -30,42 +24,29 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/androidbg"
                 android:elevation="5dp"
-                app:titleTextColor="@color/navyblue"
-                app:navigationIcon="@drawable/ic_back_arrow"
-                app:navigationIconTint="@color/navyblue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_back_arrow"
+                app:navigationIconTint="@color/navyblue"
+                app:titleTextColor="@color/navyblue">
 
                 <TextView
                     android:id="@+id/tvQuizName"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/navyblue"
-
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:textColor="@color/navyblue" />
 
 
             </com.google.android.material.appbar.MaterialToolbar>
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvQuizName"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/kotlin_quiz"-->
-<!--                android:textColor="@color/navyblue"-->
-<!--                android:textSize="30sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.5"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,10 +57,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:text="@string/question"
                     android:textColor="@color/background"
-                    android:textSize="23sp"
+                    android:textSize="19sp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -88,10 +70,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="3dp"
                     android:text="06/20"
                     android:textColor="@color/background"
-                    android:textSize="32sp"
+                    android:textSize="25sp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline2"
                     app:layout_constraintStart_toEndOf="@+id/textView4" />
 
@@ -107,195 +90,205 @@
                 <TextView
                     android:id="@+id/tvQuestion"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:text="Question..."
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
+                    android:text="Question..."
                     android:textColor="@color/navyblue"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/cvOption1"
+                    app:layout_constraintBottom_toTopOf="@+id/llOptions"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvOption1"
+                <LinearLayout
+                    android:id="@+id/llOptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp"
-                    app:contentPadding="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/cvOption2"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@id/guideline1"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:strokeColor="@color/blue"
-                    app:strokeWidth="2dp">
+                    app:layout_constraintStart_toStartOf="parent">
 
-                    <LinearLayout
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvOption1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:backgroundTint="@android:color/transparent"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/white"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:contentPadding="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/cvOption2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:strokeColor="@color/blue"
+                        app:strokeWidth="2dp">
 
-                        <TextView
-                            android:id="@+id/tvOption1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Option 1"
-                            android:textColor="@color/textBlue"
-                            android:textSize="17sp" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ivOption1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="10dp"
-                            app:civ_border_color="@color/black"
-                            app:civ_border_width="1dp" />
-
-
-                    </LinearLayout>
-
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvOption2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp"
-                    app:contentPadding="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/cvOption3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:strokeColor="@color/blue"
-                    app:strokeWidth="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:backgroundTint="@android:color/transparent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvOption2"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Option 1"
-                            android:textColor="@color/textBlue"
-                            android:textSize="17sp" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ivOption2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="20dp"
-                            app:civ_border_color="@color/black"
-                            app:civ_border_width="1dp" />
+                            android:backgroundTint="@android:color/transparent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvOption1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Option 1"
+                                android:textColor="@color/textBlue"
+                                android:textSize="17sp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivOption1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                app:civ_border_color="@color/black"
+                                app:civ_border_width="1dp" />
 
 
-                    </LinearLayout>
+                        </LinearLayout>
 
 
-                </com.google.android.material.card.MaterialCardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvOption3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp"
-                    app:contentPadding="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/cvOption4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:strokeColor="@color/blue"
-                    app:strokeWidth="2dp">
-
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvOption2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:backgroundTint="@android:color/transparent"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/white"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:contentPadding="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/cvOption3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:strokeColor="@color/blue"
+                        app:strokeWidth="2dp">
 
-                        <TextView
-                            android:id="@+id/tvOption3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Option 1"
-                            android:textColor="@color/textBlue"
-                            android:textSize="17sp" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ivOption3"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="20dp"
-                            app:civ_border_color="@color/black"
-                            app:civ_border_width="1dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                            android:backgroundTint="@android:color/transparent"
+                            android:orientation="horizontal">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvOption4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp"
-                    app:contentPadding="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:strokeColor="@color/blue"
-                    app:strokeWidth="2dp">
+                            <TextView
+                                android:id="@+id/tvOption2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Option 1"
+                                android:textColor="@color/textBlue"
+                                android:textSize="17sp" />
 
-                    <LinearLayout
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivOption2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="20dp"
+                                app:civ_border_color="@color/black"
+                                app:civ_border_width="1dp" />
+
+
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvOption3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:backgroundTint="@android:color/transparent"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/white"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:contentPadding="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/cvOption4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:strokeColor="@color/blue"
+                        app:strokeWidth="2dp">
 
-                        <TextView
-                            android:id="@+id/tvOption4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Option 1"
-                            android:textColor="@color/textBlue"
-                            android:textSize="17sp" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ivOption4"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="20dp"
-                            app:civ_border_color="@color/black"
-                            app:civ_border_width="1dp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                            android:backgroundTint="@android:color/transparent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvOption3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Option 1"
+                                android:textColor="@color/textBlue"
+                                android:textSize="17sp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivOption3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="20dp"
+                                app:civ_border_color="@color/black"
+                                app:civ_border_width="1dp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvOption4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/white"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:contentPadding="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:strokeColor="@color/blue"
+                        app:strokeWidth="2dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:backgroundTint="@android:color/transparent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvOption4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Option 1"
+                                android:textColor="@color/textBlue"
+                                android:textSize="17sp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivOption4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="20dp"
+                                app:civ_border_color="@color/black"
+                                app:civ_border_width="1dp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline1"

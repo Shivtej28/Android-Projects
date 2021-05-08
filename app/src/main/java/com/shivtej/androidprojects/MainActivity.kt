@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
+
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.navview.setNavigationItemSelectedListener(this)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val list: ArrayList<ListGradient> = ArrayList()
         val listGradient1 = ListGradient("Basic", R.drawable.basicgradient)
         val listGradient2 = ListGradient("Intermediate", R.drawable.basicgradient)
-        val listGradient3 = ListGradient("Advanced", R.drawable.basicgradient)
+        val listGradient3 = ListGradient("Advance", R.drawable.basicgradient)
         list.add(listGradient1)
         list.add(listGradient2)
         list.add(listGradient3)
@@ -123,13 +125,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 rating()
                 return true
             }
-            R.id.about -> {
+            R.id.share ->{
+                shareApp()
+                return true
+            }
+            R.id.check_for_updates -> {
                 //Toast.makeText(this, "About", Toast.LENGTH_SHORT).show()
-                showVideoAd()
+                checkForUpdates()
                 return true
             }
         }
         return false
+    }
+
+    private fun checkForUpdates() {
+        val url = "market://details?id=$packageName"
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setData(Uri.parse(url))
+        startActivity(intent)
+    }
+
+    private fun shareApp() {
+        val appId = packageName
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name)
+        var shareMessage = "Hey Checkout this Awesome App Here you will get some cool android projects to start " +
+                "your android development journey Download App now \n\n"
+        shareMessage =
+            """
+                ${shareMessage}https://play.google.com/store/apps/details?id=$appId
+                
+                
+                 """.trimIndent()
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+        startActivity(Intent.createChooser(shareIntent, "choose one"))
     }
 
     private fun showVideoAd() {
@@ -159,7 +189,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             } please rate us! Your feedback is important for us!"
         )
         builder.setPositiveButton("Rate it") { _: DialogInterface, i: Int ->
-            val url = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
+            val url = "market://details?id=$packageName"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setData(Uri.parse(url))
             startActivity(intent)

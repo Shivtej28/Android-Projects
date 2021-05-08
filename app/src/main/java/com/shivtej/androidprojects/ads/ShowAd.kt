@@ -14,7 +14,7 @@ class ShowAd {
     lateinit var mInterstitialAd : InterstitialAd
 
     fun loadRewardedAd(context: Context){
-        rewardedAd = RewardedAd(context, Constants.mRewardAdUnitId)
+        rewardedAd = RewardedAd(context, Constants.testRewardedAdId)
         rewardedAd.loadAd(AdRequest.Builder().build(), object : RewardedAdLoadCallback(){
             override fun onRewardedAdFailedToLoad(p0: Int) {
                 super.onRewardedAdFailedToLoad(p0)
@@ -27,7 +27,7 @@ class ShowAd {
     fun loadInterstitialAd(context: Context){
         mInterstitialAd = InterstitialAd(context)
         MobileAds.initialize(context, Constants.mAPPUnitId)
-        mInterstitialAd.adUnitId = Constants.mInterstitialAdUnitId
+        mInterstitialAd.adUnitId = Constants.testInterstitialId
         mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 }

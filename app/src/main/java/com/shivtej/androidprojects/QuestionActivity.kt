@@ -24,6 +24,7 @@ class QuestionActivity : AppCompatActivity() {
     var questionNum = 0
     var totalQuestion = 0
     private var score = 0
+    var onAfterQuizFragment = false
 
     private lateinit var selectedAnswer: String
     private var question = Question()
@@ -54,20 +55,13 @@ class QuestionActivity : AppCompatActivity() {
         showQuestion()
 
         binding.questionToolbar.setNavigationOnClickListener {
-            onBackPressed()
+            quitQuiz()
         }
 
         binding.tvQuit.setOnClickListener {
-            val builder = AlertDialog.Builder(it.context)
 
-            builder.setTitle("Quit Quiz")
-            builder.setMessage("Want to quit Quiz?\nYou will lose your score!")
-            builder.setPositiveButton("Yes") { _: DialogInterface, i: Int ->
-                finish()
-            }
-            builder.setNegativeButton("No") { _: DialogInterface, i: Int -> }
+            quitQuiz()
 
-            builder.show()
         }
 
 
@@ -196,6 +190,20 @@ class QuestionActivity : AppCompatActivity() {
         }
     }
 
+    private fun quitQuiz() {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Quit Quiz")
+        builder.setMessage("Want to quit Quiz?\nYou will lose your score!")
+        builder.setPositiveButton("Yes") { _: DialogInterface, i: Int ->
+            finish()
+        }
+        builder.setNegativeButton("No") { _: DialogInterface, i: Int -> }
+
+        builder.show()
+
+    }
+
     private fun checkAnswer(selectedBtn: MaterialCardView, selectedImg: CircleImageView) {
         if (selectedAnswer == "") {
             Toast.makeText(this, "Please Select Any one option", Toast.LENGTH_SHORT).show()
@@ -255,6 +263,7 @@ class QuestionActivity : AppCompatActivity() {
         } else {
             //Toast.makeText(this, "Quiz Completed", Toast.LENGTH_SHORT).show()
             binding.cl.visibility = View.GONE
+            onAfterQuizFragment = true
             val fragment = AfterQuizFragment()
             val bundle = Bundle()
             Log.i("Score", score.toString())
@@ -316,5 +325,13 @@ class QuestionActivity : AppCompatActivity() {
         cvOption2.isEnabled = true
         cvOption3.isEnabled = true
         cvOption4.isEnabled = true
+    }
+
+    override fun onBackPressed() {
+        if(onAfterQuizFragment){
+            finish()
+        }else{
+            quitQuiz()
+        }
     }
 }

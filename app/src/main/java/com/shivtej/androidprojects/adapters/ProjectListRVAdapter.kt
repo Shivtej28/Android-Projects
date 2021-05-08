@@ -20,7 +20,7 @@ class ProjectListRVAdapter(private var projectList : List<Project>, private val 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = projectList[position]
-        holder.tvTitle.text = currentItem.title
+
         holder.itemView.setOnClickListener {
             onCLickedProject.onProjectClicked(currentItem)
         }
@@ -32,7 +32,7 @@ class ProjectListRVAdapter(private var projectList : List<Project>, private val 
     override fun getItemCount(): Int = projectList.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle: TextView = itemView.findViewById(R.id.tvProjectTitle)
+
         val ivProjectImage : ImageView = itemView.findViewById(R.id.ivProjectImage)
     }
 }

@@ -39,13 +39,14 @@ class AfterQuizFragment : Fragment() {
         }
 
         btnShare.setOnClickListener {
+            val appId = context?.packageName
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name)
             var shareMessage = "Hey Check Out My Score of $quizname on this App\n\n"
             shareMessage =
                 """
-                ${shareMessage}https://play.google.com/store/apps/details?id=${com.shivtej.androidprojects.BuildConfig.APPLICATION_ID}
+                ${shareMessage}https://play.google.com/store/apps/details?id=$appId
                 
                 
                  """.trimIndent()
@@ -67,6 +68,22 @@ class AfterQuizFragment : Fragment() {
         }else {
             tvScore.setTextColor(Color.GREEN)
             ivwinLose.setImageResource(R.drawable.highscore)
+        }
+
+        btnShare.setOnClickListener {
+            val appId = context?.packageName
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name)
+            var shareMessage = "Hey Check Out My Score of $quizname on this App\n\n"
+            shareMessage =
+                """
+                ${shareMessage}https://play.google.com/store/apps/details?id=$appId
+                
+                
+                 """.trimIndent()
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+            startActivity(Intent.createChooser(shareIntent, "choose one"))
         }
         tvScore.text = "$score "
         tvTotalScore.text = "/ $totalQuestion"

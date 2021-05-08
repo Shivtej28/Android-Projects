@@ -44,7 +44,7 @@ class QuizActivity : AppCompatActivity() {
 
         mInterstitialAd = InterstitialAd(this)
         MobileAds.initialize(this, Constants.mAPPUnitId)
-        mInterstitialAd.adUnitId = Constants.mInterstitialAdUnitId
+        mInterstitialAd.adUnitId = Constants.testInterstitialId
         loadAd()
 
         mInterstitialAd.adListener = object : AdListener() {
@@ -63,6 +63,7 @@ class QuizActivity : AppCompatActivity() {
         list = ArrayList()
         quizName = intent.getStringExtra(Constants.QUIZ_NAME).toString()
         binding.toolbar.title = quizName
+        binding.tvQuizName1.text = quizName
         setSupportActionBar(binding.toolbar)
 
         binding.toolbar.setNavigationOnClickListener {

@@ -73,4 +73,14 @@ class WebViewActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onBackPressed() {
+        if(webView.canGoBack()){
+            webView.goBack()
+        }else{
+            super.onBackPressed()
+            finish()
+        }
+
+    }
 }

@@ -51,6 +51,7 @@ class ProjectListActivity : AppCompatActivity() {
         mInterstitialAd.adUnitId = Constants.testInterstitialId
 
         //loadAd()
+        println("Hello")
         mInterstitialAd.adListener = object : AdListener(){
             override fun onAdClicked() {
                 super.onAdOpened()

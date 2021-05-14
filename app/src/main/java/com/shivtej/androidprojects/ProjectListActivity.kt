@@ -52,6 +52,7 @@ class ProjectListActivity : AppCompatActivity() {
 
         //loadAd()
         println("Hello")
+        println("UI Branch 2nd")
         mInterstitialAd.adListener = object : AdListener(){
             override fun onAdClicked() {
                 super.onAdOpened()

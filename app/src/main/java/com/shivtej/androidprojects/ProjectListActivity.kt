@@ -50,7 +50,7 @@ class ProjectListActivity : AppCompatActivity() {
         MobileAds.initialize(this, Constants.mAPPUnitId)
         mInterstitialAd.adUnitId = Constants.testInterstitialId
 
-        loadAd()
+        //loadAd()
         mInterstitialAd.adListener = object : AdListener(){
             override fun onAdClicked() {
                 super.onAdOpened()

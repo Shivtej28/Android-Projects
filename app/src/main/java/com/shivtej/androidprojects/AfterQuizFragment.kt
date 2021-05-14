@@ -18,6 +18,9 @@ class AfterQuizFragment : Fragment() {
     private lateinit var tvScore : TextView
     private lateinit var tvTotalScore : TextView
 
+    private lateinit var atharva: String
+    private lateinit var shivtej: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

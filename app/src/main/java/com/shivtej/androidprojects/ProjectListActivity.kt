@@ -39,7 +39,7 @@ class ProjectListActivity : AppCompatActivity() {
 
 
     var project1 = Project()
-    val showAd = ShowAd()
+    //val showAd = ShowAd()
     lateinit var mInterstitialAd : InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {

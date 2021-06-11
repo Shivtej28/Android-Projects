@@ -1,17 +1,5 @@
 package com.shivtej.androidprojects.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import android.graphics.drawable.GradientDrawable
 
-@Parcelize
-data class Project(
-    val title : String = "",
-    val description : String = "",
-    val apk : String = "",
-    val zipfile : String = "",
-    val image : String = "",
-    val ss1 : String = "",
-    val ss2 : String = "",
-    val ss3 : String = "",
-    val ss4 : String = "",
-    val ss5 : String = "")  : Parcelable
+data class Project(val item: String, val gradientDrawable: Int)

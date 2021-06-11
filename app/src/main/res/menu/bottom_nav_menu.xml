@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/projectFragment"
+        android:icon="@drawable/ic_outline_school"
+        android:iconTint="@color/white"
+        android:title="Project" />
+
+    <item
+        android:id="@+id/learnFragment"
+        android:icon="@drawable/ic_outline_assignment"
+        android:iconTint="@color/white"
+        android:title="Learn" />
+
+    <item
+        android:id="@+id/quizFragment"
+        android:icon="@drawable/ic_outline_emoji_events_24"
+        android:iconTint="@color/white"
+        android:title="Quiz" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_outline_person"
+        android:iconTint="@color/white"
+        android:title="Profile" />
+
+</menu>

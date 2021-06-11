@@ -82,7 +82,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        navController.navigate(R.id.action_signUpFragment_to_homeFragment)
+        navController.navigate(R.id.action_signUpFragment_to_projectFragment)
     }
 
     companion object {

@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.shivtej.androidprojects.databinding.FragmentHomeBinding
+import com.shivtej.androidprojects.databinding.FragmentLearnBinding
 
-class HomeFragment: Fragment() {
+class LearnFragment: Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentLearnBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentLearnBinding.inflate(inflater, container, false)
         return binding.root
     }
 

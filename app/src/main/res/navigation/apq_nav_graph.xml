@@ -2,59 +2,44 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/apq_nav_graph"
-    app:startDestination="@id/startupFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.shivtej.androidprojects.ui.fragments.SignUpFragment"
-        android:label="SignUpFragment" >
-        <action
-            android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/startupFragment"
-        android:name="com.shivtej.androidprojects.ui.fragments.StartupFragment"
-        android:label="StartupFragment" >
-        <action
-            android:id="@+id/action_startupFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_startupFragment_to_signUpFragment"
+            android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_startupFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_loginFragment_to_projectFragment"
+            app:destination="@id/projectFragment" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.shivtej.androidprojects.ui.fragments.HomeFragment"
-        android:label="HomeFragment" />
+        android:id="@+id/signUpFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_projectFragment"
+            app:destination="@id/projectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/learnFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.LearnFragment"
+        android:label="LearnFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/projectFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.ProjectFragment"
+        android:label="ProjectFragment" />
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.QuizFragment"
+        android:label="QuizFragment" />
 </navigation>

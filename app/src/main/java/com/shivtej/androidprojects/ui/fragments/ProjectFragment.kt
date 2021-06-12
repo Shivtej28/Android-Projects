@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentProjectBinding
@@ -22,6 +23,7 @@ class ProjectFragment: Fragment() {
     ): View {
         binding = FragmentProjectBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
+        activity1.findViewById<MaterialToolbar>(R.id.toolbar).visibility = View.VISIBLE
         activity1.findViewById<BottomNavigationView>(R.id.bottom_nav_bar).visibility = View.VISIBLE
         return binding.root
     }

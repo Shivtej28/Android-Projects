@@ -15,11 +15,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentLoginBinding
+import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.Constants
 import java.security.Policy
 
@@ -37,6 +40,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        activity?.findViewById<MaterialToolbar>(R.id.toolbar)?.visibility = View.GONE
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.GONE
         return binding.root
     }
 

@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.shivtej.androidprojects.R
-import com.shivtej.androidprojects.models.ProjectList
+import com.shivtej.androidprojects.models.Project
 import com.smarteist.autoimageslider.SliderViewAdapter
 
-class SliderAdapter(private val list: List<ProjectList>) :
+class SliderAdapter(private val list: List<Project>) :
     SliderViewAdapter<SliderAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : SliderViewAdapter.ViewHolder(itemView) {

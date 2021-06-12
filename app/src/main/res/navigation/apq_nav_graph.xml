@@ -37,9 +37,20 @@
     <fragment
         android:id="@+id/projectFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProjectFragment"
-        android:label="ProjectFragment" />
+        android:label="ProjectFragment" >
+        <action
+            android:id="@+id/action_projectFragment_to_projectDetailsFragment"
+            app:destination="@id/projectDetailsFragment" />
+        <argument
+            android:name="project"
+            app:argType="com.shivtej.androidprojects.models.Project" />
+    </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.QuizFragment"
         android:label="QuizFragment" />
+    <fragment
+        android:id="@+id/projectDetailsFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.ProjectDetailsFragment"
+        android:label="ProjectDetailsFragment" />
 </navigation>

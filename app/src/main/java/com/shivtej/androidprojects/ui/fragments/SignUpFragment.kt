@@ -76,13 +76,16 @@ class SignUpFragment : Fragment() {
                         context, "Authentication failed.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    updateUI(null)
+
                 }
             }
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        navController.navigate(R.id.action_signUpFragment_to_projectFragment)
+        if(user != null){
+            navController.navigate(R.id.action_signUpFragment_to_projectFragment)
+        }
+
     }
 
     companion object {

@@ -2,6 +2,7 @@ package com.shivtej.androidprojects.ui
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -20,5 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.navhostFragment)
         binding.bottomNavBar.setupWithNavController(navController)
+
     }
 }

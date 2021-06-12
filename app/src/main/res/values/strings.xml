@@ -14,5 +14,10 @@
     <string name="create_account">Create Account</string>
     <string name="welcome">You can use email, or you can continue with your social account.</string>
     <string name="use_email">Use Email</string>
+    <string name="basic">Basic Projects</string>
+    <string name="advance">Advance Projects</string>
+    <string name="intermediate">Intermediate Projects</string>
+    <string name="project_screenshots">Project ScreenShots</string>
+    <string name="get_source_code">Get Source Code</string>
 
 </resources>

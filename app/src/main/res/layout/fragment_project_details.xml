@@ -4,35 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/imageSlider"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/grey"
         android:layout_margin="@dimen/_4sdp"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="#2b2b2b"
+        app:sliderIndicatorUnselectedColor="@color/grey"
+        app:sliderScrollTimeInSec="1"
+        app:sliderStartAutoCycle="true" />
 
-        <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/imageSlider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:sliderAnimationDuration="600"
-            app:sliderAutoCycleDirection="back_and_forth"
-            app:sliderAutoCycleEnabled="true"
-            app:sliderIndicatorAnimationDuration="600"
-            app:sliderIndicatorGravity="center_horizontal|bottom"
-            app:sliderIndicatorMargin="15dp"
-            app:sliderIndicatorOrientation="horizontal"
-            app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
-            app:sliderIndicatorSelectedColor="#2b2b2b"
-            app:sliderIndicatorUnselectedColor="@color/grey"
-            app:sliderScrollTimeInSec="1"
-            app:sliderStartAutoCycle="true" />
-
-    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -45,20 +40,20 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/_4sdp"
         android:paddingHorizontal="@dimen/_4sdp"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        app:layout_constraintBottom_toTopOf="@id/source_code_btn"/>
+        app:layout_constraintBottom_toTopOf="@id/source_code_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/source_code_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2b2b2b"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_4sdp"
+        android:backgroundTint="#2b2b2b"
         android:text="@string/get_source_code"
         android:textColor="@color/white"
         app:cornerRadius="@dimen/_4sdp"

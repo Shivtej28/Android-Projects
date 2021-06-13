@@ -50,6 +50,7 @@ class ProjectFragment: Fragment(), ItemClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
         basicProjectsList = listOf()
         intermediateProjectsList = listOf()
         advanceProjectList = listOf()
@@ -86,12 +87,15 @@ class ProjectFragment: Fragment(), ItemClicked {
 
     override fun onDetach() {
         super.onDetach()
-
+       // navController.popBackStack(R.id.loginFragment, true)
     }
+
+
 
     override fun onItemClicked(project: Project) {
         val bundle = Bundle()
         bundle.putSerializable("project", project)
         navController.navigate(R.id.action_projectFragment_to_projectDetailsFragment, bundle)
     }
+
 }

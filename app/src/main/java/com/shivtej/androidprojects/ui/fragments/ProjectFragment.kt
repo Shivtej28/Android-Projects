@@ -19,7 +19,7 @@ import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
-class ProjectFragment: Fragment(), ItemClicked {
+class ProjectFragment : Fragment(), ItemClicked {
 
     private lateinit var binding: FragmentProjectBinding
     private lateinit var activity1: MainActivity
@@ -54,11 +54,14 @@ class ProjectFragment: Fragment(), ItemClicked {
         intermediateProjectsList = listOf()
         advanceProjectList = listOf()
 
-        binding.basicRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.intermediateRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.advanceRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.basicRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.intermediateRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.advanceRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        viewModel.getBasicProjects().observe(viewLifecycleOwner, Observer { it->
+        viewModel.getBasicProjects().observe(viewLifecycleOwner, Observer { it ->
             basicProjectsList = it
             basicAdapter = ProjectAdapter(basicProjectsList, this)
             binding.basicRecyclerView.adapter = basicAdapter
@@ -67,14 +70,14 @@ class ProjectFragment: Fragment(), ItemClicked {
             basicAdapter.notifyDataSetChanged()
         })
 
-        viewModel.getIntermediateProjects().observe(viewLifecycleOwner, Observer { it->
+        viewModel.getIntermediateProjects().observe(viewLifecycleOwner, Observer { it ->
             intermediateProjectsList = it
             intermediateAdapter = ProjectAdapter(intermediateProjectsList, this)
             binding.intermediateRecyclerView.adapter = intermediateAdapter
             intermediateAdapter.notifyDataSetChanged()
         })
 
-        viewModel.getAdvanceProjects().observe(viewLifecycleOwner, Observer { it->
+        viewModel.getAdvanceProjects().observe(viewLifecycleOwner, Observer { it ->
             advanceProjectList = it
             advancedAdapter = ProjectAdapter(intermediateProjectsList, this)
             binding.advanceRecyclerView.adapter = intermediateAdapter

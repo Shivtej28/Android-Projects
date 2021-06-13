@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.shivtej.androidprojects.adapters.SliderAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectDetailsBinding
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.ui.MainActivity
 import com.smarteist.autoimageslider.SliderView
 
-class ProjectDetailsFragment: Fragment() {
+class ProjectDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProjectDetailsBinding
     private lateinit var project: Project
-    private lateinit var activity1 : MainActivity
+    private lateinit var activity1: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,16 +37,12 @@ class ProjectDetailsFragment: Fragment() {
 
         val detailUrl = project.description
         binding.webView.loadUrl(detailUrl)
-        //creating arraylist for storing images
 
-        //adding urls inside array list
-
-        //passing arraylist to adapter class
-
+        val adapter = SliderAdapter(imagesList)
 
         binding.imageSlider.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
 
-        //Set Adapter
+        binding.imageSlider.setSliderAdapter(adapter)
 
         binding.imageSlider.scrollTimeInSec = 3
 
@@ -57,32 +54,32 @@ class ProjectDetailsFragment: Fragment() {
 
     private fun getImagesList(): ArrayList<String> {
         val imagesList: ArrayList<String> = ArrayList()
-        if (!project.ss1.equals("")) {
+        if (project.ss1 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss2.equals("")) {
+        if (project.ss2 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss3.equals("")) {
+        if (project.ss3 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss4.equals("")) {
+        if (project.ss4 != "") {
             imagesList.add(project.ss1)
         }
 
-        if (!project.ss5.equals("")) {
+        if (project.ss5 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss6.equals("")) {
+        if (project.ss6 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss7.equals("")) {
+        if (project.ss7 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss8.equals("")) {
+        if (project.ss8 != "") {
             imagesList.add(project.ss1)
         }
-        if (!project.ss9.equals("")) {
+        if (project.ss9 != "") {
             imagesList.add(project.ss1)
         }
 

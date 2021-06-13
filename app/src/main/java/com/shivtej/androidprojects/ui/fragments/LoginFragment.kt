@@ -32,6 +32,7 @@ class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var activity1: MainActivity
 
 
     override fun onCreateView(
@@ -40,8 +41,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        activity?.findViewById<MaterialToolbar>(R.id.toolbar)?.visibility = View.GONE
-        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.GONE
+        //(activity as MainActivity).hideView()
+        activity1 = activity as MainActivity
         return binding.root
     }
 
@@ -52,6 +53,10 @@ class LoginFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         auth = FirebaseAuth.getInstance()
+        //activity1.hideView()
+        //if previously login
+        val user = auth.currentUser
+        //updateUI(user)
 
         binding.loginBtn.setOnClickListener {
             login()
@@ -72,6 +77,7 @@ class LoginFragment : Fragment() {
 
         googleSignInClient = GoogleSignIn.getClient(activity?.applicationContext!!, gso)
     }
+
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent

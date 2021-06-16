@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
-import com.shivtej.androidprojects.ProjectRepository
+import com.shivtej.androidprojects.repo.ProjectRepository
 import com.shivtej.androidprojects.models.Project
 
 class ProjectViewModel : ViewModel() {

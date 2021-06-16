@@ -1,4 +1,4 @@
-package com.shivtej.androidprojects
+package com.shivtej.androidprojects.repo
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore

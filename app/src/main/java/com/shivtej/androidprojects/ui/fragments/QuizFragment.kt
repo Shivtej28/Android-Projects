@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.shivtej.androidprojects.databinding.FragmentQuizBinding
 import com.shivtej.androidprojects.ui.MainActivity
 

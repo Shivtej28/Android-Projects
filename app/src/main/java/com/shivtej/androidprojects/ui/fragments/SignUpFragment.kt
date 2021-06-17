@@ -14,12 +14,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentSignUpBinding
+import com.shivtej.androidprojects.ui.MainActivity
 
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
+    private lateinit var activity1: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +29,8 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        activity1 = activity as MainActivity
+        activity1.hideView()
         return binding.root
     }
 

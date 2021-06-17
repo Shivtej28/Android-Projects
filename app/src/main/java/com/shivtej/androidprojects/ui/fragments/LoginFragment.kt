@@ -43,6 +43,7 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         //(activity as MainActivity).hideView()
         activity1 = activity as MainActivity
+        activity1.hideView()
         return binding.root
     }
 

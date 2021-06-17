@@ -19,5 +19,15 @@
     <string name="intermediate">Intermediate Projects</string>
     <string name="project_screenshots">Project ScreenShots</string>
     <string name="get_source_code">Get Source Code</string>
+    <string name="question_text">What is your name?</string>
+    <string name="option_1">Option 1</string>
+    <string name="option_2">Option 2</string>
+    <string name="option_3">Option 3</string>
+    <string name="option_4">Option 4</string>
+    <string name="question_number">01/10</string>
+    <string name="project_name">Project Name</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="pop_up_menu">Pop-Up Menu</string>
 
 </resources>

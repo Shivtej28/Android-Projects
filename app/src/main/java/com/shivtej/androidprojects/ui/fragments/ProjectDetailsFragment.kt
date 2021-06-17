@@ -25,6 +25,7 @@ class ProjectDetailsFragment : Fragment() {
     ): View {
         binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
+        activity1.showView()
         return binding.root
     }
 
@@ -82,7 +83,6 @@ class ProjectDetailsFragment : Fragment() {
         if (project.ss9 != "") {
             imagesList.add(project.ss1)
         }
-
         return imagesList
     }
 }

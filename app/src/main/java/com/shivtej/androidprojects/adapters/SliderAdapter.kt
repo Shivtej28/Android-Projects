@@ -31,6 +31,7 @@ class SliderAdapter(private val list: ArrayList<String>) :
         val currentItem = list[position]
         if (viewHolder != null) {
             Glide.with(viewHolder.itemView).load(currentItem).into(viewHolder.imageView)
+
         }
     }
 

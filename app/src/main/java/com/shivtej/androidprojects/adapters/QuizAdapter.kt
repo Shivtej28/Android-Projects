@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.shivtej.androidprojects.R
 
-class QuizAdapter(private val list: List<Quiz>, private val onClickListener: QuizItemClicked):
+class QuizAdapter(private val list: List<String>, private val onClickListener: QuizItemClicked):
 RecyclerView.Adapter<QuizAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -22,7 +22,7 @@ RecyclerView.Adapter<QuizAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: QuizAdapter.ViewHolder, position: Int) {
         val currentItem = list[position]
-        holder.tvQuizNumber.text = currentItem.quizNo
+        holder.tvQuizNumber.text = currentItem
         holder.itemView.setOnClickListener {
             onClickListener.onItemClicked(currentItem)
         }
@@ -32,5 +32,5 @@ RecyclerView.Adapter<QuizAdapter.ViewHolder>() {
 }
 
 interface QuizItemClicked{
-    fun onItemClicked(quiz: Quiz)
+    fun onItemClicked(quiz: String)
 }

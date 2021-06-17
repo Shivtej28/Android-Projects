@@ -17,6 +17,8 @@
         <action
             android:id="@+id/action_loginFragment_to_projectFragment"
             app:destination="@id/projectFragment"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -28,11 +30,7 @@
         android:label="SignUpFragment" >
         <action
             android:id="@+id/action_signUpFragment_to_projectFragment"
-            app:destination="@id/projectFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/projectFragment" />
     </fragment>
     <fragment
         android:id="@+id/learnFragment"
@@ -48,26 +46,22 @@
         android:label="ProjectFragment" >
         <action
             android:id="@+id/action_projectFragment_to_projectDetailsFragment"
-            app:destination="@id/projectDetailsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/projectDetailsFragment" />
         <argument
             android:name="project"
             app:argType="com.shivtej.androidprojects.models.Project" />
-        <action
-            android:id="@+id/action_projectFragment_to_projectListFragment"
-            app:destination="@id/projectListFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.QuizFragment"
-        android:label="QuizFragment" />
+        android:label="QuizFragment">
+        <action
+            android:id="@+id/action_quizFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <argument
+            android:name="quizname"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/projectDetailsFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProjectDetailsFragment"
@@ -76,4 +70,8 @@
         android:id="@+id/projectListFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProjectListFragment"
         android:label="ProjectListFragment" />
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.QuestionFragment"
+        android:label="QuestionFragment" />
 </navigation>

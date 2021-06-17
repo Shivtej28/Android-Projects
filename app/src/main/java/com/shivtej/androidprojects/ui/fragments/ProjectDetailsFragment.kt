@@ -1,11 +1,16 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.SliderAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectDetailsBinding
 import com.shivtej.androidprojects.models.Project
@@ -34,6 +39,7 @@ class ProjectDetailsFragment : Fragment() {
         activity1.hideView()
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
+
         val imagesList = getImagesList()
 
         val detailUrl = project.description
@@ -51,6 +57,21 @@ class ProjectDetailsFragment : Fragment() {
 
         binding.imageSlider.startAutoCycle()
 
+
+        binding.sourceCodeBtn.setOnClickListener {
+            val builder = CustomTabsIntent.Builder()
+            val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+                .setNavigationBarColor(ContextCompat.getColor(requireContext(), R.color.androidbg))
+                .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.orange))
+                .setSecondaryToolbarColor(ContextCompat.getColor(requireContext(),R.color.primary))
+                .build()
+            builder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, colorSchemeParams)
+            val customTabIntent = builder.build()
+
+            customTabIntent.launchUrl(requireContext(), Uri.parse(project.zipfile))
+        }
+
+
     }
 
     private fun getImagesList(): ArrayList<String> {
@@ -59,29 +80,28 @@ class ProjectDetailsFragment : Fragment() {
             imagesList.add(project.ss1)
         }
         if (project.ss2 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss2)
         }
         if (project.ss3 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss3)
         }
         if (project.ss4 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss4)
         }
-
         if (project.ss5 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss5)
         }
         if (project.ss6 != "") {
             imagesList.add(project.ss1)
         }
         if (project.ss7 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss7)
         }
         if (project.ss8 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss8)
         }
         if (project.ss9 != "") {
-            imagesList.add(project.ss1)
+            imagesList.add(project.ss9)
         }
         return imagesList
     }

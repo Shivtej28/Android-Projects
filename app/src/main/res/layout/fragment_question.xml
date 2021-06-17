@@ -63,11 +63,13 @@
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
                 app:contentPadding="@dimen/_4sdp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tvQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserratmediumitalic"

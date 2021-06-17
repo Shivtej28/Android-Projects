@@ -23,4 +23,8 @@ class ProjectRepository {
         val collectionReference = firestoreDB.collection("Advance")
         return collectionReference
     }
+
+    fun getQuizReference(quizName: String): CollectionReference {
+        return firestoreDB.collection(quizName)
+    }
 }

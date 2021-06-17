@@ -34,6 +34,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -42,7 +43,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         val quizname = arguments?.getString("quizname").toString()
 
-       
+
         questionsList = arrayListOf()
 
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
@@ -71,13 +72,16 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.tvOption2.text = question.option2
         binding.tvOption3.text = question.option3
         binding.tvOption4.text = question.option4
-        val number = questionNumber+1
+        val number = questionNumber + 1
         "$number/10".also { binding.questionNumber.text = it }
         disableEnableCVOption(true)
         setCardBackgroundWhite()
 
 
+
     }
+
+
 
     private fun setCardBackgroundWhite() {
 

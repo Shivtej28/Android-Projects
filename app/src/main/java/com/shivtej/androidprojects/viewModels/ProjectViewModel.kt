@@ -129,5 +129,27 @@ class ProjectViewModel : ViewModel() {
 
     }
 
+    fun getQuizQuestion(quizName : String) {
+
+        repository.getQuizReference(quizName)
+            .addSnapshotListener(EventListener<QuerySnapshot>{value, error ->
+                if( error != null){
+                    Log.w(TAG, "Quiz Failed", error)
+                    quizList.value = null
+                    return@EventListener
+                }
+                val list: MutableList<Question> = mutableListOf()
+                for(question in value!!){
+                    val question = question.toObject(Question::class.java)
+                    list.add(question)
+                }
+                quizList.value = list
+
+            })
+
+
+
+    }
+
 
 }

@@ -12,7 +12,7 @@ class ProjectAdapter(private val list: List<Project>, private val onClickListene
     RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvProjectName = itemView.findViewById<TextView>(R.id.tvProjectName)
+        val tvProjectName: TextView = itemView.findViewById(R.id.tvProjectName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

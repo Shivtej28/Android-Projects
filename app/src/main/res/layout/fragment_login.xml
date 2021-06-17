@@ -118,7 +118,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:backgroundTint="#287ce9"
+                android:backgroundTint="@color/blue_btn"
                 android:text="Login"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"

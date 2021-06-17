@@ -51,9 +51,20 @@
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.QuizFragment"
-        android:label="QuizFragment" />
+        android:label="QuizFragment">
+        <action
+            android:id="@+id/action_quizFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <argument
+            android:name="quizname"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/projectDetailsFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProjectDetailsFragment"
         android:label="ProjectDetailsFragment" />
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.QuestionFragment"
+        android:label="QuestionFragment" />
 </navigation>

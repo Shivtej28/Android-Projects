@@ -1,4 +1,4 @@
-package com.shivtej.androidprojects
+package com.shivtej.androidprojects.repo
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
@@ -22,5 +22,9 @@ class ProjectRepository {
     fun getAdvancedProjects() : CollectionReference{
         val collectionReference = firestoreDB.collection("Advance")
         return collectionReference
+    }
+
+    fun getQuizReference(quizName: String): CollectionReference {
+        return firestoreDB.collection(quizName)
     }
 }

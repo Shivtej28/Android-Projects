@@ -4,17 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/blue_btn"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/imageSlider"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/grey"
-
+        android:background="@drawable/slider_logo_bg"
         android:layout_margin="@dimen/_4sdp"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:sliderAnimationDuration="600"
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderAutoCycleEnabled="true"
@@ -35,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <WebView
         android:id="@+id/webView"
@@ -54,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_4sdp"
-        android:backgroundTint="#2b2b2b"
+        android:backgroundTint="@color/blue_btn"
         android:text="@string/get_source_code"
         android:textColor="@color/white"
         app:cornerRadius="@dimen/_4sdp"

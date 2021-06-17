@@ -42,10 +42,10 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         val quizname = arguments?.getString("quizname").toString()
 
-        Log.d(TAG, quizname.toString())
+       
         questionsList = arrayListOf()
 
-        viewModel.getQuestions(quizname).observe(viewLifecycleOwner, Observer {
+        viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
             showQuestion()
             Log.i(TAG, questionsList[0].toString())
@@ -75,6 +75,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         "$number/10".also { binding.questionNumber.text = it }
         disableEnableCVOption(true)
         setCardBackgroundWhite()
+
 
     }
 

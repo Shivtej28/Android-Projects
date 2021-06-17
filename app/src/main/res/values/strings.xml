@@ -29,5 +29,12 @@
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="pop_up_menu">Pop-Up Menu</string>
+    <string name="person_name">Person Name</string>
+    <string name="email">Email</string>
+    <string name="donate">Donate</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="feedback_or_contact_us">Feedback or Contact Us</string>
+    <string name="share_with_friends">Share with Friends</string>
+    <string name="check_for_update">Check for Update</string>
 
 </resources>

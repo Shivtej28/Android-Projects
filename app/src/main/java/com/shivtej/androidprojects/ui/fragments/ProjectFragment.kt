@@ -80,8 +80,8 @@ class ProjectFragment : Fragment(), ItemClicked {
 
         viewModel.getAdvanceProjects().observe(viewLifecycleOwner, Observer { it ->
             advanceProjectList = it
-            advancedAdapter = ProjectAdapter(intermediateProjectsList, this)
-            binding.advanceRecyclerView.adapter = intermediateAdapter
+            advancedAdapter = ProjectAdapter(advanceProjectList, this)
+            binding.advanceRecyclerView.adapter = advancedAdapter
             advancedAdapter.notifyDataSetChanged()
         })
 

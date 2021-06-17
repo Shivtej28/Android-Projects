@@ -35,18 +35,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_8sdp"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_number"
         app:rcBackgroundColor="#A0DBFD"
-        app:rcProgressColor="#6ea9ca" />
+        app:rcProgressColor="@color/blue_btn" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progressbar">
@@ -59,11 +59,11 @@
                 android:id="@+id/questions_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
-                app:contentPadding="@dimen/_4sdp"
-
+                app:contentPadding="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserratmediumitalic"
-                    android:padding="@dimen/_2sdp"
+                    android:padding="@dimen/_6sdp"
                     android:text="@string/question_text"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp" />
@@ -84,7 +84,8 @@
                 android:id="@+id/cvOption1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
@@ -93,7 +94,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/questions_card_view"
                 app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_2sdp">
+                app:strokeWidth="@dimen/_1sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -115,7 +116,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|center_vertical"
-                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_1"
                         android:textColor="@color/textBlue"
@@ -129,7 +130,8 @@
                 android:id="@+id/cvOption2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
@@ -138,7 +140,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvOption1"
                 app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_2sdp">
+                app:strokeWidth="@dimen/_1sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,7 +162,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|center_vertical"
-                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_2"
                         android:textColor="@color/textBlue"
@@ -174,7 +176,8 @@
                 android:id="@+id/cvOption3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
@@ -183,7 +186,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvOption2"
                 app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_2sdp">
+                app:strokeWidth="@dimen/_1sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -205,7 +208,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|center_vertical"
-                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_3"
                         android:textColor="@color/textBlue"
@@ -219,16 +222,19 @@
                 android:id="@+id/cvOption4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
                 app:contentPadding="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvOption3"
                 app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_2sdp">
+                app:strokeWidth="@dimen/_1sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -250,7 +256,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|center_vertical"
-                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_4"
                         android:textColor="@color/textBlue"

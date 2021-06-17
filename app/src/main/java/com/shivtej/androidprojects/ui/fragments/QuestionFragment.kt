@@ -47,7 +47,6 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         val quizname = arguments?.getString("quizname").toString()
 
-
         questionsList = arrayListOf()
 
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
@@ -56,22 +55,18 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             Log.i(TAG, questionsList[0].toString())
         })
 
-
-
         Log.d(TAG, questionsList.toString())
 
         binding.cvOption1.setOnClickListener(this)
         binding.cvOption2.setOnClickListener(this)
         binding.cvOption3.setOnClickListener(this)
         binding.cvOption4.setOnClickListener(this)
-
-
     }
 
     private fun showQuestion() {
 
         question = questionsList[questionNumber]
-        binding.tvQuestion.text = question.question
+        binding.questionsTextView.text = question.question
         binding.tvOption1.text = question.option1
         binding.tvOption2.text = question.option2
         binding.tvOption3.text = question.option3
@@ -80,12 +75,8 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         "$number/10".also { binding.questionNumber.text = it }
         disableEnableCVOption(true)
         setCardBackgroundWhite()
-
-
-
+        binding.progressbar.setProgress(number * 10)
     }
-
-
 
     private fun setCardBackgroundWhite() {
 
@@ -97,7 +88,6 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.ivOption3.setImageResource(R.drawable.c_option)
         binding.cvOption4.background.setTint(Color.WHITE)
         binding.ivOption4.setImageResource(R.drawable.d_option)
-
     }
 
     override fun onClick(v: View?) {
@@ -115,9 +105,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             R.id.cvOption4 -> {
                 checkAnswer(binding.tvOption4, binding.cvOption4, binding.ivOption4)
             }
-
         }
-
     }
 
     private fun checkAnswer(
@@ -132,11 +120,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         Log.d(TAG, "Answer")
         if (answer == selectedAns) {
             cvOption.background.setTint(Color.GREEN)
-            ivOption.setImageResource(R.drawable.tick_circle)
+            ivOption.setImageResource(R.drawable.basic_tick)
             Log.d(TAG, "Correct Ans")
         } else {
             cvOption.background.setTint(Color.RED)
-            ivOption.setImageResource(R.drawable.ic_wrong)
+            ivOption.setImageResource(R.drawable.close)
             getCorrectAnswer()
         }
         questionNumber++
@@ -144,27 +132,25 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         handler.postDelayed({
             showQuestion()
         }, 3000)
-
-
     }
 
     private fun getCorrectAnswer() {
         when (question.answer) {
             binding.tvOption1.text.toString() -> {
                 binding.cvOption1.background.setTint(Color.GREEN)
-                binding.ivOption1.setImageResource(R.drawable.tick_circle)
+                binding.ivOption1.setImageResource(R.drawable.basic_tick)
             }
             binding.tvOption2.text.toString() -> {
                 binding.cvOption2.background.setTint(Color.GREEN)
-                binding.ivOption2.setImageResource(R.drawable.tick_circle)
+                binding.ivOption2.setImageResource(R.drawable.basic_tick)
             }
             binding.tvOption3.text.toString() -> {
                 binding.cvOption3.background.setTint(Color.GREEN)
-                binding.ivOption3.setImageResource(R.drawable.tick_circle)
+                binding.ivOption3.setImageResource(R.drawable.basic_tick)
             }
             else -> {
                 binding.cvOption4.background.setTint(Color.GREEN)
-                binding.ivOption4.setImageResource(R.drawable.tick_circle)
+                binding.ivOption4.setImageResource(R.drawable.basic_tick)
             }
         }
     }

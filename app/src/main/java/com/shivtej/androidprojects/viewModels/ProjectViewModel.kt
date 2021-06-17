@@ -17,10 +17,10 @@ class ProjectViewModel : ViewModel() {
     var basicProjectList: MutableLiveData<List<Project>> = MutableLiveData()
     var intermediateProjectList: MutableLiveData<List<Project>> = MutableLiveData()
     var advanceProjectList: MutableLiveData<List<Project>> = MutableLiveData()
-    val quizList : MutableLiveData<List<Question>> = MutableLiveData()
+    val quizList: MutableLiveData<List<Question>> = MutableLiveData()
     val repository = ProjectRepository()
 
-    fun getQuestions(quizName: String) : LiveData<List<Question>>{
+    fun getQuestions(quizName: String): LiveData<List<Question>> {
         getQuizQuestion(quizName)
         return quizList
     }
@@ -59,10 +59,7 @@ class ProjectViewModel : ViewModel() {
 
                 advanceProjectList.value = list
                 Log.i("List", basicProjectList.value.toString())
-
             })
-
-
     }
 
     fun getBProjects() {
@@ -81,12 +78,10 @@ class ProjectViewModel : ViewModel() {
 
                 basicProjectList.value = basicList
                 Log.i("List", basicProjectList.value.toString())
-
             })
-
     }
 
-    fun getIProjects(){
+    fun getIProjects() {
         repository.getIntermediateProjects()
             .addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
                 if (e != null) {
@@ -99,57 +94,26 @@ class ProjectViewModel : ViewModel() {
                     val project = doc.toObject(Project::class.java)
                     list.add(project)
                 }
-
                 intermediateProjectList.value = list
                 Log.i("List", intermediateProjectList.value.toString())
-
             })
-
     }
 
-    fun getQuizQuestion(quizName : String) {
+    private fun getQuizQuestion(quizName: String) {
 
         repository.getQuizReference(quizName)
-            .addSnapshotListener(EventListener<QuerySnapshot>{value, error ->
-                if( error != null){
+            .addSnapshotListener(EventListener<QuerySnapshot> { value, error ->
+                if (error != null) {
                     Log.w(TAG, "Quiz Failed", error)
                     quizList.value = null
                     return@EventListener
                 }
                 val list: MutableList<Question> = mutableListOf()
-                for(question in value!!){
+                for (question in value!!) {
                     val question = question.toObject(Question::class.java)
                     list.add(question)
                 }
                 quizList.value = list
-
             })
-
-
-
     }
-
-    fun getQuizQuestion(quizName : String) {
-
-        repository.getQuizReference(quizName)
-            .addSnapshotListener(EventListener<QuerySnapshot>{value, error ->
-                if( error != null){
-                    Log.w(TAG, "Quiz Failed", error)
-                    quizList.value = null
-                    return@EventListener
-                }
-                val list: MutableList<Question> = mutableListOf()
-                for(question in value!!){
-                    val question = question.toObject(Question::class.java)
-                    list.add(question)
-                }
-                quizList.value = list
-
-            })
-
-
-
-    }
-
-
 }

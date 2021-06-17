@@ -16,7 +16,7 @@ import com.shivtej.androidprojects.databinding.FragmentQuizBinding
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
-class QuizFragment: Fragment() {
+class QuizFragment: Fragment(), QuizItemClicked {
 
     private lateinit var binding: FragmentQuizBinding
     private lateinit var activity1: MainActivity
@@ -57,7 +57,6 @@ class QuizFragment: Fragment() {
 
         val javaAdapter = QuizAdapter(javaList.toList(), this)
         binding.javaRecyclerView.adapter = javaAdapter
-
     }
 
     override fun onItemClicked(quiz: String) {
@@ -65,6 +64,4 @@ class QuizFragment: Fragment() {
         bundle.putString("quizname", quiz)
         navController.navigate(R.id.action_quizFragment_to_questionFragment, bundle)
     }
-
-
 }

@@ -1,14 +1,17 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.shivtej.androidprojects.databinding.FragmentProfileBinding
 import com.shivtej.androidprojects.ui.MainActivity
 
-class ProfileFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var activity1: MainActivity
@@ -26,5 +29,40 @@ class ProfileFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.rateUsCardView.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW, Uri.parse(
+                    "https://play.google.com/store/apps/details?id=com.shivtej.androidprojects"
+                )
+            )
+            startActivity(browserIntent)
+        }
+
+        binding.feedbackCardView.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW, Uri.parse(
+                    "asdevelopers1428@gmail.com"
+                )
+            )
+            startActivity(browserIntent)
+        }
+
+        binding.shareCardView.setOnClickListener {
+            ShareCompat.IntentBuilder.from(activity1)
+                .setType("text/bold")
+                .setChooserTitle("Chooser Title")
+                .setText("Check out this amazing App at:\n https://play.google.com/store/apps/details?id=com.shivtej.androidprojects")
+                .startChooser()
+        }
+
+        binding.updateCardView.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW, Uri.parse(
+                    "https://play.google.com/store/apps/details?id=com.shivtej.androidprojects"
+                )
+            )
+            startActivity(browserIntent)
+        }
     }
 }

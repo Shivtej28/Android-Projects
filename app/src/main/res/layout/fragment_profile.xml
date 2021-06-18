@@ -23,14 +23,14 @@
 
             <TextView
                 android:id="@+id/name_text_view"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
                 android:fontFamily="@font/montserratbold"
                 android:text="@string/person_name"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
-                app:layout_constraintEnd_toStartOf="@id/edit_btn"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,26 +38,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
-                android:fontFamily="@font/montserratsemibold"
+                android:fontFamily="@font/montserratmedium"
                 android:text="@string/email"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="#2b2b2b"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_text_view" />
-
-            <ImageButton
-                android:id="@+id/edit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:contentDescription="@string/donate"
-                android:padding="@dimen/_4sdp"
-                android:src="@drawable/ic_baseline_edit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_4sdp"
+        android:background="@drawable/custom_ripple"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
@@ -180,6 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_4sdp"
+
                 android:contentDescription="@string/feedback_or_contact_us"
                 android:src="@drawable/ic_feedback"
                 app:layout_constraintBottom_toBottomOf="parent"

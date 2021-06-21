@@ -30,6 +30,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.donateCardView.setOnClickListener {
+            binding.paymentLayout.visibility = View.VISIBLE
+        }
+
         binding.rateUsCardView.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW, Uri.parse(
@@ -40,12 +44,19 @@ class ProfileFragment : Fragment() {
         }
 
         binding.feedbackCardView.setOnClickListener {
+            val email = arrayOf("asdevelopers1428@gmail.com")
+
             val browserIntent = Intent(
-                Intent.ACTION_VIEW, Uri.parse(
-                    "asdevelopers1428@gmail.com"
-                )
+                Intent.ACTION_SENDTO
             )
-            startActivity(browserIntent)
+            browserIntent.setType("text/plain")
+                .setData(
+                    Uri.parse(
+                        "mailto:"
+                    )
+                ).putExtra(Intent.EXTRA_EMAIL, email)
+                .setPackage("com.google.android.gm")
+            startActivity(Intent.createChooser(browserIntent, "Send Your Email"))
         }
 
         binding.shareCardView.setOnClickListener {

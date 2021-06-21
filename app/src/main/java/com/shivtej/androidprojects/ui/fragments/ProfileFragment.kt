@@ -9,13 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
 import com.google.android.play.core.review.testing.FakeReviewManager
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentProfileBinding
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
 class ProfileFragment : Fragment() {
 
@@ -23,6 +30,9 @@ class ProfileFragment : Fragment() {
     private lateinit var activity1: MainActivity
     lateinit var manager: ReviewManager
     var reviewInfo: ReviewInfo? = null
+    private lateinit var navController: NavController
+
+    private val viewModel: ProjectViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -33,13 +43,16 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
         activity1.showView()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+         navController = Navigation.findNavController(view)
+        val auth = Firebase.auth
+        val uid = auth.uid.toString()
+        val user = viewModel.getUser(uid)
 
         initReviews()
 
@@ -56,6 +69,14 @@ class ProfileFragment : Fragment() {
 //            startActivity(browserIntent)
             askForReview()
 
+        }
+
+        if (user != null) {
+            Log.i("Profile", user.userName.toString())
+            binding.nameTextView.text = user.userName.toString()
+            binding.tvEmail.text = user.email.toString()
+        }else{
+            Log.i("Profile", "error")
         }
 
         binding.feedbackCardView.setOnClickListener {
@@ -89,6 +110,12 @@ class ProfileFragment : Fragment() {
                 )
             )
             startActivity(browserIntent)
+        }
+
+        binding.logoutCardView.setOnClickListener {
+
+            auth.signOut()
+            navController.navigate(R.id.action_profileFragment_to_loginFragment)
         }
     }
 

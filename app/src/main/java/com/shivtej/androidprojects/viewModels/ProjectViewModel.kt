@@ -4,11 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
 import com.shivtej.androidprojects.repo.ProjectRepository
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.models.Question
+import com.shivtej.androidprojects.models.User
+import kotlinx.coroutines.launch
 
 class ProjectViewModel : ViewModel() {
 
@@ -19,6 +22,8 @@ class ProjectViewModel : ViewModel() {
     var advanceProjectList: MutableLiveData<List<Project>> = MutableLiveData()
     val quizList: MutableLiveData<List<Question>> = MutableLiveData()
     val repository = ProjectRepository()
+    var user: User? = null
+
 
     fun getQuestions(quizName: String): LiveData<List<Question>> {
         getQuizQuestion(quizName)
@@ -116,4 +121,30 @@ class ProjectViewModel : ViewModel() {
                 quizList.value = list
             })
     }
+
+    fun addUserToFirebase(user: User) = viewModelScope.launch {
+        repository.addUserToFirebase(user)
+    }
+
+    fun getUserDetails(uid: String) {
+        val reference = repository.getUserReference(uid)
+
+        reference.addSnapshotListener { value, error ->
+            if(error != null){
+                Log.i(TAG, "Error: ${error.message}")
+            }
+            user = value?.toObject(User::class.java)
+            if (user != null) {
+                Log.i(TAG, user!!.userName.toString())
+            }
+
+        }
+    }
+
+    fun getUser(uid: String): User? {
+        getUserDetails(uid)
+        return user
+    }
+
+
 }

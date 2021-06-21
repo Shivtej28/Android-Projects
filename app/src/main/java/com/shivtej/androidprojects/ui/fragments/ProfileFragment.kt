@@ -39,11 +39,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.donateCardView.setOnClickListener {
-            // binding.paymentLayout.visibility = View.VISIBLE
-        }
+
 
         initReviews()
+
+        binding.donateCardView.setOnClickListener {
+            binding.paymentLayout.visibility = View.VISIBLE
+        }
 
         binding.rateUsCardView.setOnClickListener {
 //            val browserIntent = Intent(

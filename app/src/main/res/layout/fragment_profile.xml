@@ -69,30 +69,89 @@
             android:layout_height="match_parent"
             android:background="@drawable/custom_ripple">
 
-            <ImageView
-                android:id="@+id/donate_img"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linear_layout_display"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:contentDescription="@string/donate"
-                android:src="@drawable/ic_donate"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blue_btn" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:fontFamily="@font/montserratsemibold"
-                android:text="@string/donate"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/donate_img"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/donate_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:contentDescription="@string/donate"
+                    android:src="@drawable/ic_donate"
+                    app:tint="@color/blue_btn" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:text="@string/donate"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/payment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_display">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:textColorHint="@color/black"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/blue_btn"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hello"
+                    app:startIconDrawable="@drawable/ic_donate"
+                    app:startIconTint="@color/blue_btn">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/amount_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#f7fafe"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:inputType="number"
+                        android:text="10"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pay_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:backgroundTint="@color/blue_btn"
+                    android:text="Pay"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_donate"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

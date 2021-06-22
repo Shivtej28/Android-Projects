@@ -126,7 +126,7 @@ class ProjectViewModel : ViewModel() {
         repository.addUserToFirebase(user)
     }
 
-    fun getUserDetails(uid: String) {
+    private fun getUserDetails(uid: String) {
         val reference = repository.getUserReference(uid)
 
         reference.addSnapshotListener { value, error ->

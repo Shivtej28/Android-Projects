@@ -18,9 +18,15 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
 import com.google.android.play.core.review.testing.FakeReviewManager
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentProfileBinding
+import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
@@ -31,6 +37,8 @@ class ProfileFragment : Fragment() {
     lateinit var manager: ReviewManager
     var reviewInfo: ReviewInfo? = null
     private lateinit var navController: NavController
+
+    var user: User? = null
 
     private val viewModel: ProjectViewModel by activityViewModels()
 
@@ -49,10 +57,10 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         navController = Navigation.findNavController(view)
+        navController = Navigation.findNavController(view)
         val auth = Firebase.auth
         val uid = auth.uid.toString()
-        val user = viewModel.getUser(uid)
+        getUser(uid)
 
         initReviews()
 
@@ -61,23 +69,10 @@ class ProfileFragment : Fragment() {
         }
 
         binding.rateUsCardView.setOnClickListener {
-//            val browserIntent = Intent(
-//                Intent.ACTION_VIEW, Uri.parse(
-//                    "https://play.google.com/store/apps/details?id=com.shivtej.androidprojects"
-//                )
-//            )
-//            startActivity(browserIntent)
             askForReview()
 
         }
 
-        if (user != null) {
-            Log.i("Profile", user.userName.toString())
-            binding.nameTextView.text = user.userName.toString()
-            binding.tvEmail.text = user.email.toString()
-        }else{
-            Log.i("Profile", "error")
-        }
 
         binding.feedbackCardView.setOnClickListener {
             val email = arrayOf("asdevelopers1428@gmail.com")
@@ -119,6 +114,26 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun getUser(uid: String) {
+        val reference = Firebase.firestore.collection("User").document(uid)
+        reference.get()
+            .addOnSuccessListener {
+                if(it != null){
+                    val user = it.toObject<User>()
+                    Log.i("user", user.toString())
+                    if (user != null) {
+                        Log.i("Profile", user.userName.toString())
+                        binding.nameTextView.text = user.userName.toString()
+                        binding.tvEmail.text = user.email.toString()
+                    }
+
+                }else{
+                    Log.i("user", "error: ")
+                }
+            }
+
+    }
+
     private fun initReviews() {
         manager = ReviewManagerFactory.create(requireContext())
         manager.requestReviewFlow().addOnCompleteListener { request ->
@@ -138,6 +153,7 @@ class ProfileFragment : Fragment() {
                 manager.launchReviewFlow(it, reviewInfo!!).addOnFailureListener {
                     // Log error and continue with the flow
                     Log.i("error", "Error ")
+
                 }.addOnCompleteListener { _ ->
                     // Log success and continue with the flow
                     Log.i("error", "Success ")

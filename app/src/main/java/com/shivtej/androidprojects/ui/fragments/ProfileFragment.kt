@@ -39,7 +39,6 @@ class ProfileFragment : Fragment() {
     private lateinit var navController: NavController
 
     var user: User? = null
-
     private val viewModel: ProjectViewModel by activityViewModels()
 
 
@@ -59,8 +58,13 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         val auth = Firebase.auth
-        val uid = auth.uid.toString()
-        getUser(uid)
+
+
+        if (user == null) {
+            user = activity1.user
+        }
+        setData()
+
 
         initReviews()
 
@@ -114,20 +118,26 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun setData() {
+        val name = user!!.userName.toString()
+        val initial = name[0].toString()
+        binding.nameInitial.text = initial
+        binding.nameTextView.text = name
+        binding.tvEmail.text = user!!.email.toString()
+    }
+
     private fun getUser(uid: String) {
         val reference = Firebase.firestore.collection("User").document(uid)
         reference.get()
             .addOnSuccessListener {
-                if(it != null){
-                    val user = it.toObject<User>()
+                if (it != null) {
+                    user = it.toObject<User>()
                     Log.i("user", user.toString())
                     if (user != null) {
-                        Log.i("Profile", user.userName.toString())
-                        binding.nameTextView.text = user.userName.toString()
-                        binding.tvEmail.text = user.email.toString()
+
                     }
 
-                }else{
+                } else {
                     Log.i("user", "error: ")
                 }
             }

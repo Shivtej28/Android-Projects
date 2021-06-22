@@ -2,18 +2,25 @@ package com.shivtej.androidprojects.ui
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
+import com.shivtej.androidprojects.models.User
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+
+    lateinit var user: User
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +38,25 @@ class MainActivity : AppCompatActivity() {
         if (user != null) {
             navController.navigate(R.id.action_loginFragment_to_projectFragment)
         }
+
+        getUser(auth.uid.toString())
+
+    }
+
+    private fun getUser(uid: String) {
+        val reference = Firebase.firestore.collection("User").document(uid)
+        reference.get()
+            .addOnSuccessListener {
+                if (it != null) {
+                     user = it.toObject<User>()!!
+                    Log.i("user", user.toString())
+                    val name = user.userName.toString()
+                    val initial = name[0].toString()
+
+                } else {
+                    Log.i("user", "error: ")
+                }
+            }
 
     }
 

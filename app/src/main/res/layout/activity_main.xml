@@ -46,7 +46,7 @@
         android:background="@drawable/bottom_nav_background"
         app:menu="@menu/bottom_nav_menu"
         android:visibility="gone"
-        app:elevation="@dimen/_4sdp"
+        app:elevation="@dimen/_6sdp"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
         app:labelVisibilityMode="selected"

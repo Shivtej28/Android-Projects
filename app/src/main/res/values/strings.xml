@@ -37,5 +37,6 @@
     <string name="share_with_friends">Share with Friends</string>
     <string name="check_for_update">Check for Update</string>
     <string name="logout">Logout</string>
+    <string name="quiz_name">Quiz Name</string>
 
 </resources>

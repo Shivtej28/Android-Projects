@@ -22,8 +22,24 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/name_initial"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_6sdp"
+                android:background="@drawable/name_initials_round_view"
+                android:fontFamily="@font/montserratmedium"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_30ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/name_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
                 android:fontFamily="@font/montserratbold"
@@ -31,10 +47,13 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/name_initial"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/email_text_view"
+                android:layout_width="wrap_content"
                 android:id="@+id/tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +64,8 @@
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/name_initial"
                 app:layout_constraintTop_toBottomOf="@id/name_text_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -229,7 +249,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_4sdp"
-
                 android:contentDescription="@string/feedback_or_contact_us"
                 android:src="@drawable/ic_feedback"
                 app:layout_constraintBottom_toBottomOf="parent"

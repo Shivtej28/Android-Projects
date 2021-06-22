@@ -36,5 +36,6 @@
     <string name="feedback_or_contact_us">Feedback or Contact Us</string>
     <string name="share_with_friends">Share with Friends</string>
     <string name="check_for_update">Check for Update</string>
+    <string name="quiz_name">Quiz Name</string>
 
 </resources>

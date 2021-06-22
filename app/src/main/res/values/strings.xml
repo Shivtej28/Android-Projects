@@ -37,5 +37,9 @@
     <string name="share_with_friends">Share with Friends</string>
     <string name="check_for_update">Check for Update</string>
     <string name="quiz_name">Quiz Name</string>
+    <string name="total_questions">Total Questions:</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="not_attempted">Not Attempted</string>
 
 </resources>

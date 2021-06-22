@@ -5,30 +5,42 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_quiz_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quiz_name"
+        android:textColor="@color/black"
+        android:layout_margin="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/montserratextrabolditalic"
+        android:textSize="@dimen/_20ssp"/>
+
+    <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:fontFamily="@font/montserratbolditalic"
         android:text="@string/question"
         android:textColor="@color/black"
         android:textSize="@dimen/_18ssp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_quiz_name"/>
 
     <TextView
         android:id="@+id/question_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:fontFamily="@font/montserratsemibold"
         android:text="@string/question_number"
         android:textColor="@color/black"
         android:textSize="@dimen/_18ssp"
         app:layout_constraintStart_toEndOf="@id/text_view"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_quiz_name"/>
 
     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
         android:id="@+id/progressbar"
@@ -44,12 +56,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/_16sdp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressbar">
+        app:layout_constraintTop_toBottomOf="@id/progressbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -59,7 +72,8 @@
                 android:id="@+id/questions_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_6sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
@@ -83,12 +97,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="@dimen/_4sdp"
+                app:cardElevation="@dimen/_2sdp"
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +113,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:backgroundTint="@android:color/transparent"
                     android:orientation="horizontal">
 
@@ -115,7 +129,7 @@
                         android:id="@+id/tvOption1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_1"
@@ -129,12 +143,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="@dimen/_4sdp"
+                app:cardElevation="@dimen/_2sdp"
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +159,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:backgroundTint="@android:color/transparent"
                     android:orientation="horizontal">
 
@@ -161,7 +175,7 @@
                         android:id="@+id/tvOption2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_2"
@@ -175,12 +189,12 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="@dimen/_4sdp"
+                app:cardElevation="@dimen/_2sdp"
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -191,7 +205,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:backgroundTint="@android:color/transparent"
                     android:orientation="horizontal">
 
@@ -207,7 +221,7 @@
                         android:id="@+id/tvOption3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_3"
@@ -221,13 +235,13 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="@dimen/_4sdp"
+                app:cardElevation="@dimen/_2sdp"
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -239,7 +253,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:backgroundTint="@android:color/transparent"
                     android:orientation="horizontal">
 
@@ -255,7 +269,7 @@
                         android:id="@+id/tvOption4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/option_4"

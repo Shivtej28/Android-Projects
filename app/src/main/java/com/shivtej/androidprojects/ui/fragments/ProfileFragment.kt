@@ -7,11 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -60,13 +62,14 @@ class ProfileFragment : Fragment() {
         val auth = Firebase.auth
 
 
-        if (user == null) {
-            user = activity1.user
-        }
-        setData()
+//        if (user == null) {
+//            user = activity1.user
+//        }
+//        setData()
 
 
         initReviews()
+
 
         binding.donateCardView.setOnClickListener {
             binding.paymentLayout.visibility = View.VISIBLE
@@ -118,31 +121,31 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setData() {
-        val name = user!!.userName.toString()
-        val initial = name[0].toString()
-        binding.nameInitial.text = initial
-        binding.nameTextView.text = name
-        binding.tvEmail.text = user!!.email.toString()
-    }
-
-    private fun getUser(uid: String) {
-        val reference = Firebase.firestore.collection("User").document(uid)
-        reference.get()
-            .addOnSuccessListener {
-                if (it != null) {
-                    user = it.toObject<User>()
-                    Log.i("user", user.toString())
-                    if (user != null) {
-
-                    }
-
-                } else {
-                    Log.i("user", "error: ")
-                }
-            }
-
-    }
+//    private fun setData() {
+//        val name = user!!.userName.toString()
+//        val initial = name[0].toString()
+//        binding.nameInitial.text = initial
+//        binding.nameTextView.text = name
+//        binding.tvEmail.text = user!!.email.toString()
+//    }
+//
+//    private fun getUser(uid: String) {
+//        val reference = Firebase.firestore.collection("User").document(uid)
+//        reference.get()
+//            .addOnSuccessListener {
+//                if (it != null) {
+//                    user = it.toObject<User>()
+//                    Log.i("user", user.toString())
+//                    if (user != null) {
+//
+//                    }
+//
+//                } else {
+//                    Log.i("user", "error: ")
+//                }
+//            }
+//
+//    }
 
     private fun initReviews() {
         manager = ReviewManagerFactory.create(requireContext())

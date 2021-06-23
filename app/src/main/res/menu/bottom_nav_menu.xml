@@ -5,24 +5,24 @@
         android:id="@+id/projectFragment"
         android:icon="@drawable/ic_outline_school"
         android:iconTint="@color/white"
-        android:title="Project" />
+        android:title="@string/project" />
 
     <item
         android:id="@+id/learnFragment"
         android:icon="@drawable/ic_outline_assignment"
         android:iconTint="@color/white"
-        android:title="Learn" />
+        android:title="@string/learn" />
 
     <item
         android:id="@+id/quizFragment"
         android:icon="@drawable/ic_outline_emoji_events_24"
         android:iconTint="@color/white"
-        android:title="Quiz" />
+        android:title="@string/quiz" />
 
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_outline_person"
         android:iconTint="@color/white"
-        android:title="Profile" />
+        android:title="@string/profile" />
 
 </menu>

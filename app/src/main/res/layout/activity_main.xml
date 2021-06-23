@@ -11,12 +11,20 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         android:background="@drawable/toolbar_background"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/toolbar_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserratsemibolditalic"
+            android:text="@string/good_morning"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -44,7 +52,6 @@
         android:layout_height="@dimen/_45sdp"
         android:layout_margin="@dimen/_8sdp"
         android:background="@drawable/bottom_nav_background"
-        app:menu="@menu/bottom_nav_menu"
         android:visibility="gone"
         app:elevation="@dimen/_6sdp"
         app:itemIconTint="@color/black"
@@ -53,6 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"
         tools:ignore="BottomAppBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

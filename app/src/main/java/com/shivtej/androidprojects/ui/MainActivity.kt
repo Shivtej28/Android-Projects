@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.visibility = View.VISIBLE
     }
 
-    fun projectView(){
+    fun projectView() {
         binding.bottomNavBar.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
     }

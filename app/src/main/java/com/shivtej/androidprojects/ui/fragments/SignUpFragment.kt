@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentSignUpBinding
+import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
 class SignUpFragment : Fragment() {
 
@@ -22,6 +25,10 @@ class SignUpFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
     private lateinit var activity1: MainActivity
+    private lateinit var userName: String
+    private lateinit var userEmail: String
+
+    private val viewModel: ProjectViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,8 +70,11 @@ class SignUpFragment : Fragment() {
             return
         }
 
+        userName = binding.nameEt.text.toString()
+        userEmail = binding.emailEt.text.toString()
+
         auth.createUserWithEmailAndPassword(
-            binding.emailEt.text.toString(),
+            userEmail,
             binding.passwordEt.text.toString()
         )
             .addOnCompleteListener { task ->
@@ -86,9 +96,17 @@ class SignUpFragment : Fragment() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        if(user != null){
+        if (user != null) {
+            addUserToFirebase(user)
             navController.navigate(R.id.action_signUpFragment_to_projectFragment)
         }
+
+    }
+
+    private fun addUserToFirebase(user: FirebaseUser) {
+        val uid = user.uid
+        val user = User(uid, userName, userEmail, 0)
+        viewModel.addUserToFirebase(user)
 
     }
 

@@ -8,9 +8,8 @@
         android:id="@+id/personal_detail_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +51,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/email_text_view"
+
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
@@ -74,9 +74,8 @@
         android:id="@+id/donate_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,10 +179,9 @@
         android:id="@+id/rate_us_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:background="@drawable/custom_ripple"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -228,9 +226,8 @@
         android:id="@+id/feedback_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -275,9 +272,8 @@
         android:id="@+id/share_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -322,9 +318,8 @@
         android:id="@+id/update_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_4sdp"
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -359,6 +354,52 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/update_img"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/logout_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="@dimen/_4sdp"
+        app:contentPadding="@dimen/_4sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/update_card_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_ripple">
+
+            <ImageView
+                android:id="@+id/logout_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_4sdp"
+                android:contentDescription="@string/check_for_update"
+                android:src="@drawable/outline_logout_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/blue_btn" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_4sdp"
+                android:fontFamily="@font/montserratsemibold"
+                android:text="@string/logout"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/logout_img"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

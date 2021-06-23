@@ -36,6 +36,20 @@
     <string name="feedback_or_contact_us">Feedback or Contact Us</string>
     <string name="share_with_friends">Share with Friends</string>
     <string name="check_for_update">Check for Update</string>
+    <string name="logout">Logout</string>
     <string name="quiz_name">Quiz Name</string>
+    <string name="total_questions">Total Questions:</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="not_attempted">Not Attempted</string>
+    <string name="quiz_summary">Quiz Summary</string>
+    <string name="good_morning">Good Morning, </string>
+    <string name="good_afternoon">Good Afternoon, </string>
+    <string name="good_evening">Good Evening, </string>
+    <string name="good_night">Good Night, </string>
+    <string name="profile">Profile</string>
+    <string name="quiz">Quiz</string>
+    <string name="learn">Learn</string>
+    <string name="project">Project</string>
 
 </resources>

@@ -41,14 +41,11 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        //(activity as MainActivity).hideView()
-        activity1 = activity as MainActivity
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         navController = Navigation.findNavController(view)
 

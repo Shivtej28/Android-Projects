@@ -10,6 +10,7 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.SliderAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectDetailsBinding
@@ -29,14 +30,13 @@ class ProjectDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
-        activity1 = activity as MainActivity
-        activity1.showView()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity1.hideView()
+        activity1 = activity as MainActivity
+        activity1.projectView()
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
 

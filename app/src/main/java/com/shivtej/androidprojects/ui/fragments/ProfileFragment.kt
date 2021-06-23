@@ -39,7 +39,6 @@ class ProfileFragment : Fragment() {
     lateinit var manager: ReviewManager
     var reviewInfo: ReviewInfo? = null
     private lateinit var navController: NavController
-
     var user: User? = null
     private val viewModel: ProjectViewModel by activityViewModels()
 
@@ -52,7 +51,6 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
         activity1.showView()
-
         return binding.root
     }
 
@@ -61,15 +59,12 @@ class ProfileFragment : Fragment() {
         navController = Navigation.findNavController(view)
         val auth = Firebase.auth
 
-
-//        if (user == null) {
-//            user = activity1.user
-//        }
-//        setData()
-
+        if (user == null) {
+            user = activity1.user
+        }
+        setData()
 
         initReviews()
-
 
         binding.donateCardView.setOnClickListener {
             binding.paymentLayout.visibility = View.VISIBLE
@@ -79,7 +74,6 @@ class ProfileFragment : Fragment() {
             askForReview()
 
         }
-
 
         binding.feedbackCardView.setOnClickListener {
             val email = arrayOf("asdevelopers1428@gmail.com")
@@ -121,31 +115,13 @@ class ProfileFragment : Fragment() {
         }
     }
 
-//    private fun setData() {
-//        val name = user!!.userName.toString()
-//        val initial = name[0].toString()
-//        binding.nameInitial.text = initial
-//        binding.nameTextView.text = name
-//        binding.tvEmail.text = user!!.email.toString()
-//    }
-//
-//    private fun getUser(uid: String) {
-//        val reference = Firebase.firestore.collection("User").document(uid)
-//        reference.get()
-//            .addOnSuccessListener {
-//                if (it != null) {
-//                    user = it.toObject<User>()
-//                    Log.i("user", user.toString())
-//                    if (user != null) {
-//
-//                    }
-//
-//                } else {
-//                    Log.i("user", "error: ")
-//                }
-//            }
-//
-//    }
+    private fun setData() {
+        val name = user!!.userName.toString()
+        val initial = name[0].toString()
+        binding.nameInitial.text = initial
+        binding.nameTextView.text = name
+        binding.tvEmail.text = user!!.email.toString()
+    }
 
     private fun initReviews() {
         manager = ReviewManagerFactory.create(requireContext())

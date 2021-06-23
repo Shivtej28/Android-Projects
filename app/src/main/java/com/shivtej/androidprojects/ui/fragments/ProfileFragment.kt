@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
         val auth = Firebase.auth
 
         if (user == null) {
-            val uid = auth.currentUser?.uid
+
             user = activity1.user
 
 

@@ -40,9 +40,8 @@ class MainActivity : AppCompatActivity() {
         //if previously login
         val user = auth.currentUser
         if (user != null) {
-
             navController.navigate(R.id.action_loginFragment_to_projectFragment)
-            getUser(user.uid.toString())
+            getUser(user.uid)
         }
 
 

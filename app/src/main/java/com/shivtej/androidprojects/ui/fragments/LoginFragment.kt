@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,8 +23,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentLoginBinding
+import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.Constants
+import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import java.security.Policy
 
 class LoginFragment : Fragment() {
@@ -33,6 +36,8 @@ class LoginFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var activity1: MainActivity
+
+    private val viewModel: ProjectViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -94,7 +99,7 @@ class LoginFragment : Fragment() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG_GOOGLE, "Google sign in failed", e)
+                Log.w(TAG_GOOGLE, e.toString())
             }
         }
     }
@@ -107,6 +112,9 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG_GOOGLE, "signInWithCredential:success")
                     val user = auth.currentUser
+                    if (user != null) {
+                        addUserToFirebase(user)
+                    }
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -138,6 +146,7 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
+
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -156,6 +165,15 @@ class LoginFragment : Fragment() {
             navController.navigate(R.id.action_loginFragment_to_projectFragment)
             activity1.getUser(user.uid)
         }
+    }
+
+    private fun addUserToFirebase(user: FirebaseUser) {
+        val uid = user.uid
+        val name = user.displayName
+        val email = user.email
+        val user = User(uid, name, email, 0)
+        viewModel.addUserToFirebase(user)
+
     }
 
     companion object {

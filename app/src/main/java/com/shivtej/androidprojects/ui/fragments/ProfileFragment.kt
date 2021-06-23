@@ -7,11 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -37,7 +39,6 @@ class ProfileFragment : Fragment() {
     lateinit var manager: ReviewManager
     var reviewInfo: ReviewInfo? = null
     private lateinit var navController: NavController
-
     var user: User? = null
     private val viewModel: ProjectViewModel by activityViewModels()
 
@@ -50,7 +51,6 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
         activity1.showView()
-
         return binding.root
     }
 
@@ -59,12 +59,10 @@ class ProfileFragment : Fragment() {
         navController = Navigation.findNavController(view)
         val auth = Firebase.auth
 
-
         if (user == null) {
            user = activity1.user1
         }
         setData()
-
 
         initReviews()
 
@@ -76,7 +74,6 @@ class ProfileFragment : Fragment() {
             askForReview()
 
         }
-
 
         binding.feedbackCardView.setOnClickListener {
             val email = arrayOf("asdevelopers1428@gmail.com")
@@ -123,8 +120,7 @@ class ProfileFragment : Fragment() {
         val initial = name[0].toString()
         binding.nameInitial.text = initial
         binding.nameTextView.text = name
-
-
+        binding.tvEmail.text = user!!.email.toString()
     }
 
     private fun initReviews() {

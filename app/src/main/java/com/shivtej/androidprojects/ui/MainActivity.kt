@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var user: User
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -56,14 +56,20 @@ class MainActivity : AppCompatActivity() {
                 if (it != null) {
                     user = it.toObject<User>()!!
                     Log.i("user", user.toString())
-                    val name = user.userName.toString()
+
 
                 } else {
                     Log.i("user", "error: ")
                 }
             }
 
+
+
     }
+
+
+
+
 
     fun hideView() {
         binding.bottomNavBar.visibility = View.GONE

@@ -40,23 +40,23 @@ class MainActivity : AppCompatActivity() {
         //if previously login
         val user = auth.currentUser
         if (user != null) {
+
             navController.navigate(R.id.action_loginFragment_to_projectFragment)
+            getUser(user.uid.toString())
         }
 
-        getUser(auth.uid.toString())
 
         toolbarText()
 
     }
 
-    private fun getUser(uid: String) {
+     fun getUser(uid: String) {
         val reference = Firebase.firestore.collection("User").document(uid)
         reference.get()
             .addOnSuccessListener {
                 if (it != null) {
-                    user = it.toObject<User>()!!
-                    Log.i("user", user.toString())
-
+                   user = it.toObject<User>()!!
+                    Log.i("user", it.data.toString())
 
                 } else {
                     Log.i("user", "error: ")

@@ -48,7 +48,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
-
+        activity1 = activity as MainActivity
         auth = FirebaseAuth.getInstance()
         //activity1.hideView()
         //if previously login
@@ -154,6 +154,7 @@ class LoginFragment : Fragment() {
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             navController.navigate(R.id.action_loginFragment_to_projectFragment)
+            activity1.getUser(user.uid)
         }
     }
 

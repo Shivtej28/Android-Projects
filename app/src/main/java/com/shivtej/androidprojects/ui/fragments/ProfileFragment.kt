@@ -60,7 +60,10 @@ class ProfileFragment : Fragment() {
         val auth = Firebase.auth
 
         if (user == null) {
+            val uid = auth.currentUser?.uid
             user = activity1.user
+
+
         }
         setData()
 
@@ -111,6 +114,7 @@ class ProfileFragment : Fragment() {
         binding.logoutCardView.setOnClickListener {
 
             auth.signOut()
+            activity1.hideView()
             navController.navigate(R.id.action_profileFragment_to_loginFragment)
         }
     }

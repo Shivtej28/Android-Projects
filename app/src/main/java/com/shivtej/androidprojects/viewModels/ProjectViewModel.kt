@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.repo.ProjectRepository
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.models.Question
@@ -127,18 +130,17 @@ class ProjectViewModel : ViewModel() {
     }
 
     private fun getUserDetails(uid: String) {
-        val reference = repository.getUserReference(uid)
+        val reference = Firebase.firestore.collection("User").document(uid)
+        reference.get()
+            .addOnSuccessListener {
+                if (it != null) {
+                    user = it.toObject<User>()!!
+                    Log.i(TAG, it.data.toString())
 
-        reference.addSnapshotListener { value, error ->
-            if(error != null){
-                Log.i(TAG, "Error: ${error.message}")
+                } else {
+                    Log.i(TAG, "error: ")
+                }
             }
-            user = value?.toObject(User::class.java)
-            if (user != null) {
-                Log.i(TAG, user!!.userName.toString())
-            }
-
-        }
     }
 
     fun getUser(uid: String): User? {

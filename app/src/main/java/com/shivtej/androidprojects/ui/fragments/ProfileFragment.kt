@@ -61,7 +61,7 @@ class ProfileFragment : Fragment() {
 
 
         if (user == null) {
-            user = activity1.user
+           user = activity1.user1
         }
         setData()
 
@@ -123,24 +123,7 @@ class ProfileFragment : Fragment() {
         val initial = name[0].toString()
         binding.nameInitial.text = initial
         binding.nameTextView.text = name
-        binding.tvEmail.text = user!!.email.toString()
-    }
 
-    private fun getUser(uid: String) {
-        val reference = Firebase.firestore.collection("User").document(uid)
-        reference.get()
-            .addOnSuccessListener {
-                if (it != null) {
-                    user = it.toObject<User>()
-                    Log.i("user", user.toString())
-                    if (user != null) {
-
-                    }
-
-                } else {
-                    Log.i("user", "error: ")
-                }
-            }
 
     }
 

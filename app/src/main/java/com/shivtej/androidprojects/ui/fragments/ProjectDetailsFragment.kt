@@ -29,19 +29,18 @@ class ProjectDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
-        activity1 = activity as MainActivity
-        activity1.showView()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity1.hideView()
+        activity1 = activity as MainActivity
+
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
 
         val imagesList = getImagesList()
-
+        activity1.showView()
         val detailUrl = project.description
         binding.webView.loadUrl(detailUrl)
 

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
 
-    lateinit var user: User
+    lateinit var user1: User
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +46,11 @@ class MainActivity : AppCompatActivity() {
     private fun getUser(uid: String) {
         val reference = Firebase.firestore.collection("User").document(uid)
         reference.get()
-            .addOnSuccessListener {
-                if (it != null) {
-                     user = it.toObject<User>()!!
-                    Log.i("user", user.toString())
-                    val name = user.userName.toString()
-                    val initial = name[0].toString()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot != null) {
+                    val user1 = documentSnapshot.toObject(User::class.java)
+                    Log.i("user", user1.toString())
+
 
                 } else {
                     Log.i("user", "error: ")

@@ -3,6 +3,7 @@ package com.shivtej.androidprojects.ui
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -76,29 +77,35 @@ class MainActivity : AppCompatActivity() {
     private fun toolbarText() {
         val currentTime: Date = Calendar.getInstance().time
 
+        Log.i("cal", currentTime.toString())
+
         val string1 = "00:00:00"
         val morning = SimpleDateFormat("HH:mm:ss").parse(string1)
         val calendar1 = Calendar.getInstance()
         calendar1.time = morning
-        calendar1.add(Calendar.DATE, 1)
+
+        Log.i("cal1", calendar1.time.toString())
 
         val string2 = "12:00:00"
         val noon = SimpleDateFormat("HH:mm:ss").parse(string2)
         val calendar2 = Calendar.getInstance()
         calendar2.time = noon
-        calendar2.add(Calendar.DATE, 1)
+
+        Log.i("cal2", calendar2.time.toString())
 
         val string3 = "16:00:00"
         val evening = SimpleDateFormat("HH:mm:ss").parse(string3)
         val calendar3 = Calendar.getInstance()
         calendar3.time = evening
-        calendar3.add(Calendar.DATE, 1)
+
+        Log.i("cal3", calendar3.time.toString())
 
         val string4 = "20:00:00"
         val night = SimpleDateFormat("HH:mm:ss").parse(string4)
         val calendar4 = Calendar.getInstance()
         calendar4.time = night
-        calendar4.add(Calendar.DATE, 1)
+
+        Log.i("cal4", calendar4.time.toString())
 
         if (currentTime.after(calendar1.time) && currentTime.before(calendar2.time)) {
             binding.toolbarTextView.text = R.string.good_morning.toString()

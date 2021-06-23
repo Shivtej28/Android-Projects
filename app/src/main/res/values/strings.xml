@@ -41,5 +41,6 @@
     <string name="correct">Correct</string>
     <string name="incorrect">Incorrect</string>
     <string name="not_attempted">Not Attempted</string>
+    <string name="quiz_summary">Quiz Summary</string>
 
 </resources>

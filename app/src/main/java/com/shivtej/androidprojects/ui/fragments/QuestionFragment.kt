@@ -76,6 +76,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         disableEnableCVOption(true)
         setCardBackgroundWhite()
         binding.progressbar.setProgress(number * 10)
+        binding.waveView.setProgress(number * 10)
     }
 
     private fun setCardBackgroundWhite() {

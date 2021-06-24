@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:wave="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.john.waveview.WaveView
+        android:id="@+id/wave_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6fabff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        wave:above_wave_color="@android:color/white"
+        wave:blow_wave_color="@android:color/white"
+        wave:progress="80"
+        wave:wave_height="little"
+        wave:wave_hz="normal"
+        wave:wave_length="middle" />
 
     <TextView
         android:id="@+id/tv_quiz_name"
@@ -106,9 +123,7 @@
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/questions_card_view"
-                app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_1sdp">
+                app:layout_constraintTop_toBottomOf="@id/questions_card_view">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -119,8 +134,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivOption1"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/a_option" />
@@ -152,9 +167,7 @@
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cvOption1"
-                app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_1sdp">
+                app:layout_constraintTop_toBottomOf="@id/cvOption1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -165,8 +178,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivOption2"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/b_option" />
@@ -198,9 +211,7 @@
                 app:contentPadding="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cvOption2"
-                app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_1sdp">
+                app:layout_constraintTop_toBottomOf="@id/cvOption2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -211,8 +222,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivOption3"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/c_option" />
@@ -246,9 +257,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cvOption3"
-                app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_1sdp">
+                app:layout_constraintTop_toBottomOf="@id/cvOption3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -259,8 +268,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivOption4"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/d_option" />

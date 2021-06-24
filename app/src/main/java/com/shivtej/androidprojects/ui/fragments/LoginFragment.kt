@@ -1,7 +1,10 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -16,18 +19,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentLoginBinding
 import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.Constants
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
-import java.security.Policy
+
 
 class LoginFragment : Fragment() {
 
@@ -38,7 +43,6 @@ class LoginFragment : Fragment() {
     private lateinit var activity1: MainActivity
 
     private val viewModel: ProjectViewModel by activityViewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,12 +76,17 @@ class LoginFragment : Fragment() {
             navController.navigate(R.id.action_loginFragment_to_signUpFragment)
         }
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val gso = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(activity?.applicationContext!!, gso)
+
+        binding.forgotPassword.setOnClickListener {
+            resetPasswordDialog(it)
+        }
     }
 
 
@@ -86,7 +95,10 @@ class LoginFragment : Fragment() {
         startActivityForResult(signInIntent, Constants.RC_SIGN_IN)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int, data: Intent?
+    ) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -126,7 +138,10 @@ class LoginFragment : Fragment() {
 
     private fun login() {
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(binding.emailEt.text.toString()).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(
+                binding.emailEt.text.toString()
+            ).matches()
+        ) {
             binding.emailEt.error = "Please enter valid email"
             binding.emailEt.requestFocus()
             return
@@ -174,6 +189,49 @@ class LoginFragment : Fragment() {
         val user = User(uid, name, email, 0)
         viewModel.addUserToFirebase(user)
 
+    }
+
+    private fun resetPasswordDialog(it: View) {
+        val builder =
+            Dialog(
+                requireContext(),
+                R.style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert
+            )
+        builder.setContentView(R.layout.password_reset_dialog)
+        builder.show()
+        builder.setCanceledOnTouchOutside(false)
+
+        val email: TextInputEditText = builder.findViewById(R.id.forgot_password_email)
+        val reset: MaterialButton = builder.findViewById(R.id.reset_btn)
+
+        val handler = Handler()
+
+        reset.setOnClickListener {
+            Firebase.auth.sendPasswordResetEmail(email.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            context,
+                            "Successfully sent mail to ${email.text} ✔️",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            val runnable = Runnable {
+                if (builder.isShowing) {
+                    builder.dismiss()
+                }
+            }
+
+            builder.setOnDismissListener {
+                handler.removeCallbacks(
+                    runnable
+                )
+            }
+
+            handler.postDelayed(runnable, 2000)
+        }
     }
 
     companion object {

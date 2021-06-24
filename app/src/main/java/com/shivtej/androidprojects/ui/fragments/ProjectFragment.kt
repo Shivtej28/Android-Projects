@@ -43,8 +43,7 @@ class ProjectFragment : Fragment(), ItemClicked {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProjectBinding.inflate(inflater, container, false)
-        activity1 = activity as MainActivity
-        activity1.showView()
+
         return binding.root
     }
 
@@ -55,7 +54,8 @@ class ProjectFragment : Fragment(), ItemClicked {
         basicProjectsList = listOf()
         intermediateProjectsList = listOf()
         advanceProjectList = listOf()
-
+        activity1 = activity as MainActivity
+        activity1.showView()
         binding.basicRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.intermediateRecyclerView.layoutManager =

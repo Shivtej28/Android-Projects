@@ -15,9 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
 import com.shivtej.androidprojects.models.User
-import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.util.*
+import java.sql.Time
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +25,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var user: User
 
 
+    companion object {
+
+        const val morning = 0
+        const val afternoon = 12
+        const val evening = 16
+        const val night = 20
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,12 +57,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-     fun getUser(uid: String) {
+    fun getUser(uid: String) {
         val reference = Firebase.firestore.collection("User").document(uid)
         reference.get()
             .addOnSuccessListener {
                 if (it != null) {
-                   user = it.toObject<User>()!!
+                    user = it.toObject<User>()!!
                     Log.i("user", it.data.toString())
 
                 } else {
@@ -81,46 +89,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun toolbarText() {
 
-        val currentTime: Date = Calendar.getInstance().time
 
-        Log.i("cal", currentTime.toString())
+        val time = Time(System.currentTimeMillis()).hours
 
-        val string1 = "00:00:00"
-        val morning = SimpleDateFormat("HH:mm:ss").parse(string1)
-        val calendar1 = Calendar.getInstance()
-        calendar1.time = morning
-
-        Log.i("cal1", morning.toString())
-
-        val string2 = "12:00:00"
-        val noon = SimpleDateFormat("HH:mm:ss").parse(string2)
-        val calendar2 = Calendar.getInstance()
-        calendar2.time = noon
-
-        //Log.i("cal2", noon.toString())
-
-        val string3 = "16:00:00"
-        val evening = SimpleDateFormat("HH:mm:ss").parse(string3)
-        val calendar3 = Calendar.getInstance()
-        calendar3.time = evening
-
-        //Log.i("cal3", calendar3.time.toString())
-
-        val string4 = "20:00:00"
-        val night = SimpleDateFormat("HH:mm:ss").parse(string4)
-        val calendar4 = Calendar.getInstance()
-        calendar4.time = night
-
-        //Log.i("cal4", calendar4.time.toString())
-
-        if (currentTime.after(calendar1.time) && currentTime.before(calendar2.time)) {
-            binding.toolbarTextView.text = R.string.good_morning.toString()
-        } else if (currentTime.after(calendar2.time) && currentTime.before(calendar3.time)) {
-            binding.toolbarTextView.text = R.string.good_afternoon.toString()
-        } else if (currentTime.after(calendar3.time) && currentTime.before(calendar4.time)) {
-            binding.toolbarTextView.text = R.string.good_evening.toString()
-        } else if (currentTime.after(calendar4.time) && currentTime.before(calendar1.time)) {
-            binding.toolbarTextView.text = R.string.good_night.toString()
+        binding.toolbarTextView.text = if (time in (morning + 1) until afternoon) {
+            Log.d("time", getString(R.string.good_morning))
+            getString(R.string.good_morning)
+        } else if (time in (afternoon + 1) until evening) {
+            Log.d("time", getString(R.string.good_afternoon))
+            getString(R.string.good_afternoon)
+        } else if (time in (evening + 1) until night) {
+            Log.d("time", getString(R.string.good_evening))
+            getString(R.string.good_evening)
+        } else {
+            Log.d("time", getString(R.string.good_night))
+            getString(R.string.good_afternoon)
         }
+
+        Log.i("cal123", time.toString())
+
     }
+
+    override fun onResume() {
+        super.onResume()
+        toolbarText()
+    }
+
+
 }

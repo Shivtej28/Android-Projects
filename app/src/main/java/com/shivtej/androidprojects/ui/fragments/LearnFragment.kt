@@ -21,12 +21,15 @@ class LearnFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLearnBinding.inflate(inflater, container, false)
-        activity1 = activity as MainActivity
-        activity1.showView()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity1 = activity as MainActivity
+        activity1.showView()
+
+
     }
 }

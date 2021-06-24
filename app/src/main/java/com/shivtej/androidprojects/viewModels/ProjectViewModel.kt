@@ -10,6 +10,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.repo.ProjectRepository
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.models.Question
@@ -24,6 +25,7 @@ class ProjectViewModel : ViewModel() {
     var intermediateProjectList: MutableLiveData<List<Project>> = MutableLiveData()
     var advanceProjectList: MutableLiveData<List<Project>> = MutableLiveData()
     val quizList: MutableLiveData<List<Question>> = MutableLiveData()
+    val learnBlogList : MutableLiveData<List<LearnBlog>> = MutableLiveData()
     val repository = ProjectRepository()
     var user: User? = null
 
@@ -146,6 +148,31 @@ class ProjectViewModel : ViewModel() {
     fun getUser(uid: String): User? {
         getUserDetails(uid)
         return user
+    }
+
+    fun getLearnBlog() : LiveData<List<LearnBlog>> {
+        getLearnBlogList()
+        Log.i("list", learnBlogList.toString())
+        return learnBlogList
+    }
+
+    private fun getLearnBlogList() {
+        repository.getLearnReference()
+            .addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
+                if (e != null) {
+                    Log.w(TAG, "Failed", e)
+                    learnBlogList.value = null
+                    return@EventListener
+                }
+                val list: MutableList<LearnBlog> = mutableListOf()
+                for (doc in value!!) {
+                    val blog = doc.toObject(LearnBlog::class.java)
+                    list.add(blog)
+                }
+                learnBlogList.value = list
+                Log.i("List", learnBlogList.value.toString())
+            })
+
     }
 
 

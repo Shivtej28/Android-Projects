@@ -58,5 +58,8 @@
     <string name="login">Login</string>
     <string name="continue_with">Continue with:</string>
     <string name="reset">Reset</string>
+    <string name="longString">When you set long text on textView it measures all of the words and lay’s out the entire text you’ve given it, so this the huge performance hit.
+
+If you’re setting a very long text that then you’re not actually showing on screen may be the user never scrolls.</string>
 
 </resources>

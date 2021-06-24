@@ -50,5 +50,9 @@ class ProjectRepository {
         }
     }
 
+    fun getLearnReference() : CollectionReference{
+        return firestoreDB.collection("Learn")
+    }
+
 
 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.card.MaterialCardView
 import com.shivtej.androidprojects.R
+import com.shivtej.androidprojects.adapters.QuestionAdapter
 import com.shivtej.androidprojects.databinding.FragmentQuestionBinding
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.models.Question
@@ -51,115 +52,123 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
-            showQuestion()
+            val adapter = QuestionAdapter(questionsList)
+            binding.questionViewpager.adapter = adapter
+            //showQuestion()
             Log.i(TAG, questionsList[0].toString())
         })
 
         Log.d(TAG, questionsList.toString())
 
-        binding.cvOption1.setOnClickListener(this)
-        binding.cvOption2.setOnClickListener(this)
-        binding.cvOption3.setOnClickListener(this)
-        binding.cvOption4.setOnClickListener(this)
-    }
-
-    private fun showQuestion() {
-
-        question = questionsList[questionNumber]
-        binding.questionsTextView.text = question.question
-        binding.tvOption1.text = question.option1
-        binding.tvOption2.text = question.option2
-        binding.tvOption3.text = question.option3
-        binding.tvOption4.text = question.option4
-        val number = questionNumber + 1
-        "$number/10".also { binding.questionNumber.text = it }
-        disableEnableCVOption(true)
-        setCardBackgroundWhite()
-        binding.progressbar.setProgress(number * 10)
-        binding.waveView.setProgress(number * 10)
-    }
-
-    private fun setCardBackgroundWhite() {
-
-        binding.cvOption1.background.setTint(Color.WHITE)
-        binding.ivOption1.setImageResource(R.drawable.a_option)
-        binding.cvOption2.background.setTint(Color.WHITE)
-        binding.ivOption2.setImageResource(R.drawable.b_option)
-        binding.cvOption3.background.setTint(Color.WHITE)
-        binding.ivOption3.setImageResource(R.drawable.c_option)
-        binding.cvOption4.background.setTint(Color.WHITE)
-        binding.ivOption4.setImageResource(R.drawable.d_option)
+//        binding.cvOption1.setOnClickListener(this)
+//        binding.cvOption2.setOnClickListener(this)
+//        binding.cvOption3.setOnClickListener(this)
+//        binding.cvOption4.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-
-            R.id.cvOption1 -> {
-                checkAnswer(binding.tvOption1, binding.cvOption1, binding.ivOption1)
-            }
-            R.id.cvOption2 -> {
-                checkAnswer(binding.tvOption2, binding.cvOption2, binding.ivOption2)
-            }
-            R.id.cvOption3 -> {
-                checkAnswer(binding.tvOption3, binding.cvOption3, binding.ivOption3)
-            }
-            R.id.cvOption4 -> {
-                checkAnswer(binding.tvOption4, binding.cvOption4, binding.ivOption4)
-            }
-        }
+        TODO("Not yet implemented")
     }
 
-    private fun checkAnswer(
-        tvOption: TextView,
-        cvOption: MaterialCardView,
-        ivOption: CircleImageView
-    ) {
+//    private fun showQuestion() {
+//
+//        question = questionsList[questionNumber]
+//        binding.questionsTextView.text = question.question
+//        binding.tvOption1.text = question.option1
+//        binding.tvOption2.text = question.option2
+//        binding.tvOption3.text = question.option3
+//        binding.tvOption4.text = question.option4
+//        val number = questionNumber + 1
+//        "$number/10".also { binding.questionNumber.text = it }
+//        disableEnableCVOption(true)
+//        setCardBackgroundWhite()
+//        binding.progressbar.setProgress(number * 10)
+//        binding.waveView.setProgress(number * 10)
+//    }
 
-        disableEnableCVOption(false)
-        val answer = question.answer
-        val selectedAns = tvOption.text.toString()
-        Log.d(TAG, "Answer")
-        if (answer == selectedAns) {
-            cvOption.background.setTint(Color.GREEN)
-            ivOption.setImageResource(R.drawable.basic_tick)
-            Log.d(TAG, "Correct Ans")
-        } else {
-            cvOption.background.setTint(Color.RED)
-            ivOption.setImageResource(R.drawable.close)
-            getCorrectAnswer()
-        }
-        questionNumber++
-        val handler = Handler()
-        handler.postDelayed({
-            showQuestion()
-        }, 3000)
-    }
+//    private fun setCardBackgroundWhite() {
+//
+//        binding.cvOption1.background.setTint(Color.WHITE)
+//        binding.ivOption1.setImageResource(R.drawable.a_option)
+//        binding.cvOption2.background.setTint(Color.WHITE)
+//        binding.ivOption2.setImageResource(R.drawable.b_option)
+//        binding.cvOption3.background.setTint(Color.WHITE)
+//        binding.ivOption3.setImageResource(R.drawable.c_option)
+//        binding.cvOption4.background.setTint(Color.WHITE)
+//        binding.ivOption4.setImageResource(R.drawable.d_option)
+//    }
 
-    private fun getCorrectAnswer() {
-        when (question.answer) {
-            binding.tvOption1.text.toString() -> {
-                binding.cvOption1.background.setTint(Color.GREEN)
-                binding.ivOption1.setImageResource(R.drawable.basic_tick)
-            }
-            binding.tvOption2.text.toString() -> {
-                binding.cvOption2.background.setTint(Color.GREEN)
-                binding.ivOption2.setImageResource(R.drawable.basic_tick)
-            }
-            binding.tvOption3.text.toString() -> {
-                binding.cvOption3.background.setTint(Color.GREEN)
-                binding.ivOption3.setImageResource(R.drawable.basic_tick)
-            }
-            else -> {
-                binding.cvOption4.background.setTint(Color.GREEN)
-                binding.ivOption4.setImageResource(R.drawable.basic_tick)
-            }
-        }
-    }
+//    override fun onClick(v: View?) {
+//        when (v?.id) {
+//
+//            R.id.cvOption1 -> {
+//                checkAnswer(binding.tvOption1, binding.cvOption1, binding.ivOption1)
+//            }
+//            R.id.cvOption2 -> {
+//                checkAnswer(binding.tvOption2, binding.cvOption2, binding.ivOption2)
+//            }
+//            R.id.cvOption3 -> {
+//                checkAnswer(binding.tvOption3, binding.cvOption3, binding.ivOption3)
+//            }
+//            R.id.cvOption4 -> {
+//                checkAnswer(binding.tvOption4, binding.cvOption4, binding.ivOption4)
+//            }
+//        }
+//    }
 
-    private fun disableEnableCVOption(b: Boolean) {
-        binding.cvOption1.isEnabled = b
-        binding.cvOption2.isEnabled = b
-        binding.cvOption3.isEnabled = b
-        binding.cvOption4.isEnabled = b
-    }
+//    private fun checkAnswer(
+//        tvOption: TextView,
+//        cvOption: MaterialCardView,
+//        ivOption: CircleImageView
+//    ) {
+//
+//        disableEnableCVOption(false)
+//        val answer = question.answer
+//        val selectedAns = tvOption.text.toString()
+//        Log.d(TAG, "Answer")
+//        if (answer == selectedAns) {
+//            cvOption.background.setTint(Color.GREEN)
+//            ivOption.setImageResource(R.drawable.basic_tick)
+//            Log.d(TAG, "Correct Ans")
+//        } else {
+//            cvOption.background.setTint(Color.RED)
+//            ivOption.setImageResource(R.drawable.close)
+//            //getCorrectAnswer()
+//        }
+//        questionNumber++
+//        val handler = Handler()
+//        handler.postDelayed({
+//            showQuestion()
+//        }, 3000)
+//    }
+
+//    private fun getCorrectAnswer() {
+//        when (question.answer) {
+//            binding.tvOption1.text.toString() -> {
+//                binding.cvOption1.background.setTint(Color.GREEN)
+//                binding.ivOption1.setImageResource(R.drawable.basic_tick)
+//            }
+//            binding.tvOption2.text.toString() -> {
+//                binding.cvOption2.background.setTint(Color.GREEN)
+//                binding.ivOption2.setImageResource(R.drawable.basic_tick)
+//            }
+//            binding.tvOption3.text.toString() -> {
+//                binding.cvOption3.background.setTint(Color.GREEN)
+//                binding.ivOption3.setImageResource(R.drawable.basic_tick)
+//            }
+//            else -> {
+//                binding.cvOption4.background.setTint(Color.GREEN)
+//                binding.ivOption4.setImageResource(R.drawable.basic_tick)
+//            }
+//        }
+//    }
+//
+//    private fun disableEnableCVOption(b: Boolean) {
+//        binding.cvOption1.isEnabled = b
+//        binding.cvOption2.isEnabled = b
+//        binding.cvOption3.isEnabled = b
+//        binding.cvOption4.isEnabled = b
+//    }
+
+
 }

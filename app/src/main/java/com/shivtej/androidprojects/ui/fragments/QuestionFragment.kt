@@ -20,6 +20,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.card.MaterialCardView
 import com.shivtej.androidprojects.R
+import com.shivtej.androidprojects.adapters.OnOptionClicked
 import com.shivtej.androidprojects.adapters.QuestionAdapter
 import com.shivtej.androidprojects.databinding.FragmentQuestionBinding
 import com.shivtej.androidprojects.ui.MainActivity
@@ -27,7 +28,7 @@ import com.shivtej.androidprojects.models.Question
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
-class QuestionFragment : Fragment(), View.OnClickListener {
+class QuestionFragment : Fragment(), OnOptionClicked {
 
     private lateinit var binding: FragmentQuestionBinding
     private lateinit var activity1: MainActivity
@@ -42,6 +43,20 @@ class QuestionFragment : Fragment(), View.OnClickListener {
     private var notAttempted = 0
 
     lateinit var callback: OnBackPressedCallback
+
+    private lateinit var tvOption1: TextView
+    private lateinit var tvOption2: TextView
+    private lateinit var tvOption3: TextView
+    private lateinit var tvOption4: TextView
+    private lateinit var cvOption1: MaterialCardView
+    private lateinit var cvOption2: MaterialCardView
+    private lateinit var cvOption3: MaterialCardView
+    private lateinit var cvOption4: MaterialCardView
+    private lateinit var ivOption1: CircleImageView
+    private lateinit var ivOption2: CircleImageView
+    private lateinit var ivOption3: CircleImageView
+    private lateinit var ivOption4: CircleImageView
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,17 +75,24 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         val quizname = arguments?.getString("quizname").toString()
 
+        binding.tvQuizName.text = quizname
+
         questionsList = arrayListOf()
 
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
-            val adapter = QuestionAdapter(questionsList)
+            val adapter = QuestionAdapter(questionsList, this, this)
             binding.questionViewpager.adapter = adapter
             //showQuestion()
-            Log.i(TAG, questionsList[0].toString())
+
         })
 
-        Log.d(TAG, questionsList.toString())
+        callback = requireActivity().onBackPressedDispatcher.addCallback {
+            showQuitDialog()
+        }
+
+        callback.isEnabled = true
+
 
 //        binding.cvOption1.setOnClickListener(this)
 //        binding.cvOption2.setOnClickListener(this)
@@ -78,8 +100,87 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 //        binding.cvOption4.setOnClickListener(this)
     }
 
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+    private fun showQuitDialog() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+
+        dialogBuilder.setTitle("End Quiz?")
+            .setPositiveButton("Yes") { _, _ ->
+                showScoreDialog()
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+
+        val dialog = dialogBuilder.create()
+
+        dialog.show()
+    }
+
+    private fun showScoreDialog() {
+        val builder =
+            Dialog(requireContext(), R.style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert)
+        builder.setContentView(R.layout.quiz_complete_dialog_box)
+        builder.show()
+        builder.setCanceledOnTouchOutside(false)
+
+        val tvTotalQuestion: TextView = builder.findViewById(R.id.tvTotalQuestion)
+        val tvCorrect: TextView = builder.findViewById(R.id.tvCorrectValue)
+        val tvIncorrect: TextView = builder.findViewById(R.id.tvIncorrectValue)
+        val tvNotAttempted: TextView = builder.findViewById(R.id.tvNotAttempted)
+        tvCorrect.text = score.toString()
+        val total = questionsList.size
+        tvTotalQuestion.text = total.toString()
+        tvIncorrect.text = inCorrect.toString()
+
+        val notAttempted = total - (score + inCorrect)
+        tvNotAttempted.text = notAttempted.toString()
+
+        val tvOk: TextView = builder.findViewById(R.id.tvOk)
+
+        tvOk.setOnClickListener {
+            callback.isEnabled = false
+            builder.dismiss()
+            activity?.onBackPressed()
+        }
+
+    }
+
+    fun changeNumbers(position: Int) {
+        val n = position+1
+        "$n/10".also { binding.questionNumber.text = it }
+        binding.progressbar.setProgress(n*10)
+    }
+
+
+    override fun onClicked(view: View, currentItem: Question, num: Int, position: Int) {
+
+        Log.i("Ans", currentItem.answer)
+
+        question = currentItem
+        tvOption1 = view.findViewById(R.id.tvOption1)
+        tvOption2 = view.findViewById(R.id.tvOption2)
+        tvOption3 = view.findViewById(R.id.tvOption3)
+        tvOption4 = view.findViewById(R.id.tvOption4)
+
+        cvOption1 = view.findViewById(R.id.cvOption1)
+        cvOption2 = view.findViewById(R.id.cvOption2)
+        cvOption3 = view.findViewById(R.id.cvOption3)
+        cvOption4 = view.findViewById(R.id.cvOption4)
+
+        ivOption1 = view.findViewById(R.id.ivOption1)
+        ivOption2 = view.findViewById(R.id.ivOption2)
+        ivOption3 = view.findViewById(R.id.ivOption3)
+        ivOption4 = view.findViewById(R.id.ivOption4)
+
+        when (num) {
+            1 -> checkAnswer(tvOption1, cvOption1, ivOption1)
+            2 -> checkAnswer(tvOption2, cvOption2, ivOption2)
+            3 -> checkAnswer(tvOption3, cvOption3, ivOption3)
+            4 -> checkAnswer(tvOption4, cvOption4, ivOption4)
+        }
+
+        Log.i("Ans", tvOption1.text.toString())
+
     }
 
 //    private fun showQuestion() {
@@ -128,59 +229,57 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 //        }
 //    }
 
-//    private fun checkAnswer(
-//        tvOption: TextView,
-//        cvOption: MaterialCardView,
-//        ivOption: CircleImageView
-//    ) {
-//
-//        disableEnableCVOption(false)
-//        val answer = question.answer
-//        val selectedAns = tvOption.text.toString()
-//        Log.d(TAG, "Answer")
-//        if (answer == selectedAns) {
-//            cvOption.background.setTint(Color.GREEN)
-//            ivOption.setImageResource(R.drawable.basic_tick)
-//            Log.d(TAG, "Correct Ans")
-//        } else {
-//            cvOption.background.setTint(Color.RED)
-//            ivOption.setImageResource(R.drawable.close)
-//            //getCorrectAnswer()
-//        }
-//        questionNumber++
-//        val handler = Handler()
-//        handler.postDelayed({
-//            showQuestion()
-//        }, 3000)
-//    }
+    private fun checkAnswer(
+        tvOption: TextView,
+        cvOption: MaterialCardView,
+        ivOption: CircleImageView
+    ) {
 
-//    private fun getCorrectAnswer() {
-//        when (question.answer) {
-//            binding.tvOption1.text.toString() -> {
-//                binding.cvOption1.background.setTint(Color.GREEN)
-//                binding.ivOption1.setImageResource(R.drawable.basic_tick)
-//            }
-//            binding.tvOption2.text.toString() -> {
-//                binding.cvOption2.background.setTint(Color.GREEN)
-//                binding.ivOption2.setImageResource(R.drawable.basic_tick)
-//            }
-//            binding.tvOption3.text.toString() -> {
-//                binding.cvOption3.background.setTint(Color.GREEN)
-//                binding.ivOption3.setImageResource(R.drawable.basic_tick)
-//            }
-//            else -> {
-//                binding.cvOption4.background.setTint(Color.GREEN)
-//                binding.ivOption4.setImageResource(R.drawable.basic_tick)
-//            }
-//        }
-//    }
-//
-//    private fun disableEnableCVOption(b: Boolean) {
-//        binding.cvOption1.isEnabled = b
-//        binding.cvOption2.isEnabled = b
-//        binding.cvOption3.isEnabled = b
-//        binding.cvOption4.isEnabled = b
-//    }
+        disableEnableCVOption(false)
+        val answer = question.answer
+        val selectedAns = tvOption.text.toString()
+        Log.d(TAG, "Answer")
+        if (answer == selectedAns) {
+            cvOption.background.setTint(Color.GREEN)
+            ivOption.setImageResource(R.drawable.basic_tick)
+            score++
+            Log.d(TAG, "Correct Ans")
+        } else {
+            cvOption.background.setTint(Color.RED)
+            ivOption.setImageResource(R.drawable.close)
+            inCorrect++
+            getCorrectAnswer()
+        }
+
+    }
+
+    private fun getCorrectAnswer() {
+        when (question.answer) {
+            tvOption1.text.toString() -> {
+                cvOption1.background.setTint(Color.GREEN)
+                ivOption1.setImageResource(R.drawable.basic_tick)
+            }
+            tvOption2.text.toString() -> {
+                cvOption2.background.setTint(Color.GREEN)
+                ivOption2.setImageResource(R.drawable.basic_tick)
+            }
+            tvOption3.text.toString() -> {
+                cvOption3.background.setTint(Color.GREEN)
+                ivOption3.setImageResource(R.drawable.basic_tick)
+            }
+            else -> {
+                cvOption4.background.setTint(Color.GREEN)
+                ivOption4.setImageResource(R.drawable.basic_tick)
+            }
+        }
+    }
+
+    private fun disableEnableCVOption(b: Boolean) {
+        cvOption1.isEnabled = b
+        cvOption2.isEnabled = b
+        cvOption3.isEnabled = b
+        cvOption4.isEnabled = b
+    }
 
 
 }

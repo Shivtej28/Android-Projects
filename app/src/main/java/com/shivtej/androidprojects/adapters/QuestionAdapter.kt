@@ -1,5 +1,6 @@
 package com.shivtej.androidprojects.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
@@ -8,28 +9,15 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
+import com.google.android.material.card.MaterialCardView
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding.inflate
 import com.shivtej.androidprojects.models.Question
+import com.shivtej.androidprojects.ui.fragments.QuestionFragment
 import java.util.*
 
-class QuestionAdapter(private val list: List<Question>): PagerAdapter() {
+class QuestionAdapter(private val list: List<Question>, private val onClicked: OnOptionClicked, val questionFragment: QuestionFragment) : PagerAdapter() {
 
-//    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        val question: TextView = itemView.findViewById(R.id.questions_text_view)
-//        val option1: TextView = itemView.findViewById(R.id.tvOption1)
-//        val option2: TextView = itemView.findViewById(R.id.tvOption2)
-//        val option3: TextView = itemView.findViewById(R.id.tvOption3)
-//        val option4: TextView = itemView.findViewById(R.id.tvOption4)
-//
-//        fun setData(que: Question){
-//            question.text = que.question
-//            option1.text = que.option1
-//            option2.text = que.option2
-//            option3.text = que.option3
-//            option4.text = que.option4
-//        }
-//    }
 
     override fun getCount(): Int {
         return list.size
@@ -43,9 +31,42 @@ class QuestionAdapter(private val list: List<Question>): PagerAdapter() {
         val view = LayoutInflater.from(container.context)
             .inflate(R.layout.question_container, container, false)
 
+
+
         val questionTv: TextView = view.findViewById(R.id.questions_text_view)
+        val tvOption1: TextView = view.findViewById(R.id.tvOption1)
+        val tvOption2: TextView = view.findViewById(R.id.tvOption2)
+        val tvOption3: TextView = view.findViewById(R.id.tvOption3)
+        val tvOption4: TextView = view.findViewById(R.id.tvOption4)
+        val cvOption1 : MaterialCardView = view.findViewById(R.id.cvOption1)
+        val cvOption2 : MaterialCardView = view.findViewById(R.id.cvOption2)
+        val cvOption3 : MaterialCardView = view.findViewById(R.id.cvOption3)
+        val cvOption4 : MaterialCardView = view.findViewById(R.id.cvOption4)
+
+
         val currentItem = list[position]
+        Log.i("posi", position.toString())
+
         questionTv.text = currentItem.question
+        tvOption1.text = currentItem.option1
+        tvOption2.text = currentItem.option2
+        tvOption3.text = currentItem.option3
+        tvOption4.text = currentItem.option4
+
+        cvOption1.setOnClickListener {
+            onClicked.onClicked(view, currentItem, 1, position)
+        }
+        cvOption2.setOnClickListener {
+            onClicked.onClicked(view, currentItem, 2, position)
+        }
+        cvOption3.setOnClickListener {
+            onClicked.onClicked(view, currentItem, 3, position)
+        }
+        cvOption4.setOnClickListener {
+            onClicked.onClicked(view, currentItem, 4, position)
+        }
+
+
         Objects.requireNonNull(container).addView(view)
 
         return view
@@ -53,5 +74,10 @@ class QuestionAdapter(private val list: List<Question>): PagerAdapter() {
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as ConstraintLayout)
+        questionFragment.changeNumbers(position)
     }
+}
+
+interface OnOptionClicked{
+    fun onClicked(view : View, currentItem : Question, num : Int, position: Int)
 }

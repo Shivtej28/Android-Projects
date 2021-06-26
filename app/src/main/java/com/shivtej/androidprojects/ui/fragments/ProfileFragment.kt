@@ -117,6 +117,10 @@ class ProfileFragment : Fragment() {
             activity1.hideView()
             navController.navigate(R.id.action_profileFragment_to_loginFragment)
         }
+
+        binding.todoDoneCardView.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_todoDoneFragment)
+        }
     }
 
     private fun setData() {

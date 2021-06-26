@@ -43,6 +43,20 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileFragment_to_todoDoneFragment"
+            app:destination="@id/todoDoneFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/projectFragment"
@@ -78,4 +92,12 @@
         android:id="@+id/questionFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.QuestionFragment"
         android:label="QuestionFragment" />
+    <fragment
+        android:id="@+id/todoDoneFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.TodoDoneFragment"
+        android:label="TodoDoneFragment" />
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.AboutUsFragment"
+        android:label="AboutUsFragment" />
 </navigation>

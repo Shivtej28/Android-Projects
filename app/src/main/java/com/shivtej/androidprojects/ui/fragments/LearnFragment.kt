@@ -48,7 +48,6 @@ class LearnFragment: Fragment(), OnClicked {
 
         binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
         viewModel.getLearnBlog().observe(viewLifecycleOwner, Observer {
             learnBlogList = it
             adapter = LearnAdapter(learnBlogList, this)

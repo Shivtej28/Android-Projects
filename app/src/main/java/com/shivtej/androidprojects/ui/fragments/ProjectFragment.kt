@@ -1,5 +1,8 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +21,7 @@ import com.shivtej.androidprojects.adapters.ProjectAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectBinding
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.utils.sendNotification
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
 class ProjectFragment : Fragment(), ItemClicked {
@@ -87,12 +91,11 @@ class ProjectFragment : Fragment(), ItemClicked {
         })
 
 
+
+
+
     }
 
-    override fun onDetach() {
-        super.onDetach()
-       // navController.popBackStack(R.id.loginFragment, true)
-    }
 
 
 

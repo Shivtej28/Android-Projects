@@ -62,4 +62,7 @@
 
 If you’re setting a very long text that then you’re not actually showing on screen may be the user never scrolls.</string>
 
+    <string name="notification_channel_id" translatable="false">notification_channel</string>
+    <string name="notification_channel_name" translatable="false">thanks</string>
+    <string name="notification_channel_description" translatable="false">Thaks For </string>
 </resources>

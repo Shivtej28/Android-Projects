@@ -60,7 +60,7 @@ class LearnFragment: Fragment(), OnClicked {
     }
 
     override fun onLearnBlogClicked(currentItem: LearnBlog) {
-        Toast.makeText(requireContext(), "Show ", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), currentItem.url, Toast.LENGTH_SHORT).show()
     }
 
     override fun onMenuMarkAsTodoClicked(currentItem: LearnBlog) {

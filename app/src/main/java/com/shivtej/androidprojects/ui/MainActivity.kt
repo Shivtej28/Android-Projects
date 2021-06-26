@@ -106,7 +106,6 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.good_afternoon)
         }
 
-        Log.i("cal123", time.toString())
 
     }
 

@@ -1,5 +1,8 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -29,6 +36,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
     private lateinit var question: Question
 
     private var questionNumber = 0
+    private var score = 0
+    private var inCorrect = 0
+    private var notAttempted = 0
+
+    lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +74,67 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.cvOption3.setOnClickListener(this)
         binding.cvOption4.setOnClickListener(this)
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            showQuitDialog()
+        }
+
+        callback.isEnabled = true
+
+    }
+
+    private fun showQuitDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("End Quiz?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            showScoreDialog()
+
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val alertDialog = builder.create()
+
+        alertDialog.show()
+    }
+
+    private fun showScoreDialog() {
+        val builder = Dialog(
+            requireContext(),
+            R.style.Base_ThemeOverlay_MaterialComponents_Dialog_Alert
+        )
+        builder.setContentView(R.layout.quiz_complete_dialog_box)
+
+        builder.show()
+        builder.setCanceledOnTouchOutside(false)
+
+        val tvOk = builder.findViewById<TextView>(R.id.tvOk)
+        val tvTotalQuestion = builder.findViewById<TextView>(R.id.tvTotalQuestion)
+        val tvCorrectValue = builder.findViewById<TextView>(R.id.tvCorrectValue)
+        val tvIncorrectValue = builder.findViewById<TextView>(R.id.tvIncorrectValue)
+        val tvNotAttempted = builder.findViewById<TextView>(R.id.tvNotAttempted)
+
+        tvOk.setOnClickListener {
+            callback.isEnabled = false
+            builder.dismiss()
+            activity?.onBackPressed()
+        }
+
+        val totalQuestion = questionsList.size
+        val notSolved = totalQuestion - questionNumber
+
+        tvTotalQuestion.text = totalQuestion.toString()
+        tvCorrectValue.text = score.toString()
+        tvIncorrectValue.text = inCorrect.toString()
+        tvNotAttempted.text = notSolved.toString()
+
+
+    }
+
 
     private fun showQuestion() {
 
@@ -123,9 +196,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             cvOption.background.setTint(Color.GREEN)
             ivOption.setImageResource(R.drawable.basic_tick)
             Log.d(TAG, "Correct Ans")
+            score++
         } else {
             cvOption.background.setTint(Color.RED)
             ivOption.setImageResource(R.drawable.close)
+            inCorrect++
             getCorrectAnswer()
         }
         questionNumber++
@@ -163,3 +238,4 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.cvOption4.isEnabled = b
     }
 }
+

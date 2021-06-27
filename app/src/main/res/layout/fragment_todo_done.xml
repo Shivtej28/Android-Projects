@@ -11,8 +11,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabBackground="@color/blue_btn"
-        app:tabTextColor="@color/white"/>
+        app:tabBackground="@color/white"
+        app:tabTextColor="@color/black"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/todo_view_pager"

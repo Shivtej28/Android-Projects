@@ -1,5 +1,8 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -17,6 +20,7 @@ import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentSignUpBinding
 import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.utils.sendNotification
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
 class SignUpFragment : Fragment() {
@@ -27,6 +31,7 @@ class SignUpFragment : Fragment() {
     private lateinit var activity1: MainActivity
     private lateinit var userName: String
     private lateinit var userEmail: String
+    private lateinit var notificationManager: NotificationManager
 
     private val viewModel: ProjectViewModel by activityViewModels()
 
@@ -50,6 +55,33 @@ class SignUpFragment : Fragment() {
 
         binding.createAccount.setOnClickListener {
             signUpUser()
+        }
+
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+
+            notificationChannel.enableLights(true)
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.notification_channel_description)
+
+           notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
+
+
         }
     }
 
@@ -99,6 +131,7 @@ class SignUpFragment : Fragment() {
         if (user != null) {
             addUserToFirebase(user)
             navController.navigate(R.id.action_signUpFragment_to_projectFragment)
+            notificationManager.sendNotification("Thanks For Using Your App", requireContext())
         }
 
     }

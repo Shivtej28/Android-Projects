@@ -35,12 +35,12 @@ class ProjectDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity1 = activity as MainActivity
-
+        activity1.hideView()
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
 
         val imagesList = getImagesList()
-        activity1.showView()
+        activity1.projectView()
         val detailUrl = project.description
         binding.webView.loadUrl(detailUrl)
 
@@ -62,7 +62,7 @@ class ProjectDetailsFragment : Fragment() {
             val colorSchemeParams = CustomTabColorSchemeParams.Builder()
                 .setNavigationBarColor(ContextCompat.getColor(requireContext(), R.color.androidbg))
                 .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.orange))
-                .setSecondaryToolbarColor(ContextCompat.getColor(requireContext(),R.color.primary))
+                .setSecondaryToolbarColor(ContextCompat.getColor(requireContext(), R.color.primary))
                 .build()
             builder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, colorSchemeParams)
             val customTabIntent = builder.build()

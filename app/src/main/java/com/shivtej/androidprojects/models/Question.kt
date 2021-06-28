@@ -10,4 +10,5 @@ data class Question(
     val option2 : String = "",
     val option3 : String = "",
     val option4 : String = "",
-    val answer : String = "") : Parcelable
+    val answer : String = "",
+    val number : String = "") : Parcelable

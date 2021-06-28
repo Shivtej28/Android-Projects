@@ -1,11 +1,17 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -18,6 +24,7 @@ import com.shivtej.androidprojects.adapters.ProjectAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectBinding
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.utils.sendNotification
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 
 class ProjectFragment : Fragment(), ItemClicked {
@@ -35,6 +42,9 @@ class ProjectFragment : Fragment(), ItemClicked {
 
     private lateinit var navController: NavController
     val TAG = "ProjectFragment"
+
+    lateinit var callback: OnBackPressedCallback
+    var backPressed = false
 
 
     override fun onCreateView(
@@ -56,6 +66,20 @@ class ProjectFragment : Fragment(), ItemClicked {
         advanceProjectList = listOf()
         activity1 = activity as MainActivity
         activity1.showView()
+
+//        callback = requireActivity().onBackPressedDispatcher.addCallback {
+//            if (backPressed) {
+//                backPressed = false
+//                closeApp()
+//
+//            }else{
+//                showToast()
+//
+//            }
+//            //activity1.onBackPressed()
+//
+//        }
+//        callback.isEnabled = true
         binding.basicRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.intermediateRecyclerView.layoutManager =
@@ -89,11 +113,19 @@ class ProjectFragment : Fragment(), ItemClicked {
 
     }
 
-    override fun onDetach() {
-        super.onDetach()
-       // navController.popBackStack(R.id.loginFragment, true)
+    private fun closeApp() {
+        callback.isEnabled = false
+        Log.i("Close", "close")
+        activity?.onBackPressed()
+
+
     }
 
+    private fun showToast() {
+        backPressed = true
+        Toast.makeText(requireContext(), "Pressed Back Again to close", Toast.LENGTH_SHORT).show()
+
+    }
 
 
     override fun onItemClicked(project: Project) {

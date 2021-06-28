@@ -4,8 +4,11 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -21,8 +24,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var navController: NavController
 
-    public lateinit var user: User
+    lateinit var user: User
+    var pressedTime: Long = 0
 
 
     companion object {
@@ -40,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.navhostFragment)
+        navController = findNavController(R.id.navhostFragment)
         binding.bottomNavBar.setupWithNavController(navController)
 
         auth = FirebaseAuth.getInstance()
@@ -103,16 +108,34 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.good_evening)
         } else {
             Log.d("time", getString(R.string.good_night))
-            getString(R.string.good_afternoon)
+            getString(R.string.good_night)
         }
 
-        Log.i("cal123", time.toString())
 
     }
 
     override fun onResume() {
         super.onResume()
         toolbarText()
+    }
+
+    override fun onBackPressed() {
+        val fragemnts = navController.currentDestination?.id
+
+        Log.i("fragments", (fragemnts == R.id.projectFragment).toString())
+        if (fragemnts != R.id.projectFragment) {
+
+            navController.popBackStack()
+        } else {
+            if (pressedTime + 2000 > System.currentTimeMillis()) {
+                super.onBackPressed();
+                finish();
+            } else {
+                Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show();
+            }
+            pressedTime = System.currentTimeMillis()
+        }
+
     }
 
 

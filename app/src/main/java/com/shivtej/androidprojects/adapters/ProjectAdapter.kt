@@ -34,4 +34,5 @@ class ProjectAdapter(private val list: List<Project>, private val onClickListene
 
 interface ItemClicked{
     fun onItemClicked(project: Project)
+
 }

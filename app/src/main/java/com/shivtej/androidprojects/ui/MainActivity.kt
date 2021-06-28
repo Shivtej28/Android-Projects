@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.good_evening)
         } else {
             Log.d("time", getString(R.string.good_night))
-            getString(R.string.good_afternoon)
+            getString(R.string.good_night)
         }
 
 

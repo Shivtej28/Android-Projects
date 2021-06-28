@@ -31,6 +31,7 @@ class QuestionAdapter(private val list: List<Question>, private val onClicked: O
         val view = LayoutInflater.from(container.context)
             .inflate(R.layout.question_container, container, false)
 
+        
 
 
         val questionTv: TextView = view.findViewById(R.id.questions_text_view)
@@ -45,7 +46,7 @@ class QuestionAdapter(private val list: List<Question>, private val onClicked: O
 
 
         val currentItem = list[position]
-        Log.i("posi", position.toString())
+        Log.i("posi", currentItem.number.toString())
 
         questionTv.text = currentItem.question
         tvOption1.text = currentItem.option1
@@ -74,7 +75,7 @@ class QuestionAdapter(private val list: List<Question>, private val onClicked: O
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as ConstraintLayout)
-        questionFragment.changeNumbers(position)
+
     }
 }
 

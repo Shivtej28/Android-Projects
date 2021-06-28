@@ -28,9 +28,10 @@ import com.shivtej.androidprojects.models.Question
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
-class QuestionFragment : Fragment(), OnOptionClicked {
+class QuestionFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentQuestionBinding
+    private lateinit var includeView: View
     private lateinit var activity1: MainActivity
     private val TAG = "QuestionFragment"
     private val viewModel: ProjectViewModel by activityViewModels()
@@ -44,18 +45,18 @@ class QuestionFragment : Fragment(), OnOptionClicked {
 
     lateinit var callback: OnBackPressedCallback
 
-    private lateinit var tvOption1: TextView
-    private lateinit var tvOption2: TextView
-    private lateinit var tvOption3: TextView
-    private lateinit var tvOption4: TextView
-    private lateinit var cvOption1: MaterialCardView
-    private lateinit var cvOption2: MaterialCardView
-    private lateinit var cvOption3: MaterialCardView
-    private lateinit var cvOption4: MaterialCardView
-    private lateinit var ivOption1: CircleImageView
-    private lateinit var ivOption2: CircleImageView
-    private lateinit var ivOption3: CircleImageView
-    private lateinit var ivOption4: CircleImageView
+//    private lateinit var tvOption1: TextView
+//    private lateinit var tvOption2: TextView
+//    private lateinit var tvOption3: TextView
+//    private lateinit var tvOption4: TextView
+//    private lateinit var cvOption1: MaterialCardView
+//    private lateinit var cvOption2: MaterialCardView
+//    private lateinit var cvOption3: MaterialCardView
+//    private lateinit var cvOption4: MaterialCardView
+//    private lateinit var ivOption1: CircleImageView
+//    private lateinit var ivOption2: CircleImageView
+//    private lateinit var ivOption3: CircleImageView
+//    private lateinit var ivOption4: CircleImageView
 
 
     override fun onCreateView(
@@ -64,8 +65,6 @@ class QuestionFragment : Fragment(), OnOptionClicked {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
-        activity1 = activity as MainActivity
-        activity1.hideView()
 
         return binding.root
     }
@@ -74,6 +73,8 @@ class QuestionFragment : Fragment(), OnOptionClicked {
         super.onViewCreated(view, savedInstanceState)
 
         val quizname = arguments?.getString("quizname").toString()
+        activity1 = activity as MainActivity
+        activity1.hideView()
 
         binding.tvQuizName.text = quizname
 
@@ -81,9 +82,8 @@ class QuestionFragment : Fragment(), OnOptionClicked {
 
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
-            val adapter = QuestionAdapter(questionsList, this, this)
-            binding.questionViewpager.adapter = adapter
-            //showQuestion()
+            //val adapter = QuestionAdapter(questionsList, this, this)
+            showQuestion()
 
         })
 
@@ -94,10 +94,10 @@ class QuestionFragment : Fragment(), OnOptionClicked {
         callback.isEnabled = true
 
 
-//        binding.cvOption1.setOnClickListener(this)
-//        binding.cvOption2.setOnClickListener(this)
-//        binding.cvOption3.setOnClickListener(this)
-//        binding.cvOption4.setOnClickListener(this)
+        binding.includeLayout.cvOption1.setOnClickListener(this)
+        binding.includeLayout.cvOption2.setOnClickListener(this)
+        binding.includeLayout.cvOption3.setOnClickListener(this)
+        binding.includeLayout.cvOption4.setOnClickListener(this)
     }
 
     private fun showQuitDialog() {
@@ -145,89 +145,100 @@ class QuestionFragment : Fragment(), OnOptionClicked {
 
     }
 
-    fun changeNumbers(position: Int) {
-        val n = position+1
-        "$n/10".also { binding.questionNumber.text = it }
-        binding.progressbar.setProgress(n*10)
-    }
 
 
-    override fun onClicked(view: View, currentItem: Question, num: Int, position: Int) {
-
-        Log.i("Ans", currentItem.answer)
-
-        question = currentItem
-        tvOption1 = view.findViewById(R.id.tvOption1)
-        tvOption2 = view.findViewById(R.id.tvOption2)
-        tvOption3 = view.findViewById(R.id.tvOption3)
-        tvOption4 = view.findViewById(R.id.tvOption4)
-
-        cvOption1 = view.findViewById(R.id.cvOption1)
-        cvOption2 = view.findViewById(R.id.cvOption2)
-        cvOption3 = view.findViewById(R.id.cvOption3)
-        cvOption4 = view.findViewById(R.id.cvOption4)
-
-        ivOption1 = view.findViewById(R.id.ivOption1)
-        ivOption2 = view.findViewById(R.id.ivOption2)
-        ivOption3 = view.findViewById(R.id.ivOption3)
-        ivOption4 = view.findViewById(R.id.ivOption4)
-
-        when (num) {
-            1 -> checkAnswer(tvOption1, cvOption1, ivOption1)
-            2 -> checkAnswer(tvOption2, cvOption2, ivOption2)
-            3 -> checkAnswer(tvOption3, cvOption3, ivOption3)
-            4 -> checkAnswer(tvOption4, cvOption4, ivOption4)
-        }
-
-        Log.i("Ans", tvOption1.text.toString())
-
-    }
-
-//    private fun showQuestion() {
+//    override fun onClicked(view: View, currentItem: Question, num: Int, position: Int) {
 //
-//        question = questionsList[questionNumber]
-//        binding.questionsTextView.text = question.question
-//        binding.tvOption1.text = question.option1
-//        binding.tvOption2.text = question.option2
-//        binding.tvOption3.text = question.option3
-//        binding.tvOption4.text = question.option4
-//        val number = questionNumber + 1
-//        "$number/10".also { binding.questionNumber.text = it }
-//        disableEnableCVOption(true)
-//        setCardBackgroundWhite()
-//        binding.progressbar.setProgress(number * 10)
-//        binding.waveView.setProgress(number * 10)
-//    }
-
-//    private fun setCardBackgroundWhite() {
+//        Log.i("Ans", currentItem.answer)
 //
-//        binding.cvOption1.background.setTint(Color.WHITE)
-//        binding.ivOption1.setImageResource(R.drawable.a_option)
-//        binding.cvOption2.background.setTint(Color.WHITE)
-//        binding.ivOption2.setImageResource(R.drawable.b_option)
-//        binding.cvOption3.background.setTint(Color.WHITE)
-//        binding.ivOption3.setImageResource(R.drawable.c_option)
-//        binding.cvOption4.background.setTint(Color.WHITE)
-//        binding.ivOption4.setImageResource(R.drawable.d_option)
-//    }
-
-//    override fun onClick(v: View?) {
-//        when (v?.id) {
+//        question = currentItem
+//        tvOption1 = view.findViewById(R.id.tvOption1)
+//        tvOption2 = view.findViewById(R.id.tvOption2)
+//        tvOption3 = view.findViewById(R.id.tvOption3)
+//        tvOption4 = view.findViewById(R.id.tvOption4)
 //
-//            R.id.cvOption1 -> {
-//                checkAnswer(binding.tvOption1, binding.cvOption1, binding.ivOption1)
-//            }
-//            R.id.cvOption2 -> {
-//                checkAnswer(binding.tvOption2, binding.cvOption2, binding.ivOption2)
-//            }
-//            R.id.cvOption3 -> {
-//                checkAnswer(binding.tvOption3, binding.cvOption3, binding.ivOption3)
-//            }
-//            R.id.cvOption4 -> {
-//                checkAnswer(binding.tvOption4, binding.cvOption4, binding.ivOption4)
-//            }
+//        cvOption1 = view.findViewById(R.id.cvOption1)
+//        cvOption2 = view.findViewById(R.id.cvOption2)
+//        cvOption3 = view.findViewById(R.id.cvOption3)
+//        cvOption4 = view.findViewById(R.id.cvOption4)
+//
+//        ivOption1 = view.findViewById(R.id.ivOption1)
+//        ivOption2 = view.findViewById(R.id.ivOption2)
+//        ivOption3 = view.findViewById(R.id.ivOption3)
+//        ivOption4 = view.findViewById(R.id.ivOption4)
+//
+//        when (num) {
+//            1 -> checkAnswer(tvOption1, cvOption1, ivOption1)
+//            2 -> checkAnswer(tvOption2, cvOption2, ivOption2)
+//            3 -> checkAnswer(tvOption3, cvOption3, ivOption3)
+//            4 -> checkAnswer(tvOption4, cvOption4, ivOption4)
 //        }
+//
+//        Log.i("Ans", tvOption1.text.toString())
+//
 //    }
+
+    private fun showQuestion() {
+
+        question = questionsList[questionNumber]
+        binding.includeLayout.questionsTextView.text = question.question
+        binding.includeLayout.tvOption1.text = question.option1
+        binding.includeLayout.tvOption2.text = question.option2
+        binding.includeLayout.tvOption3.text = question.option3
+        binding.includeLayout.tvOption4.text = question.option4
+        val number = questionNumber + 1
+        "$number/10".also { binding.questionNumber.text = it }
+        disableEnableCVOption(true)
+        setCardBackgroundWhite()
+        binding.progressbar.setProgress(number * 10)
+        binding.waveView.setProgress(number * 10)
+    }
+
+    private fun setCardBackgroundWhite() {
+
+        binding.includeLayout.cvOption1.background.setTint(Color.WHITE)
+        binding.includeLayout.ivOption1.setImageResource(R.drawable.a_option)
+        binding.includeLayout.cvOption2.background.setTint(Color.WHITE)
+        binding.includeLayout.ivOption2.setImageResource(R.drawable.b_option)
+        binding.includeLayout.cvOption3.background.setTint(Color.WHITE)
+        binding.includeLayout.ivOption3.setImageResource(R.drawable.c_option)
+        binding.includeLayout.cvOption4.background.setTint(Color.WHITE)
+        binding.includeLayout.ivOption4.setImageResource(R.drawable.d_option)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+
+            R.id.cvOption1 -> {
+                checkAnswer(
+                    binding.includeLayout.tvOption1,
+                    binding.includeLayout.cvOption1,
+                    binding.includeLayout.ivOption1
+                )
+            }
+            R.id.cvOption2 -> {
+                checkAnswer(
+                    binding.includeLayout.tvOption2,
+                    binding.includeLayout.cvOption2,
+                    binding.includeLayout.ivOption2
+                )
+            }
+            R.id.cvOption3 -> {
+                checkAnswer(
+                    binding.includeLayout.tvOption3,
+                    binding.includeLayout.cvOption3,
+                    binding.includeLayout.ivOption3
+                )
+            }
+            R.id.cvOption4 -> {
+                checkAnswer(
+                    binding.includeLayout.tvOption4,
+                    binding.includeLayout.cvOption4,
+                    binding.includeLayout.ivOption4
+                )
+            }
+        }
+    }
 
     private fun checkAnswer(
         tvOption: TextView,
@@ -250,35 +261,42 @@ class QuestionFragment : Fragment(), OnOptionClicked {
             inCorrect++
             getCorrectAnswer()
         }
+        if(questionNumber<questionsList.size-1){
+            questionNumber++
+            showQuestion()
+        }else{
+            showScoreDialog()
+        }
+
 
     }
 
     private fun getCorrectAnswer() {
         when (question.answer) {
-            tvOption1.text.toString() -> {
-                cvOption1.background.setTint(Color.GREEN)
-                ivOption1.setImageResource(R.drawable.basic_tick)
+            binding.includeLayout.tvOption1.text.toString() -> {
+                binding.includeLayout.cvOption1.background.setTint(Color.GREEN)
+                binding.includeLayout.ivOption1.setImageResource(R.drawable.basic_tick)
             }
-            tvOption2.text.toString() -> {
-                cvOption2.background.setTint(Color.GREEN)
-                ivOption2.setImageResource(R.drawable.basic_tick)
+            binding.includeLayout.tvOption2.text.toString() -> {
+                binding.includeLayout.cvOption2.background.setTint(Color.GREEN)
+                binding.includeLayout.ivOption2.setImageResource(R.drawable.basic_tick)
             }
-            tvOption3.text.toString() -> {
-                cvOption3.background.setTint(Color.GREEN)
-                ivOption3.setImageResource(R.drawable.basic_tick)
+            binding.includeLayout.tvOption3.text.toString() -> {
+                binding.includeLayout.cvOption3.background.setTint(Color.GREEN)
+                binding.includeLayout.ivOption3.setImageResource(R.drawable.basic_tick)
             }
             else -> {
-                cvOption4.background.setTint(Color.GREEN)
-                ivOption4.setImageResource(R.drawable.basic_tick)
+                binding.includeLayout.cvOption4.background.setTint(Color.GREEN)
+                binding.includeLayout.ivOption4.setImageResource(R.drawable.basic_tick)
             }
         }
     }
 
     private fun disableEnableCVOption(b: Boolean) {
-        cvOption1.isEnabled = b
-        cvOption2.isEnabled = b
-        cvOption3.isEnabled = b
-        cvOption4.isEnabled = b
+        binding.includeLayout.cvOption1.isEnabled = b
+        binding.includeLayout.cvOption2.isEnabled = b
+        binding.includeLayout.cvOption3.isEnabled = b
+        binding.includeLayout.cvOption4.isEnabled = b
     }
 
 

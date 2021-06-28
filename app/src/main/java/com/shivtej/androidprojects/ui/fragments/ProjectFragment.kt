@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -40,6 +43,9 @@ class ProjectFragment : Fragment(), ItemClicked {
     private lateinit var navController: NavController
     val TAG = "ProjectFragment"
 
+    lateinit var callback: OnBackPressedCallback
+    var backPressed = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +66,20 @@ class ProjectFragment : Fragment(), ItemClicked {
         advanceProjectList = listOf()
         activity1 = activity as MainActivity
         activity1.showView()
+
+//        callback = requireActivity().onBackPressedDispatcher.addCallback {
+//            if (backPressed) {
+//                backPressed = false
+//                closeApp()
+//
+//            }else{
+//                showToast()
+//
+//            }
+//            //activity1.onBackPressed()
+//
+//        }
+//        callback.isEnabled = true
         binding.basicRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.intermediateRecyclerView.layoutManager =
@@ -91,12 +111,21 @@ class ProjectFragment : Fragment(), ItemClicked {
         })
 
 
+    }
 
+    private fun closeApp() {
+        callback.isEnabled = false
+        Log.i("Close", "close")
+        activity?.onBackPressed()
 
 
     }
 
+    private fun showToast() {
+        backPressed = true
+        Toast.makeText(requireContext(), "Pressed Back Again to close", Toast.LENGTH_SHORT).show()
 
+    }
 
 
     override fun onItemClicked(project: Project) {

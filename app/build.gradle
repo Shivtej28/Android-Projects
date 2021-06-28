@@ -125,5 +125,7 @@ dependencies {
     //RazorPay
     implementation 'com.razorpay:checkout:1.6.6'
 
+    //AdMob
+    implementation 'com.google.android.gms:play-services-ads:20.2.0'
 
 }

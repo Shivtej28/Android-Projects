@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
@@ -47,7 +47,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
@@ -92,7 +92,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
@@ -137,7 +137,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
@@ -182,7 +182,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption4"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"

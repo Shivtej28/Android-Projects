@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/apq_nav_graph"
     app:startDestination="@id/loginFragment">
     <fragment
@@ -35,7 +36,14 @@
     <fragment
         android:id="@+id/learnFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.LearnFragment"
-        android:label="LearnFragment" />
+        android:label="LearnFragment" >
+        <action
+            android:id="@+id/action_learnFragment_to_blogViewFragment"
+            app:destination="@id/blogViewFragment" />
+        <argument
+            android:name="blog"
+            app:argType="com.shivtej.androidprojects.models.LearnBlog" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProfileFragment"
@@ -78,4 +86,9 @@
         android:id="@+id/questionFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.QuestionFragment"
         android:label="QuestionFragment" />
+    <fragment
+        android:id="@+id/blogViewFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.BlogViewFragment"
+        android:label="fragment_blog_view"
+        tools:layout="@layout/fragment_blog_view" />
 </navigation>

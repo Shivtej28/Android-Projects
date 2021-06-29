@@ -40,10 +40,14 @@ class ProjectDetailsFragment : Fragment() {
         Log.e("project", project.toString())
 
         val imagesList = getImagesList()
-        activity1.projectView()
+        activity1.hideView()
         val detailUrl = project.description
         binding.webView.loadUrl(detailUrl)
+        binding.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
 
+        binding.toolbarTextView.text = project.title
         val adapter = SliderAdapter(imagesList)
 
         binding.imageSlider.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR

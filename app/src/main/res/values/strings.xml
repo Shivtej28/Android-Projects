@@ -65,4 +65,5 @@ If you’re setting a very long text that then you’re not actually showing on 
     <string name="notification_channel_id" translatable="false">notification_channel</string>
     <string name="notification_channel_name" translatable="false">thanks</string>
     <string name="notification_channel_description" translatable="false">Thaks For </string>
+    <string name="feed_articles">Feed Articles</string>
 </resources>

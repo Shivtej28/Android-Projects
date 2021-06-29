@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.LearnAdapter
@@ -26,6 +28,8 @@ class LearnFragment: Fragment(), OnClicked {
     private lateinit var learnBlogList: List<LearnBlog>
     private lateinit var adapter: LearnAdapter
 
+    private lateinit var navController: NavController
+
     private val viewModel: ProjectViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -42,7 +46,7 @@ class LearnFragment: Fragment(), OnClicked {
         super.onViewCreated(view, savedInstanceState)
         activity1 = activity as MainActivity
         activity1.showView()
-
+        navController = Navigation.findNavController(view)
 
         learnBlogList = listOf()
 
@@ -59,7 +63,9 @@ class LearnFragment: Fragment(), OnClicked {
     }
 
     override fun onLearnBlogClicked(currentItem: LearnBlog) {
-        Toast.makeText(requireContext(), currentItem.url, Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        bundle.putSerializable("blog", currentItem)
+        navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
     }
 
     override fun onMenuMarkAsTodoClicked(currentItem: LearnBlog) {

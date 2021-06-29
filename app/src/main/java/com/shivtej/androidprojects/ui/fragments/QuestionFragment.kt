@@ -5,8 +5,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -75,6 +78,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -115,6 +119,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.includeLayout.cvOption2.setOnClickListener(this)
         binding.includeLayout.cvOption3.setOnClickListener(this)
         binding.includeLayout.cvOption4.setOnClickListener(this)
+
+        //CountDown Timer
+        binding.countDown.isCountDown = true
+        binding.countDown.base = SystemClock.elapsedRealtime() + 30000
+        binding.countDown.start()
 
 
         val adRequest = AdRequest.Builder().build()

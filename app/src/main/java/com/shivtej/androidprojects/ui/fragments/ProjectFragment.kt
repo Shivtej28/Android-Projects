@@ -44,7 +44,7 @@ class ProjectFragment : Fragment(), ItemClicked {
     val TAG = "ProjectFragment"
 
     lateinit var callback: OnBackPressedCallback
-    var backPressed = false
+    var pressedTime: Long = 0
 
 
     override fun onCreateView(
@@ -67,19 +67,18 @@ class ProjectFragment : Fragment(), ItemClicked {
         activity1 = activity as MainActivity
         activity1.showView()
 
-//        callback = requireActivity().onBackPressedDispatcher.addCallback {
-//            if (backPressed) {
-//                backPressed = false
-//                closeApp()
-//
-//            }else{
-//                showToast()
-//
-//            }
-//            //activity1.onBackPressed()
-//
-//        }
-//        callback.isEnabled = true
+        callback = requireActivity().onBackPressedDispatcher.addCallback {
+            if (pressedTime + 2000 > System.currentTimeMillis()) {
+                activity1.finish()
+            } else {
+                Toast.makeText(requireContext(), "Press back again to exit", Toast.LENGTH_SHORT)
+                    .show();
+            }
+            pressedTime = System.currentTimeMillis()
+
+
+        }
+        callback.isEnabled = true
         binding.basicRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.intermediateRecyclerView.layoutManager =
@@ -116,13 +115,13 @@ class ProjectFragment : Fragment(), ItemClicked {
     private fun closeApp() {
         callback.isEnabled = false
         Log.i("Close", "close")
-        activity?.onBackPressed()
+        activity1.finish()
 
 
     }
 
     private fun showToast() {
-        backPressed = true
+
         Toast.makeText(requireContext(), "Pressed Back Again to close", Toast.LENGTH_SHORT).show()
 
     }

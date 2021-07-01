@@ -119,24 +119,5 @@ class MainActivity : AppCompatActivity() {
         toolbarText()
     }
 
-    override fun onBackPressed() {
-        val fragemnts = navController.currentDestination?.id
-
-        Log.i("fragments", (fragemnts == R.id.projectFragment).toString())
-        if (fragemnts != R.id.projectFragment) {
-
-            navController.popBackStack()
-        } else {
-            if (pressedTime + 2000 > System.currentTimeMillis()) {
-                super.onBackPressed();
-                finish();
-            } else {
-                Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show();
-            }
-            pressedTime = System.currentTimeMillis()
-        }
-
-    }
-
 
 }

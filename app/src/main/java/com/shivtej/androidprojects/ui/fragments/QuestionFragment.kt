@@ -43,7 +43,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
     private var inCorrect = 0
     private var notAttempted = 0
 
-    lateinit var callback: OnBackPressedCallback
+    private lateinit var callback: OnBackPressedCallback
 
 //    private lateinit var tvOption1: TextView
 //    private lateinit var tvOption2: TextView
@@ -80,18 +80,19 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         questionsList = arrayListOf()
 
+        callback = requireActivity().onBackPressedDispatcher.addCallback {
+            Log.d("back", "back")
+            showQuitDialog()
+        }
+        callback.isEnabled = true
+
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
-            //val adapter = QuestionAdapter(questionsList, this, this)
             showQuestion()
 
         })
 
-        callback = requireActivity().onBackPressedDispatcher.addCallback {
-            showQuitDialog()
-        }
 
-        callback.isEnabled = true
 
 
         binding.includeLayout.cvOption1.setOnClickListener(this)
@@ -144,7 +145,6 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         }
 
     }
-
 
 
 //    override fun onClicked(view: View, currentItem: Question, num: Int, position: Int) {
@@ -261,10 +261,10 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             inCorrect++
             getCorrectAnswer()
         }
-        if(questionNumber<questionsList.size-1){
+        if (questionNumber < questionsList.size - 1) {
             questionNumber++
             showQuestion()
-        }else{
+        } else {
             showScoreDialog()
         }
 

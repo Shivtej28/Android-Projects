@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_4sdp"
@@ -47,7 +47,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
@@ -92,7 +92,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
@@ -137,7 +137,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:backgroundTint="@color/white"
@@ -182,7 +182,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvOption4"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
@@ -190,7 +190,6 @@
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="@dimen/_2sdp"
                 app:contentPadding="@dimen/_12sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvOption3">
@@ -225,6 +224,21 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserratmedium"
+                android:text="@string/next"
+                android:textColor="@color/black"
+                app:cornerRadius="@dimen/_6sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvOption4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

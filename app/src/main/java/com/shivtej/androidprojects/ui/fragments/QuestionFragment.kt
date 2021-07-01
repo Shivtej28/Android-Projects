@@ -1,11 +1,14 @@
 package com.shivtej.androidprojects.ui.fragments
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +18,13 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.card.MaterialCardView
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.OnOptionClicked
@@ -43,7 +50,9 @@ class QuestionFragment : Fragment(), View.OnClickListener {
     private var inCorrect = 0
     private var notAttempted = 0
 
-    private lateinit var callback: OnBackPressedCallback
+    lateinit var callback: OnBackPressedCallback
+    private var mInterstitialAd: InterstitialAd? = null
+
 
 //    private lateinit var tvOption1: TextView
 //    private lateinit var tvOption2: TextView
@@ -69,8 +78,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        MobileAds.initialize(context) {}
 
         val quizname = arguments?.getString("quizname").toString()
         activity1 = activity as MainActivity
@@ -80,25 +92,99 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         questionsList = arrayListOf()
 
-        callback = requireActivity().onBackPressedDispatcher.addCallback {
-            Log.d("back", "back")
-            showQuitDialog()
-        }
-        callback.isEnabled = true
+        val adView = AdView(context)
+
+        adView.adSize = AdSize.LARGE_BANNER
+
+        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
+
+
+
 
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
+            //val adapter = QuestionAdapter(questionsList, this, this)
             showQuestion()
 
         })
 
-
+        callback = requireActivity().onBackPressedDispatcher.addCallback {
+            showQuitDialog()
+        }
+        callback.isEnabled = true
 
 
         binding.includeLayout.cvOption1.setOnClickListener(this)
         binding.includeLayout.cvOption2.setOnClickListener(this)
         binding.includeLayout.cvOption3.setOnClickListener(this)
         binding.includeLayout.cvOption4.setOnClickListener(this)
+
+        //CountDown Timer
+        binding.countDown.isCountDown = true
+        binding.countDown.base = SystemClock.elapsedRealtime() + 30000
+        binding.countDown.start()
+
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
+        binding.adView.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+
+
+        }
+
+        InterstitialAd.load(
+            context,
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d(TAG, adError.message)
+                    mInterstitialAd = null
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d(TAG, "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                }
+            })
+
+        mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                Log.d(TAG, "Ad was dismissed.")
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                Log.d(TAG, "Ad failed to show.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d(TAG, "Ad showed fullscreen content.")
+                mInterstitialAd = null;
+            }
+        }
+
     }
 
     private fun showQuitDialog() {
@@ -123,6 +209,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         builder.setContentView(R.layout.quiz_complete_dialog_box)
         builder.show()
         builder.setCanceledOnTouchOutside(false)
+        builder.setCancelable(false)
 
         val tvTotalQuestion: TextView = builder.findViewById(R.id.tvTotalQuestion)
         val tvCorrect: TextView = builder.findViewById(R.id.tvCorrectValue)
@@ -142,6 +229,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             callback.isEnabled = false
             builder.dismiss()
             activity?.onBackPressed()
+            if (mInterstitialAd != null) {
+                mInterstitialAd?.show(activity1)
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+            }
         }
 
     }

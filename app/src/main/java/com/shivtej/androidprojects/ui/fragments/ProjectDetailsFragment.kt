@@ -10,6 +10,12 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.SliderAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectDetailsBinding
@@ -22,6 +28,7 @@ class ProjectDetailsFragment : Fragment() {
     private lateinit var binding: FragmentProjectDetailsBinding
     private lateinit var project: Project
     private lateinit var activity1: MainActivity
+    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,9 +42,41 @@ class ProjectDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity1 = activity as MainActivity
-        activity1.hideView()
+        activity1.projectView()
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
+
+        val adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(context,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("ProjectDetails", adError.message)
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d("ProjectDetails", "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+            }
+
+
+        })
+
+        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                Log.d("ProjectDetails", "Ad was dismissed.")
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                Log.d("ProjectDetails", "Ad failed to show.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d("ProjectDetails", "Ad showed fullscreen content.")
+                mInterstitialAd = null;
+            }
+        }
+
 
         val imagesList = getImagesList()
         activity1.hideView()
@@ -62,6 +101,13 @@ class ProjectDetailsFragment : Fragment() {
 
 
         binding.sourceCodeBtn.setOnClickListener {
+
+//            if (mInterstitialAd != null) {
+//                mInterstitialAd?.show(activity1)
+//            } else {
+//                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+//            }
+
             val builder = CustomTabsIntent.Builder()
             val colorSchemeParams = CustomTabColorSchemeParams.Builder()
                 .setNavigationBarColor(ContextCompat.getColor(requireContext(), R.color.androidbg))
@@ -73,7 +119,6 @@ class ProjectDetailsFragment : Fragment() {
 
             customTabIntent.launchUrl(requireContext(), Uri.parse(project.zipfile))
         }
-
 
     }
 

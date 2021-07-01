@@ -61,9 +61,11 @@
     <string name="longString">When you set long text on textView it measures all of the words and lay’s out the entire text you’ve given it, so this the huge performance hit.
 
 If you’re setting a very long text that then you’re not actually showing on screen may be the user never scrolls.</string>
+    <string name="todo_done">Todo/Done</string>
 
     <string name="notification_channel_id" translatable="false">notification_channel</string>
     <string name="notification_channel_name" translatable="false">thanks</string>
     <string name="notification_channel_description" translatable="false">Thaks For </string>
     <string name="feed_articles">Feed Articles</string>
+    <string name="next">Next</string>
 </resources>

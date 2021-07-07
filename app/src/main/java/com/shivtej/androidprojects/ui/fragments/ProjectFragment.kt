@@ -43,8 +43,8 @@ class ProjectFragment : Fragment(), ItemClicked {
     private lateinit var navController: NavController
     val TAG = "ProjectFragment"
 
-    lateinit var callback: OnBackPressedCallback
-    var pressedTime: Long = 0
+
+    private var pressedTime: Long = 0
 
 
     override fun onCreateView(
@@ -67,18 +67,14 @@ class ProjectFragment : Fragment(), ItemClicked {
         activity1 = activity as MainActivity
         activity1.showView()
 
-        callback = requireActivity().onBackPressedDispatcher.addCallback {
-            if (pressedTime + 2000 > System.currentTimeMillis()) {
-                activity1.finish()
-            } else {
-                Toast.makeText(requireContext(), "Press back again to exit", Toast.LENGTH_SHORT)
-                    .show();
-            }
-            pressedTime = System.currentTimeMillis()
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    closeApp()
+                }
 
-
-        }
-        callback.isEnabled = true
+            })
+        //callback.isEnabled = true
         binding.basicRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.intermediateRecyclerView.layoutManager =
@@ -113,9 +109,14 @@ class ProjectFragment : Fragment(), ItemClicked {
     }
 
     private fun closeApp() {
-        callback.isEnabled = false
-        Log.i("Close", "close")
-        activity1.finish()
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            activity?.finish()
+        } else {
+            Toast.makeText(requireContext(), "Press back again to exit", Toast.LENGTH_SHORT)
+                .show()
+            Log.d("finish", activity1.supportFragmentManager.backStackEntryCount.toString())
+        }
+        pressedTime = System.currentTimeMillis()
 
 
     }

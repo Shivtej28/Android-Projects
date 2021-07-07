@@ -48,21 +48,25 @@ class ProjectDetailsFragment : Fragment() {
 
         val adRequest = AdRequest.Builder().build()
 
-        InterstitialAd.load(context,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d("ProjectDetails", adError.message)
-                mInterstitialAd = null
-            }
+        InterstitialAd.load(
+            context,
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d("ProjectDetails", adError.message)
+                    mInterstitialAd = null
+                }
 
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                Log.d("ProjectDetails", "Ad was loaded.")
-                mInterstitialAd = interstitialAd
-            }
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d("ProjectDetails", "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                }
 
 
-        })
+            })
 
-        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+        mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
                 Log.d("ProjectDetails", "Ad was dismissed.")
             }

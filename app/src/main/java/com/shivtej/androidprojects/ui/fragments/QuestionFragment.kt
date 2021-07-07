@@ -1,34 +1,24 @@
 package com.shivtej.androidprojects.ui.fragments
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.graphics.Color
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
+import android.os.*
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.card.MaterialCardView
 import com.shivtej.androidprojects.R
-import com.shivtej.androidprojects.adapters.OnOptionClicked
-import com.shivtej.androidprojects.adapters.QuestionAdapter
 import com.shivtej.androidprojects.databinding.FragmentQuestionBinding
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.models.Question
@@ -48,24 +38,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
     private var questionNumber = 0
     private var score = 0
     private var inCorrect = 0
-    private var notAttempted = 0
 
     lateinit var callback: OnBackPressedCallback
     private var mInterstitialAd: InterstitialAd? = null
 
-
-//    private lateinit var tvOption1: TextView
-//    private lateinit var tvOption2: TextView
-//    private lateinit var tvOption3: TextView
-//    private lateinit var tvOption4: TextView
-//    private lateinit var cvOption1: MaterialCardView
-//    private lateinit var cvOption2: MaterialCardView
-//    private lateinit var cvOption3: MaterialCardView
-//    private lateinit var cvOption4: MaterialCardView
-//    private lateinit var ivOption1: CircleImageView
-//    private lateinit var ivOption2: CircleImageView
-//    private lateinit var ivOption3: CircleImageView
-//    private lateinit var ivOption4: CircleImageView
+    private lateinit var timer: CountDownTimer
 
 
     override fun onCreateView(
@@ -100,7 +77,6 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
 
 
-
         viewModel.getQuestions(quizname).observe(viewLifecycleOwner, {
             questionsList = it
             //val adapter = QuestionAdapter(questionsList, this, this)
@@ -119,14 +95,9 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.includeLayout.cvOption3.setOnClickListener(this)
         binding.includeLayout.cvOption4.setOnClickListener(this)
 
-        //CountDown Timer
-        binding.countDown.isCountDown = true
-        binding.countDown.base = SystemClock.elapsedRealtime() + 30000
-        binding.countDown.start()
-
 
         val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
+        //binding.adView.loadAd(adRequest)
 
         binding.adView.adListener = object : AdListener() {
             override fun onAdLoaded() {
@@ -150,8 +121,6 @@ class QuestionFragment : Fragment(), View.OnClickListener {
                 // Code to be executed when the user is about to return
                 // to the app after tapping on an ad.
             }
-
-
         }
 
         InterstitialAd.load(
@@ -185,9 +154,24 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             }
         }
 
+        binding.includeLayout.nextBtn.setOnClickListener {
+            timer.cancel()
+            showNextQuestion()
+        }
+
+    }
+
+    private fun showNextQuestion() {
+        if (questionNumber < questionsList.size - 1) {
+            questionNumber++
+            showQuestion()
+        } else {
+            showScoreDialog()
+        }
     }
 
     private fun showQuitDialog() {
+        timer.cancel()
         val dialogBuilder = AlertDialog.Builder(requireContext())
 
         dialogBuilder.setTitle("End Quiz?")
@@ -195,7 +179,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
                 showScoreDialog()
             }
             .setNegativeButton("No") { _, _ ->
-
+                timer.start()
             }
 
         val dialog = dialogBuilder.create()
@@ -238,40 +222,8 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
     }
 
-
-//    override fun onClicked(view: View, currentItem: Question, num: Int, position: Int) {
-//
-//        Log.i("Ans", currentItem.answer)
-//
-//        question = currentItem
-//        tvOption1 = view.findViewById(R.id.tvOption1)
-//        tvOption2 = view.findViewById(R.id.tvOption2)
-//        tvOption3 = view.findViewById(R.id.tvOption3)
-//        tvOption4 = view.findViewById(R.id.tvOption4)
-//
-//        cvOption1 = view.findViewById(R.id.cvOption1)
-//        cvOption2 = view.findViewById(R.id.cvOption2)
-//        cvOption3 = view.findViewById(R.id.cvOption3)
-//        cvOption4 = view.findViewById(R.id.cvOption4)
-//
-//        ivOption1 = view.findViewById(R.id.ivOption1)
-//        ivOption2 = view.findViewById(R.id.ivOption2)
-//        ivOption3 = view.findViewById(R.id.ivOption3)
-//        ivOption4 = view.findViewById(R.id.ivOption4)
-//
-//        when (num) {
-//            1 -> checkAnswer(tvOption1, cvOption1, ivOption1)
-//            2 -> checkAnswer(tvOption2, cvOption2, ivOption2)
-//            3 -> checkAnswer(tvOption3, cvOption3, ivOption3)
-//            4 -> checkAnswer(tvOption4, cvOption4, ivOption4)
-//        }
-//
-//        Log.i("Ans", tvOption1.text.toString())
-//
-//    }
-
     private fun showQuestion() {
-
+        startTimer()
         question = questionsList[questionNumber]
         binding.includeLayout.questionsTextView.text = question.question
         binding.includeLayout.tvOption1.text = question.option1
@@ -339,6 +291,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
     ) {
 
         disableEnableCVOption(false)
+        timer.cancel()
         val answer = question.answer
         val selectedAns = tvOption.text.toString()
         Log.d(TAG, "Answer")
@@ -353,14 +306,9 @@ class QuestionFragment : Fragment(), View.OnClickListener {
             inCorrect++
             getCorrectAnswer()
         }
-        if (questionNumber < questionsList.size - 1) {
-            questionNumber++
-            showQuestion()
-        } else {
+        if (questionNumber == questionsList.size - 1) {
             showScoreDialog()
         }
-
-
     }
 
     private fun getCorrectAnswer() {
@@ -389,6 +337,23 @@ class QuestionFragment : Fragment(), View.OnClickListener {
         binding.includeLayout.cvOption2.isEnabled = b
         binding.includeLayout.cvOption3.isEnabled = b
         binding.includeLayout.cvOption4.isEnabled = b
+    }
+
+    private fun startTimer() {
+        //CountDown Timer
+        timer = object : CountDownTimer(5000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                Log.d("Timer", millisUntilFinished.toString())
+                var sec = millisUntilFinished / 1000
+                "00:$sec".also { binding.countDown.text = it }
+            }
+
+            override fun onFinish() {
+                Log.i("Timer", "End")
+                showNextQuestion()
+            }
+        }
+        timer.start()
     }
 
 

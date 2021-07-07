@@ -22,12 +22,21 @@
         app:sliderIndicatorMargin="15dp"
         app:sliderIndicatorOrientation="horizontal"
         app:sliderIndicatorPadding="3dp"
+        android:visibility="gone"
         app:sliderIndicatorRadius="2dp"
         app:sliderIndicatorSelectedColor="#2b2b2b"
         app:sliderIndicatorUnselectedColor="@color/grey"
         app:sliderScrollTimeInSec="1"
         app:sliderStartAutoCycle="true" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/image_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

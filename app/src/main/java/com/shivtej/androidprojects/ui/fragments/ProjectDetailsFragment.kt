@@ -10,6 +10,7 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -90,27 +91,13 @@ class ProjectDetailsFragment : Fragment() {
             activity?.onBackPressed()
         }
 
+        setUpRecyclerView(imagesList)
+
+
         binding.toolbarTextView.text = project.title
-        val adapter = SliderAdapter(imagesList)
-
-        binding.imageSlider.autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
-
-        binding.imageSlider.setSliderAdapter(adapter)
-
-        binding.imageSlider.scrollTimeInSec = 3
-
-        binding.imageSlider.isAutoCycle = true
-
-        binding.imageSlider.startAutoCycle()
 
 
         binding.sourceCodeBtn.setOnClickListener {
-
-//            if (mInterstitialAd != null) {
-//                mInterstitialAd?.show(activity1)
-//            } else {
-//                Log.d("TAG", "The interstitial ad wasn't ready yet.")
-//            }
 
             val builder = CustomTabsIntent.Builder()
             val colorSchemeParams = CustomTabColorSchemeParams.Builder()
@@ -123,6 +110,15 @@ class ProjectDetailsFragment : Fragment() {
 
             customTabIntent.launchUrl(requireContext(), Uri.parse(project.zipfile))
         }
+
+    }
+
+    private fun setUpRecyclerView(imagesList: ArrayList<String>) {
+        binding.imageRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val adapter = SliderAdapter(imagesList)
+        binding.imageRecyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
 
     }
 

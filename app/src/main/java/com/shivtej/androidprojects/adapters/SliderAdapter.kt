@@ -1,38 +1,35 @@
 package com.shivtej.androidprojects.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shivtej.androidprojects.R
+import com.shivtej.androidprojects.adapters.SliderAdapter.ViewHolder
 import com.smarteist.autoimageslider.SliderViewAdapter
 
 class SliderAdapter(private val list: ArrayList<String>) :
-    SliderViewAdapter<SliderAdapter.ViewHolder>() {
+    RecyclerView.Adapter<SliderAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : SliderViewAdapter.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageView: ImageView = itemView.findViewById(R.id.project_ss_image_view)
     }
 
-    override fun getCount(): Int {
-        return list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.image_slider_item,parent, false)
+        return  ViewHolder(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
-        val view =
-            LayoutInflater.from(parent?.context).inflate(
-                R.layout.image_slider_item, parent, false
-            )
-        return ViewHolder(view)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+       val currentItem = list[position]
+        Log.d("Link", currentItem.toString())
+        Glide.with(holder.itemView.context).load(currentItem).into(holder.imageView)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
-        val currentItem = list[position]
-        if (viewHolder != null) {
-            Glide.with(viewHolder.itemView).load(currentItem).into(viewHolder.imageView)
+    override fun getItemCount(): Int = list.size
 
-        }
-    }
 
 }

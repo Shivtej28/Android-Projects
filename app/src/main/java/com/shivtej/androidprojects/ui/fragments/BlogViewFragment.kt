@@ -19,12 +19,12 @@ class BlogViewFragment : Fragment() {
 
     private lateinit var binding: FragmentBlogViewBinding
     private lateinit var activity1: MainActivity
-
+    private var like: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentBlogViewBinding.inflate(inflater, container, false)
         return binding.root
@@ -77,6 +77,20 @@ class BlogViewFragment : Fragment() {
         binding.blogWebView.webChromeClient = WebChromeClient()
 
         binding.blogWebView.loadUrl(blog.url.toString())
+
+        binding.bookmarkPost.setOnClickListener {
+            like = if (like) {
+                binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
+                binding.bookmarkPost.playAnimation()
+                false
+            } else {
+                binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
+                binding.bookmarkPost.playAnimation()
+                true
+            }
+        }
+
+        binding.sharePost.playAnimation()
 
     }
 

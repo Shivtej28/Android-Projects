@@ -5,19 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.shivtej.androidprojects.R
-import com.shivtej.androidprojects.databinding.FragmentMarkAsDoneBinding
+import com.shivtej.androidprojects.databinding.FragmentSavedPostBinding
 
-class MarkAsDoneFragment : Fragment() {
+class SavedPostFragment : Fragment() {
 
-    private lateinit var binding: FragmentMarkAsDoneBinding
+    private lateinit var binding: FragmentSavedPostBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentMarkAsDoneBinding.inflate(inflater, container, false)
+        binding = FragmentSavedPostBinding.inflate(inflater, container, false)
         return binding.root
     }
 

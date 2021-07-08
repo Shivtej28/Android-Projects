@@ -3,25 +3,26 @@ package com.shivtej.androidprojects.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.models.LearnBlog
-import com.shivtej.androidprojects.ui.fragments.LearnFragment
 
 class LearnAdapter(private val list: List<LearnBlog>, private val onClicked: OnClicked) :
-    RecyclerView.Adapter<LearnAdapter.ViewHolder>()  {
+    RecyclerView.Adapter<LearnAdapter.ViewHolder>() {
 
-        inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-            val tvTitle : TextView = itemView.findViewById(R.id.title)
-            val tvContent : TextView = itemView.findViewById(R.id.some_content)
-            val popUpMenu : ImageButton = itemView.findViewById(R.id.pop_up_menu)
-        }
+    private var like: Boolean = true
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvTitle: TextView = itemView.findViewById(R.id.title)
+        val tvContent: TextView = itemView.findViewById(R.id.some_content)
+        val bookmark: LottieAnimationView = itemView.findViewById(R.id.bookmark_post)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.learn_list_rv_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.learn_list_rv_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,23 +35,23 @@ class LearnAdapter(private val list: List<LearnBlog>, private val onClicked: OnC
             onClicked.onLearnBlogClicked(currentItem)
         }
 
-        holder.popUpMenu.setOnClickListener {
-            val popUp = PopupMenu(holder.itemView.context, holder.popUpMenu)
-            popUp.inflate(R.menu.learn_menu)
-            popUp.show()
+        holder.bookmark.setOnClickListener {
+
+            like = if (like) {
+                holder.bookmark.setMinAndMaxProgress(0.0f, 0.5f)
+                holder.bookmark.playAnimation()
+                false
+            } else {
+                holder.bookmark.setMinAndMaxProgress(0.5f, 1.0f)
+                holder.bookmark.playAnimation()
+                true
+            }
         }
-
-
-
     }
 
     override fun getItemCount(): Int = list.size
 }
 
-interface OnClicked{
-    fun onLearnBlogClicked(currentItem : LearnBlog)
-
-    fun onMenuMarkAsTodoClicked(currentItem: LearnBlog)
-
-    fun orMenuMarkAsDoneClicked(currentItem: LearnBlog)
+interface OnClicked {
+    fun onLearnBlogClicked(currentItem: LearnBlog)
 }

@@ -1,6 +1,5 @@
 package com.shivtej.androidprojects.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -105,15 +104,6 @@ class LearnFragment: Fragment(), OnClicked {
                 bundle.putSerializable("blog", currentItem)
                 navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
             }
-
-            override fun onMenuMarkAsTodoClicked(currentItem: LearnBlog) {
-                TODO("Not yet implemented")
-            }
-
-            override fun orMenuMarkAsDoneClicked(currentItem: LearnBlog) {
-                TODO("Not yet implemented")
-            }
-
         })
 
         binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -125,13 +115,5 @@ class LearnFragment: Fragment(), OnClicked {
         val bundle = Bundle()
         bundle.putSerializable("blog", currentItem)
         navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
-    }
-
-    override fun onMenuMarkAsTodoClicked(currentItem: LearnBlog) {
-        TODO("Not yet implemented")
-    }
-
-    override fun orMenuMarkAsDoneClicked(currentItem: LearnBlog) {
-        TODO("Not yet implemented")
     }
 }

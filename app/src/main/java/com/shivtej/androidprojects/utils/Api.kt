@@ -11,6 +11,6 @@ interface Api {
 
     }
 
-    @GET("articles?username=nataliedeweerd")
+    @GET("articles?username=asadevelopers")
     fun getHeroes(): Call<ArrayList<LearnBlog>>
 }

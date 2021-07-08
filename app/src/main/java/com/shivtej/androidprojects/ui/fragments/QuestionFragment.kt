@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.os.*
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentQuestionBinding
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.models.Question
+import com.shivtej.androidprojects.utils.Constants
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -69,11 +71,11 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
         questionsList = arrayListOf()
 
-        val adView = AdView(context)
+        val adView = AdView(requireContext())
 
-        adView.adSize = AdSize.LARGE_BANNER
+        adView.adSize = AdSize.FULL_BANNER
 
-        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
+        adView.adUnitId = Constants.testBannerAd
 
 
 
@@ -97,7 +99,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
 
         val adRequest = AdRequest.Builder().build()
-        //binding.adView.loadAd(adRequest)
+        binding.adView.loadAd(adRequest)
 
         binding.adView.adListener = object : AdListener() {
             override fun onAdLoaded() {

@@ -28,7 +28,7 @@ class LearnAdapter(private val list: List<LearnBlog>, private val onClicked: OnC
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
         holder.tvTitle.text = currentItem.title
-        holder.tvContent.text = currentItem.detail
+        holder.tvContent.text = currentItem.description
 
         holder.itemView.setOnClickListener {
             onClicked.onLearnBlogClicked(currentItem)

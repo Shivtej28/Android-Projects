@@ -3,6 +3,9 @@ package com.shivtej.androidprojects.utils
  class Constants {
 
     companion object{
+
+        val BASE_URL = "https://dev.to/api/articles?username=powercoder"
+
         const val PROJECT_LEVEL : String = "PROJECT_LEVEL"
         const val QUIZ_NAME : String = "QUIZ_NAME"
         const val PROJECT : String = "PROJECT"
@@ -18,6 +21,7 @@ package com.shivtej.androidprojects.utils
 
         const val testInterstitialId : String = "ca-app-pub-3940256099942544/1033173712"
         const val testRewardedAdId : String = "ca-app-pub-3940256099942544/5224354917"
+        const val testBannerAd : String = "ca-app-pub-3940256099942544/6300978111"
 
         const val RC_SIGN_IN = 9001
 

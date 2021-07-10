@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.shivtej.androidprojects.ui.fragments.MarkAsDoneFragment
+import com.shivtej.androidprojects.ui.fragments.SavedPostFragment
 import com.shivtej.androidprojects.ui.fragments.TodoDoneFragment
 import com.shivtej.androidprojects.ui.fragments.TodoFragment
 
@@ -17,7 +17,7 @@ class TabLayoutAdapter(fragmentManager: FragmentManager?, lifecycle: Lifecycle) 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> TodoFragment()
-            1 -> MarkAsDoneFragment()
+            1 -> SavedPostFragment()
             else -> TodoDoneFragment()
         }
     }

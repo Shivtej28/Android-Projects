@@ -25,7 +25,7 @@ class SliderAdapter(private val list: ArrayList<String>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val currentItem = list[position]
-        Log.d("Link", currentItem.toString())
+        Log.d("Link", currentItem)
         Glide.with(holder.itemView.context).load(currentItem).into(holder.imageView)
     }
 

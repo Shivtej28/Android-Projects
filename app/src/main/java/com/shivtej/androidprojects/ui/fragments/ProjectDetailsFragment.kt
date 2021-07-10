@@ -85,13 +85,15 @@ class ProjectDetailsFragment : Fragment() {
 
         val imagesList = getImagesList()
         activity1.hideView()
+        setUpRecyclerView(imagesList)
+        Log.d("link", imagesList.toString())
         val detailUrl = project.description
         binding.webView.loadUrl(detailUrl)
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
 
-        setUpRecyclerView(imagesList)
+
 
 
         binding.toolbarTextView.text = project.title

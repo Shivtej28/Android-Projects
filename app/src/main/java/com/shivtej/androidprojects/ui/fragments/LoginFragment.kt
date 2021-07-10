@@ -1,7 +1,6 @@
 package com.shivtej.androidprojects.ui.fragments
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -32,7 +31,7 @@ import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.Constants
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
-
+import java.sql.Time
 
 class LoginFragment : Fragment() {
 
@@ -56,6 +55,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        toolbarText()
         navController = Navigation.findNavController(view)
         activity1 = activity as MainActivity
         auth = FirebaseAuth.getInstance()
@@ -231,6 +231,22 @@ class LoginFragment : Fragment() {
             }
 
             handler.postDelayed(runnable, 2000)
+        }
+    }
+
+    private fun toolbarText() {
+
+        val time = Time(System.currentTimeMillis()).hours
+
+        binding.hello.text = if (time in (MainActivity.morning + 1) until MainActivity.afternoon) {
+            Log.d("time", getString(R.string.good_morning))
+            getString(R.string.good_morning)
+        } else if (time in (MainActivity.afternoon + 1) until MainActivity.evening) {
+            Log.d("time", getString(R.string.good_afternoon))
+            getString(R.string.good_afternoon)
+        } else{
+            Log.d("time", getString(R.string.good_evening))
+            getString(R.string.good_evening)
         }
     }
 

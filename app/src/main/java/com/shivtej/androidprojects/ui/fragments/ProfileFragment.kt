@@ -7,25 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.model.ReviewErrorCode
-import com.google.android.play.core.review.testing.FakeReviewManager
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
@@ -36,7 +26,6 @@ import com.shivtej.androidprojects.models.Order
 import com.shivtej.androidprojects.models.PaymentInterface
 import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
-import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,13 +37,14 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var activity1: MainActivity
-    lateinit var manager: ReviewManager
-    var reviewInfo: ReviewInfo? = null
+    private lateinit var manager: ReviewManager
+    private var reviewInfo: ReviewInfo? = null
     private lateinit var navController: NavController
     var user: User? = null
-    private val viewModel: ProjectViewModel by activityViewModels()
+    //private val viewModel: ProjectViewModel by activityViewModels()
     private lateinit var retrofit: Retrofit
     private lateinit var retroInterface: PaymentInterface
+    private var visible: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,10 +65,7 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         Checkout.preload(context)
 
         if (user == null) {
-
             user = activity1.user
-
-
         }
         setData()
 
@@ -92,23 +79,26 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         retroInterface = retrofit.create(PaymentInterface::class.java)
 
         binding.donateCardView.setOnClickListener {
-            binding.paymentLayout.visibility = View.VISIBLE
+            if (!visible) {
+                binding.paymentLayout.visibility = View.VISIBLE
+                visible = true
+            } else {
+                binding.paymentLayout.visibility = View.GONE
+                visible = false
+            }
         }
 
         binding.payBtn.setOnClickListener {
-
             val amount = binding.amountEditText.text.toString()
 
             if (amount.isEmpty()) {
                 return@setOnClickListener
             }
-
             getOrderId(amount)
         }
 
         binding.rateUsCardView.setOnClickListener {
             askForReview()
-
         }
 
         binding.feedbackCardView.setOnClickListener {
@@ -151,8 +141,8 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
             navController.navigate(R.id.action_profileFragment_to_loginFragment)
         }
 
-        binding.todoDoneCardView.setOnClickListener {
-            navController.navigate(R.id.action_profileFragment_to_todoDoneFragment)
+        binding.savedArticleCardView.setOnClickListener {
+            navController.navigate(R.id.action_profileFragment_to_savedPostFragment)
         }
     }
 
@@ -221,7 +211,7 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
                     // Log error and continue with the flow
                     Log.i("error", "Error ")
 
-                }.addOnCompleteListener { _ ->
+                }.addOnCompleteListener {
                     // Log success and continue with the flow
                     Log.i("error", "Success ")
                 }

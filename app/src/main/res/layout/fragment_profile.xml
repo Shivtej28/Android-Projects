@@ -71,7 +71,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/todo_done_card_view"
+        android:id="@+id/saved_article_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4sdp"
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_4sdp"
                     android:contentDescription="@string/donate"
-                    android:src="@drawable/ic_baseline_todo_done"
+                    android:src="@drawable/ic_baseline_bookmark_24"
                     app:tint="@color/blue_btn" />
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:layout_weight="1"
                     android:fontFamily="@font/montserratsemibold"
-                    android:text="@string/todo_done"
+                    android:text="@string/saved_articles"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp" />
 
@@ -132,7 +132,7 @@
         app:contentPadding="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todo_done_card_view">
+        app:layout_constraintTop_toBottomOf="@id/saved_article_card_view">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linear_layout_display">

@@ -4,11 +4,9 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +16,6 @@ import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
 import com.shivtej.androidprojects.models.User
-import java.sql.Time
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,8 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     lateinit var user: User
-    var pressedTime: Long = 0
-
 
     companion object {
 
@@ -37,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         const val evening = 16
         const val night = 20
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,9 +51,6 @@ class MainActivity : AppCompatActivity() {
             getUser(user.uid)
         }
 
-
-        toolbarText()
-
     }
 
     fun getUser(uid: String) {
@@ -74,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                     Log.i("user", "error: ")
                 }
             }
-
     }
 
     fun hideView() {
@@ -91,33 +81,4 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavBar.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
     }
-
-    private fun toolbarText() {
-
-
-        val time = Time(System.currentTimeMillis()).hours
-
-        binding.toolbarTextView.text = if (time in (morning + 1) until afternoon) {
-            Log.d("time", getString(R.string.good_morning))
-            getString(R.string.good_morning)
-        } else if (time in (afternoon + 1) until evening) {
-            Log.d("time", getString(R.string.good_afternoon))
-            getString(R.string.good_afternoon)
-        } else if (time in (evening + 1) until night) {
-            Log.d("time", getString(R.string.good_evening))
-            getString(R.string.good_evening)
-        } else {
-            Log.d("time", getString(R.string.good_night))
-            getString(R.string.good_night)
-        }
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        toolbarText()
-    }
-
-
 }

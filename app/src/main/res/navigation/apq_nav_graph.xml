@@ -59,8 +59,8 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_profileFragment_to_todoDoneFragment"
-            app:destination="@id/todoDoneFragment"
+            android:id="@+id/action_profileFragment_to_savedPostFragment"
+            app:destination="@id/savedPostFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -106,11 +106,12 @@
         android:label="fragment_blog_view"
         tools:layout="@layout/fragment_blog_view" />
     <fragment
-        android:id="@+id/todoDoneFragment"
-        android:name="com.shivtej.androidprojects.ui.fragments.TodoDoneFragment"
-        android:label="TodoDoneFragment" />
-    <fragment
         android:id="@+id/aboutUsFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.AboutUsFragment"
         android:label="AboutUsFragment" />
+    <fragment
+        android:id="@+id/savedPostFragment"
+        android:name="com.shivtej.androidprojects.ui.fragments.SavedPostFragment"
+        android:label="fragment_saved_post"
+        tools:layout="@layout/fragment_saved_post" />
 </navigation>

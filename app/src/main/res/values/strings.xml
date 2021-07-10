@@ -42,10 +42,10 @@
     <string name="incorrect">Incorrect</string>
     <string name="not_attempted">Not Attempted</string>
     <string name="quiz_summary">Quiz Summary</string>
-    <string name="good_morning">Good Morning, </string>
-    <string name="good_afternoon">Good Afternoon, </string>
-    <string name="good_evening">Good Evening, </string>
-    <string name="good_night">Good Night, </string>
+    <string name="good_morning">Hello, Good Morning</string>
+    <string name="good_afternoon">Hello, Good Afternoon</string>
+    <string name="good_evening">Hello, Good Evening</string>
+    <string name="good_night">Hello, Good Night</string>
     <string name="profile">Profile</string>
     <string name="quiz">Quiz</string>
     <string name="learn">Learn</string>
@@ -68,4 +68,6 @@ If you’re setting a very long text that then you’re not actually showing on 
     <string name="notification_channel_description" translatable="false">Thaks For </string>
     <string name="feed_articles">Feed Articles</string>
     <string name="next">Next</string>
+    <string name="saved_articles">Saved Articles</string>
+    <string name="articles">Articles</string>
 </resources>

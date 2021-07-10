@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.shivtej.androidprojects.databinding.FragmentLearnBinding
 import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.RetrofitClient
-import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,11 +28,9 @@ class LearnFragment: Fragment(), OnClicked {
     private lateinit var activity1: MainActivity
 
     private lateinit var learnBlogList: List<LearnBlog>
-    private lateinit var adapter: LearnAdapter
 
     private lateinit var navController: NavController
 
-    private val viewModel: ProjectViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

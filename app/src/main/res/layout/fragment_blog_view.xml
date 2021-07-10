@@ -33,16 +33,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.airbnb.lottie.LottieAnimationView
+            <ImageButton
                 android:id="@+id/share_post"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
-                app:lottie_autoPlay="true"
+                android:background="@android:color/transparent"
+                app:tint="@color/black"
+                android:contentDescription="@string/share_with_friends"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/bookmark_post"
                 app:layout_constraintTop_toTopOf="parent"
-                app:lottie_rawRes="@raw/share_animation" />
+                android:src="@drawable/ic_share"/>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/bookmark_post"

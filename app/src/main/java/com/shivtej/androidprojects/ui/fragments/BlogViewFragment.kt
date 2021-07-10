@@ -14,7 +14,6 @@ import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.Constants
 
-
 class BlogViewFragment : Fragment() {
 
     private lateinit var binding: FragmentBlogViewBinding
@@ -89,13 +88,8 @@ class BlogViewFragment : Fragment() {
                 true
             }
         }
-
-        binding.sharePost.playAnimation()
-
     }
-
 }
-
 
 private class MyBrowser : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {

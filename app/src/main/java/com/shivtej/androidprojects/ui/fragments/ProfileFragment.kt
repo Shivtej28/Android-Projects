@@ -152,7 +152,7 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         }
 
         binding.todoDoneCardView.setOnClickListener {
-            navController.navigate(R.id.action_profileFragment_to_todoDoneFragment)
+            navController.navigate(R.id.action_profileFragment_to_savedPostFragment)
         }
     }
 

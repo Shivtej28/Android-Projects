@@ -6,11 +6,11 @@ import retrofit2.http.GET
 
 interface Api {
 
-    companion object{
-        val BASE_URL: String = "https://dev.to/api/articles?username="
+    companion object {
+        const val BASE_URL: String = "https://dev.to/api/"
 
     }
 
-    @GET("articles?username=asadevelopers")
+    @GET("articles?username=sjsouvik")
     fun getHeroes(): Call<ArrayList<LearnBlog>>
 }

@@ -20,7 +20,7 @@ class RetrofitClient private constructor() {
     }
 
     init {
-        val retrofit = Retrofit.Builder().baseUrl("https://dev.to/api/")
+        val retrofit = Retrofit.Builder().baseUrl(Api.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         myApi = retrofit.create(Api::class.java)

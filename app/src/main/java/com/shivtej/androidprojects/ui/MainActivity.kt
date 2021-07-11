@@ -17,7 +17,12 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
+import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.models.User
+import com.shivtej.androidprojects.utils.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.sql.Time
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     lateinit var user: User
-    var pressedTime: Long = 0
+
 
 
     companion object {
@@ -118,6 +123,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         toolbarText()
     }
+
+
 
 
 }

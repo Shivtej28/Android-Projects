@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,12 +20,13 @@ import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.RetrofitClient
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
+import com.shivtej.androidprojects.viewModels.SavedPostViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class LearnFragment: Fragment(), OnClicked {
+class LearnFragment : Fragment() {
 
     private lateinit var binding: FragmentLearnBinding
     private lateinit var activity1: MainActivity
@@ -34,7 +36,8 @@ class LearnFragment: Fragment(), OnClicked {
 
     private lateinit var navController: NavController
 
-    private val viewModel: ProjectViewModel by activityViewModels()
+
+    private val viewModel: SavedPostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +55,7 @@ class LearnFragment: Fragment(), OnClicked {
         activity1.showView()
         navController = Navigation.findNavController(view)
 
-        learnBlogList = listOf()
+
 
         binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -63,14 +66,41 @@ class LearnFragment: Fragment(), OnClicked {
 //            adapter.notifyDataSetChanged()
 //
 //        })
-
+        setUpRecyclerView()
+        viewModel.readAllPosts.observe(viewLifecycleOwner, Observer {
+            adapter.getRoomPostList(it)
+        })
         getLearnBlogs()
+
+    }
+
+
+    private fun setUpRecyclerView() {
+        adapter = LearnAdapter(object : OnClicked {
+            override fun onLearnBlogClicked(currentItem: LearnBlog) {
+                val bundle = Bundle()
+                bundle.putSerializable("blog", currentItem)
+                navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
+            }
+
+            override fun savePost(currentItem: LearnBlog) {
+                viewModel.addPost(currentItem)
+            }
+
+            override fun deletePost(currentItem: LearnBlog) {
+                viewModel.deletePost(currentItem)
+            }
+
+
+        })
+
+        binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.learnRecyclerView.adapter = adapter
 
     }
 
     private fun getLearnBlogs() {
 
-        //our API Interface
         //our API Interface
         val call: Call<ArrayList<LearnBlog>>? = RetrofitClient.instance?.myApi?.getHeroes()
 
@@ -81,9 +111,9 @@ class LearnFragment: Fragment(), OnClicked {
                 call: Call<ArrayList<LearnBlog>>,
                 response: Response<ArrayList<LearnBlog>>
             ) {
-                val heroList: List<LearnBlog> = response.body() as List<LearnBlog>
-                Log.d("blog", heroList.toString())
-                setUpRecyclerView(heroList)
+                learnBlogList = response.body() as List<LearnBlog>
+                Log.d("blog", learnBlogList.toString())
+                adapter.setData(learnBlogList)
             }
 
             override fun onFailure(call: Call<ArrayList<LearnBlog>>, t: Throwable) {
@@ -97,23 +127,5 @@ class LearnFragment: Fragment(), OnClicked {
         })
     }
 
-    private fun setUpRecyclerView(heroList: List<LearnBlog>) {
-        val adapter = LearnAdapter(heroList, object : OnClicked{
-            override fun onLearnBlogClicked(currentItem: LearnBlog) {
-               val bundle = Bundle()
-                bundle.putSerializable("blog", currentItem)
-                navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
-            }
-        })
 
-        binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.learnRecyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun onLearnBlogClicked(currentItem: LearnBlog) {
-        val bundle = Bundle()
-        bundle.putSerializable("blog", currentItem)
-        navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
-    }
 }

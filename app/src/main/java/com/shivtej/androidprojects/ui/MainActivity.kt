@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.sql.Time
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,6 +63,8 @@ class MainActivity : AppCompatActivity() {
             getUser(user.uid)
         }
 
+        getRandomText()
+
     }
 
     fun getUser(uid: String) {
@@ -75,6 +79,15 @@ class MainActivity : AppCompatActivity() {
                     Log.i("user", "error: ")
                 }
             }
+    }
+
+
+    private fun getRandomText() {
+        val randomToolbarText =
+            arrayOf("Hi,", "Hello,", "Namaste,", "Hola,", "Hey")
+        val randomValue = Random.nextInt(randomToolbarText.size)
+
+        binding.toolbarTextView.text = randomToolbarText[randomValue]
     }
 
     fun hideView() {

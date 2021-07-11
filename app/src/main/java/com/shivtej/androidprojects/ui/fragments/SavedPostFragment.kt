@@ -15,6 +15,7 @@ import com.shivtej.androidprojects.adapters.LearnAdapter
 import com.shivtej.androidprojects.adapters.OnClicked
 import com.shivtej.androidprojects.databinding.FragmentSavedPostBinding
 import com.shivtej.androidprojects.models.LearnBlog
+import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.viewModels.SavedPostViewModel
 
 class SavedPostFragment : Fragment() {
@@ -38,7 +39,7 @@ class SavedPostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         setUpRecyclerView()
-
+        (activity as MainActivity).hideView()
         viewModel.readAllPosts.observe(viewLifecycleOwner, Observer {
             adapter.getRoomPostList(it)
             adapter.setData(it)

@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -62,9 +61,6 @@ class MainActivity : AppCompatActivity() {
             getUser(user.uid)
         }
 
-
-        toolbarText()
-
     }
 
     fun getUser(uid: String) {
@@ -79,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                     Log.i("user", "error: ")
                 }
             }
-
     }
 
     fun hideView() {
@@ -96,35 +91,4 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavBar.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
     }
-
-    private fun toolbarText() {
-
-
-        val time = Time(System.currentTimeMillis()).hours
-
-        binding.toolbarTextView.text = if (time in (morning + 1) until afternoon) {
-            Log.d("time", getString(R.string.good_morning))
-            getString(R.string.good_morning)
-        } else if (time in (afternoon + 1) until evening) {
-            Log.d("time", getString(R.string.good_afternoon))
-            getString(R.string.good_afternoon)
-        } else if (time in (evening + 1) until night) {
-            Log.d("time", getString(R.string.good_evening))
-            getString(R.string.good_evening)
-        } else {
-            Log.d("time", getString(R.string.good_night))
-            getString(R.string.good_night)
-        }
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        toolbarText()
-    }
-
-
-
-
 }

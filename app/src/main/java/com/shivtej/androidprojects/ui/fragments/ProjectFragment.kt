@@ -1,8 +1,5 @@
 package com.shivtej.androidprojects.ui.fragments
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +18,10 @@ import com.shivtej.androidprojects.adapters.ItemClicked
 import com.shivtej.androidprojects.adapters.ProjectAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectBinding
 import com.shivtej.androidprojects.models.Project
+import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
-import com.shivtej.androidprojects.utils.sendNotification
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
+import kotlin.random.Random
 
 class ProjectFragment : Fragment(), ItemClicked {
 
@@ -39,13 +35,12 @@ class ProjectFragment : Fragment(), ItemClicked {
     private lateinit var basicAdapter: ProjectAdapter
     private lateinit var intermediateAdapter: ProjectAdapter
     private lateinit var advancedAdapter: ProjectAdapter
+    var user: User? = null
 
     private lateinit var navController: NavController
-    val TAG = "ProjectFragment"
-
+    private val TAG = "ProjectFragment"
 
     private var pressedTime: Long = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +48,6 @@ class ProjectFragment : Fragment(), ItemClicked {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProjectBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -82,7 +76,7 @@ class ProjectFragment : Fragment(), ItemClicked {
         binding.advanceRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        viewModel.getBasicProjects().observe(viewLifecycleOwner, Observer { it ->
+        viewModel.getBasicProjects().observe(viewLifecycleOwner, {
             basicProjectsList = it
             basicAdapter = ProjectAdapter(basicProjectsList, this)
             binding.basicRecyclerView.adapter = basicAdapter
@@ -91,42 +85,42 @@ class ProjectFragment : Fragment(), ItemClicked {
             basicAdapter.notifyDataSetChanged()
         })
 
-        viewModel.getIntermediateProjects().observe(viewLifecycleOwner, Observer { it ->
+        viewModel.getIntermediateProjects().observe(viewLifecycleOwner, {
             intermediateProjectsList = it
             intermediateAdapter = ProjectAdapter(intermediateProjectsList, this)
             binding.intermediateRecyclerView.adapter = intermediateAdapter
             intermediateAdapter.notifyDataSetChanged()
         })
 
-        viewModel.getAdvanceProjects().observe(viewLifecycleOwner, Observer { it ->
+        viewModel.getAdvanceProjects().observe(viewLifecycleOwner, {
             advanceProjectList = it
             advancedAdapter = ProjectAdapter(advanceProjectList, this)
             binding.advanceRecyclerView.adapter = advancedAdapter
             advancedAdapter.notifyDataSetChanged()
         })
 
+        getRandomText()
+    }
 
+    private fun getRandomText() {
+        val randomToolbarText =
+            arrayOf("Hi,", "Hello,", "Namaste,", "Hola,", "Hey,", "How's it going?")
+        val randomValue = Random.nextInt(randomToolbarText.size)
+
+        activity1.findViewById<TextView>(R.id.toolbar_text_view).text =
+            randomToolbarText[randomValue]
     }
 
     private fun closeApp() {
         if (pressedTime + 2000 > System.currentTimeMillis()) {
             activity?.finish()
         } else {
-            Toast.makeText(requireContext(), "Press back again to exit", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), "Press again to exit", Toast.LENGTH_SHORT)
                 .show()
             Log.d("finish", activity1.supportFragmentManager.backStackEntryCount.toString())
         }
         pressedTime = System.currentTimeMillis()
-
-
     }
-
-    private fun showToast() {
-
-        Toast.makeText(requireContext(), "Pressed Back Again to close", Toast.LENGTH_SHORT).show()
-
-    }
-
 
     override fun onItemClicked(project: Project) {
         val bundle = Bundle()
@@ -134,4 +128,8 @@ class ProjectFragment : Fragment(), ItemClicked {
         navController.navigate(R.id.action_projectFragment_to_projectDetailsFragment, bundle)
     }
 
+    override fun onResume() {
+        super.onResume()
+        getRandomText()
+    }
 }

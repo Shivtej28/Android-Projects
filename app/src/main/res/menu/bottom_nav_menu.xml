@@ -11,11 +11,11 @@
         android:id="@+id/learnFragment"
         android:icon="@drawable/ic_outline_assignment"
         android:iconTint="@color/white"
-        android:title="@string/learn" />
+        android:title="@string/articles" />
 
     <item
         android:id="@+id/quizFragment"
-        android:icon="@drawable/ic_outline_emoji_events_24"
+        android:icon="@drawable/quiz"
         android:iconTint="@color/white"
         android:title="@string/quiz" />
 

@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/quizFragment"
-        android:icon="@drawable/quiz"
+        android:icon="@drawable/ic_quiz"
         android:iconTint="@color/white"
         android:title="@string/quiz" />
 

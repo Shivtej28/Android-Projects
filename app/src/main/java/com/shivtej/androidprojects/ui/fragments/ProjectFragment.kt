@@ -99,10 +99,17 @@ class ProjectFragment : Fragment(), ItemClicked {
             advancedAdapter.notifyDataSetChanged()
         })
 
-
+        getRandomText()
     }
 
+    private fun getRandomText() {
+        val randomToolbarText =
+            arrayOf("Hi,", "Hello,", "Namaste,\uD83D\uDE4F", "Hola,", "Hey,", "How's it going?")
+        val randomValue = Random.nextInt(randomToolbarText.size)
 
+        activity1.findViewById<TextView>(R.id.toolbar_text_view).text =
+            randomToolbarText[randomValue]
+    }
 
     private fun closeApp() {
         if (pressedTime + 2000 > System.currentTimeMillis()) {
@@ -121,5 +128,8 @@ class ProjectFragment : Fragment(), ItemClicked {
         navController.navigate(R.id.action_projectFragment_to_projectDetailsFragment, bundle)
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        getRandomText()
+    }
 }

@@ -21,9 +21,9 @@
             android:id="@+id/toolbar_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserratsemibolditalic"
+            android:fontFamily="@font/montserratsemibold"
             android:text="@string/good_morning"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp" />
 
     </com.google.android.material.appbar.MaterialToolbar>

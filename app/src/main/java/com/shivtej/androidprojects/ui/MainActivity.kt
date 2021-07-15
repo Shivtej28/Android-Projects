@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getRandomText() {
         val randomToolbarText =
-            arrayOf("Hi,", "Hello,", "Namaste,", "Hola,", "Hey")
+            arrayOf("Hi,", "Hello,", "Namaste,\uD83D\uDE4F", "Hola,", "Hey,")
         val randomValue = Random.nextInt(randomToolbarText.size)
         val name = user.userName?.split(" ")
         Log.i("name", name?.get(0).toString())

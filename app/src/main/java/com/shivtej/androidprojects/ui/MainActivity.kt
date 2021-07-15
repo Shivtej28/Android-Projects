@@ -26,7 +26,7 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
 
@@ -57,11 +57,12 @@ class MainActivity : AppCompatActivity() {
         //if previously login
         val user = auth.currentUser
         if (user != null) {
-            navController.navigate(R.id.action_loginFragment_to_projectFragment)
             getUser(user.uid)
+            navController.navigate(R.id.action_loginFragment_to_projectFragment)
+
         }
 
-        getRandomText()
+
 
     }
 
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 if (it != null) {
                     user = it.toObject<User>()!!
+                    getRandomText()
                     Log.i("user", it.data.toString())
 
                 } else {
@@ -108,8 +110,10 @@ class MainActivity : AppCompatActivity() {
         val randomToolbarText =
             arrayOf("Hi,", "Hello,", "Namaste,", "Hola,", "Hey")
         val randomValue = Random.nextInt(randomToolbarText.size)
-
-        binding.toolbarTextView.text = randomToolbarText[randomValue]
+        val name = user.userName?.split(" ")
+        Log.i("name", name?.get(0).toString())
+        val n = name?.get(0)
+        binding.toolbarTextView.text = randomToolbarText[randomValue]+n
     }
 
     fun hideView() {

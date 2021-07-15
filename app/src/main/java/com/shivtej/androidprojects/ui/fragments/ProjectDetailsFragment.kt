@@ -11,10 +11,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.shivtej.androidprojects.R
@@ -22,6 +19,7 @@ import com.shivtej.androidprojects.adapters.SliderAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectDetailsBinding
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.utils.Constants
 import com.smarteist.autoimageslider.SliderView
 
 class ProjectDetailsFragment : Fragment() {
@@ -37,6 +35,8 @@ class ProjectDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
+        MobileAds.initialize(requireContext())
+        loadAd()
         return binding.root
     }
 
@@ -48,40 +48,6 @@ class ProjectDetailsFragment : Fragment() {
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
 
-        val adRequest = AdRequest.Builder().build()
-
-        InterstitialAd.load(
-            context,
-            "ca-app-pub-3940256099942544/1033173712",
-            adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.d("ProjectDetails", adError.message)
-                    mInterstitialAd = null
-                }
-
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    Log.d("ProjectDetails", "Ad was loaded.")
-                    mInterstitialAd = interstitialAd
-                }
-
-
-            })
-
-        mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                Log.d("ProjectDetails", "Ad was dismissed.")
-            }
-
-            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                Log.d("ProjectDetails", "Ad failed to show.")
-            }
-
-            override fun onAdShowedFullScreenContent() {
-                Log.d("ProjectDetails", "Ad showed fullscreen content.")
-                mInterstitialAd = null;
-            }
-        }
 
 
         val imagesList = getImagesList()
@@ -94,25 +60,77 @@ class ProjectDetailsFragment : Fragment() {
             activity?.onBackPressed()
         }
 
-
-
-
         binding.toolbarTextView.text = project.title
 
-
         binding.sourceCodeBtn.setOnClickListener {
-
-            val builder = CustomTabsIntent.Builder()
-            val colorSchemeParams = CustomTabColorSchemeParams.Builder()
-                .setNavigationBarColor(ContextCompat.getColor(requireContext(), R.color.androidbg))
-                .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.orange))
-                .setSecondaryToolbarColor(ContextCompat.getColor(requireContext(), R.color.primary))
-                .build()
-            builder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, colorSchemeParams)
-            val customTabIntent = builder.build()
-
-            customTabIntent.launchUrl(requireContext(), Uri.parse(project.zipfile))
+            if (mInterstitialAd != null) {
+                mInterstitialAd?.show(activity)
+            } else {
+                goToCustomTab()
+                requestNewInterstitial()
+            }
         }
+
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(
+            requireContext(),
+            Constants.testInterstitialId,
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d("ProjectDetails", adError.message)
+                    mInterstitialAd = null
+                    goToCustomTab()
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d("ProjectDetails", "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                    mInterstitialAd?.fullScreenContentCallback =
+                        object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                Log.d("ProjectDetails", "Ad was dismissed.")
+                                goToCustomTab()
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                                Log.d("ProjectDetails", "Ad failed to show.")
+                                goToCustomTab()
+                            }
+
+                            override fun onAdShowedFullScreenContent() {
+                                Log.d("ProjectDetails", "Ad showed fullscreen content.")
+                                mInterstitialAd = null
+                            }
+                        }
+                }
+
+
+            })
+
+    }
+
+    private fun requestNewInterstitial() {
+        if (mInterstitialAd == null) {
+            loadAd()
+        }
+    }
+
+    private fun goToCustomTab() {
+        val builder = CustomTabsIntent.Builder()
+        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+            .setNavigationBarColor(ContextCompat.getColor(requireContext(), R.color.androidbg))
+            .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.orange))
+            .setSecondaryToolbarColor(ContextCompat.getColor(requireContext(), R.color.primary))
+            .build()
+        builder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, colorSchemeParams)
+        val customTabIntent = builder.build()
+
+        customTabIntent.launchUrl(requireContext(), Uri.parse(project.zipfile))
 
     }
 

@@ -36,21 +36,10 @@ class LearnAdapter(private val onClicked: OnClicked) :
         holder.tvTitle.text = currentItem.title
         holder.tvContent.text = currentItem.description
 
-//        for(blog in roomPostList){
-//            if(currentItem.id == blog.id){
-//                holder.bookmark.setMinAndMaxProgress(0.0f, 0.5f)
-//            }else{
-//                holder.bookmark.setMinAndMaxProgress(0.5f, 1.0f)
-//            }
-//        }
-
-        Log.d("current", currentItem.toString())
-
 
         holder.itemView.setOnClickListener {
             onClicked.onLearnBlogClicked(currentItem)
         }
-
 
 
         if (roomPostList.contains(currentItem)) {

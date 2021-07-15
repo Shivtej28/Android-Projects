@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:navigationIconTint="@color/black">
+        app:navigationIconTint="@color/white">
 
         <TextView
             android:id="@+id/toolbar_text_view"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserratsemibolditalic"
             android:text="Saved"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp" />
 
     </com.google.android.material.appbar.MaterialToolbar>

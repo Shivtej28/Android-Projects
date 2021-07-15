@@ -13,5 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarcolor</item>
         <!-- Customize your theme here. -->
     </style>
-
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="snackbarStyle">@style/MySnackbar</item>
+    </style>
+    <style name="MySnackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">70dp</item>
+    </style>
 </resources>

@@ -36,7 +36,8 @@
     <fragment
         android:id="@+id/learnFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.LearnFragment"
-        android:label="LearnFragment" >
+        android:label="LearnFragment"
+        >
         <action
             android:id="@+id/action_learnFragment_to_blogViewFragment"
             app:destination="@id/blogViewFragment" />
@@ -117,7 +118,11 @@
         android:id="@+id/blogViewFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.BlogViewFragment"
         android:label="fragment_blog_view"
-        tools:layout="@layout/fragment_blog_view" />
+        tools:layout="@layout/fragment_blog_view" >
+        <argument
+            android:name="blog"
+            app:argType="com.shivtej.androidprojects.models.LearnBlog" />
+    </fragment>
     <fragment
         android:id="@+id/aboutUsFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.AboutUsFragment"

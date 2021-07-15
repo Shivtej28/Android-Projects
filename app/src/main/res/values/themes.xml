@@ -12,48 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarcolor</item>
 
-        <!--this is makes changes to the entire snackbar-->
-        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
-
-        <!--this item is optional as all the snackbar wont contain the action button-->
-        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
-        <!-- Customize your theme here. -->
-    </style>
-    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
-
-        <!--this child makes changes to the background color of the snackbar-->
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
-
-        <!--if this is made 0 then the action button text color will be white-->
-        <!--if this is 1 then the custom color can be set to action button text-->
-        <item name="actionTextColorAlpha">1</item>
-
-        <!--this attribute makes slide animation for the snackbar-->
-        <item name="animationMode">slide</item>
     </style>
 
-    <!--this is child is needed only when there is action button in snackbar-->
-    <!--otherwise this is not necessary-->
-    <!--in this case the action button color inside the snackbar is set to red-->
-    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
-        <item name="android:textColor">@android:color/holo_red_dark</item>
-        <item name="actionButtonStyle">?attr/buttonStyle</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="snackbarStyle">@style/MySnackbar</item>
+    </style>
+    <style name="MySnackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">70dp</item>
     </style>
 
-    <!--this color inside this child is the background color of the snackbar-->
-    <style name="ThemeOverlay.App.Snackbar" parent="">
-        <item name="colorOnSurface">@android:color/black</item>
-    </style>
-
-    <style name="ExpandedAppBar" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textSize">1sp</item>
-        <item name="android:textColor">@color/darkblue</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="Collapsed" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/navyblue</item>
-        <item name="android:textStyle">normal</item>
-    </style>
 </resources>

@@ -46,7 +46,9 @@ class ProjectListFragment : Fragment() {
         setUpRecyclerView(list)
 
         binding.toolbarTextView.text = list.projectName
-
+        binding.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
 
     }
 

@@ -98,7 +98,7 @@ class ProjectFragment : Fragment(), ItemClicked {
             advancedAdapter.notifyDataSetChanged()
         })
 
-        getRandomText()
+        //getRandomText()
 
         binding.basicLinearLayout.setOnClickListener {
             val text = binding.tvBasic.text.toString()
@@ -155,8 +155,5 @@ class ProjectFragment : Fragment(), ItemClicked {
         )
     }
 
-    override fun onResume() {
-        super.onResume()
-        getRandomText()
-    }
+
 }

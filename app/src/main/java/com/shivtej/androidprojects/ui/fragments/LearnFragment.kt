@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,6 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.LearnAdapter
@@ -19,6 +23,7 @@ import com.shivtej.androidprojects.adapters.OnClicked
 import com.shivtej.androidprojects.databinding.FragmentLearnBinding
 import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.ui.MainActivity
+import com.shivtej.androidprojects.utils.Constants
 import com.shivtej.androidprojects.utils.RetrofitClient
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import com.shivtej.androidprojects.viewModels.SavedPostViewModel
@@ -36,6 +41,11 @@ class LearnFragment : Fragment() {
     private lateinit var adapter: LearnAdapter
 
     private lateinit var navController: NavController
+    private val TAG = "LearnFragment"
+
+    private var mInterstitialAd: InterstitialAd? = null
+
+    private lateinit var current: LearnBlog
 
 
     private val viewModel: SavedPostViewModel by activityViewModels()
@@ -46,7 +56,8 @@ class LearnFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLearnBinding.inflate(inflater, container, false)
-
+        MobileAds.initialize(requireContext())
+        loadAd()
         return binding.root
     }
 
@@ -54,20 +65,10 @@ class LearnFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity1 = activity as MainActivity
         activity1.showView()
-       activity1.checkNetwork()
+        activity1.checkNetwork()
         navController = Navigation.findNavController(view)
 
         learnBlogList = emptyList()
-
-        // getLearnBlogs()
-
-//        viewModel.getLearnBlog().observe(viewLifecycleOwner, Observer {
-//            learnBlogList = it
-//            adapter = LearnAdapter(learnBlogList, this)
-//            binding.learnRecyclerView.adapter = adapter
-//            adapter.notifyDataSetChanged()
-//
-//        })
 
 
     }
@@ -88,34 +89,27 @@ class LearnFragment : Fragment() {
     private fun setUpRecyclerView() {
         adapter = LearnAdapter(object : OnClicked {
             override fun onLearnBlogClicked(currentItem: LearnBlog) {
-                val bundle = Bundle()
-                bundle.putSerializable("blog", currentItem)
-                navController.navigate(R.id.action_learnFragment_to_blogViewFragment, bundle)
+                current = currentItem
+                if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(requireActivity())
+                } else {
+                    goToBlogView()
+                    requestNewInterstitial()
+                }
             }
 
             override fun savePost(currentItem: LearnBlog) {
                 viewModel.addPost(currentItem)
-                Snackbar.make(binding.root, "Saved Blog", Snackbar.LENGTH_SHORT).show()
+                showSavedSnackBar()
 
                 onStart()
             }
 
             override fun deletePost(currentItem: LearnBlog) {
+                current = currentItem
                 viewModel.deletePost(currentItem)
 
-                val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
-                    .setAction("UNDO") {
-                        viewModel.addPost(currentItem)
-                        onStart()
-                    }
-                snackbar.setDuration(3000);
-                snackbar.setTextColor(resources.getColor(R.color.black))
-                // set the background tint color for the snackbar
-                snackbar.setBackgroundTint(resources.getColor(R.color.white));
-                // set the action button text color of the snackbar however this is optional
-                // as all the snackbar wont have the action button
-                snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark));
-                snackbar.show();
+                showDeleteSnackBar()
                 onStart()
             }
 
@@ -125,6 +119,11 @@ class LearnFragment : Fragment() {
         binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.learnRecyclerView.adapter = adapter
 
+    }
+
+    private fun goToBlogView() {
+
+        navController.navigate(LearnFragmentDirections.actionLearnFragmentToBlogViewFragment(current))
     }
 
     private fun getLearnBlogs() {
@@ -140,7 +139,7 @@ class LearnFragment : Fragment() {
                 response: Response<ArrayList<LearnBlog>>
             ) {
                 learnBlogList = response.body() as List<LearnBlog>
-                Log.d("blog", learnBlogList.toString())
+
                 adapter.setData(learnBlogList)
             }
 
@@ -153,6 +152,102 @@ class LearnFragment : Fragment() {
                 Log.d("blog", t.message.toString())
             }
         })
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(
+            requireContext(),
+            Constants.testInterstitialId,
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d(TAG, adError.message)
+                    mInterstitialAd = null
+
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d(TAG, "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                    mInterstitialAd?.fullScreenContentCallback =
+                        object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                Log.d(TAG, "Ad was dismissed.")
+                                goToBlogView()
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                                Log.d(TAG, "Ad failed to show.")
+                                goToBlogView()
+                            }
+
+                            override fun onAdShowedFullScreenContent() {
+                                Log.d(TAG, "Ad showed fullscreen content.")
+                                mInterstitialAd = null
+                            }
+                        }
+                }
+            })
+    }
+
+    private fun requestNewInterstitial() {
+        if (mInterstitialAd == null) {
+            loadAd()
+        }
+    }
+
+    private fun showSavedSnackBar() {
+        val snackbar = Snackbar.make(binding.root, "Saved Blog", Snackbar.LENGTH_SHORT)
+        snackbar.duration = 3000
+        snackbar.setTextColor(resources.getColor(R.color.black))
+        // set the background tint color for the snackbar
+        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        val sv = snackbar.view
+        val lp = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        val height = activity1.binding.bottomNavBar.height
+        val h = binding.root.height
+        lp.setMargins(0, h, 0, height)
+        sv.layoutParams = lp
+        Log.i("margin", h.toString())
+        Log.i("margin", height.toString())
+
+        snackbar.show()
+
+
+    }
+
+    private fun showDeleteSnackBar() {
+        val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
+            .setAction("UNDO") {
+                viewModel.addPost(current)
+                onStart()
+            }
+
+        snackbar.duration = 3000
+        snackbar.setTextColor(resources.getColor(R.color.black))
+        // set the background tint color for the snackbar
+        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        // set the action button text color of the snackbar however this is optional
+        // as all the snackbar wont have the action button
+        snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark))
+        val sv = snackbar.view
+        val lp = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        val height = activity1.binding.bottomNavBar.height
+        val h = binding.root.height
+        lp.setMargins(0, h, 0, 0)
+
+        sv.layoutParams = lp
+        Log.i("margin", h.toString())
+        Log.i("margin", height.toString())
+        snackbar.show()
     }
 
 

@@ -2,12 +2,17 @@ package com.shivtej.androidprojects.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -19,6 +24,7 @@ import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.utils.Constants
 import com.shivtej.androidprojects.viewModels.SavedPostViewModel
+import kotlin.properties.Delegates
 
 class BlogViewFragment : Fragment() {
 
@@ -28,7 +34,9 @@ class BlogViewFragment : Fragment() {
 
     private val viewModel: SavedPostViewModel by activityViewModels()
 
-    private lateinit var roomPostList: List<LearnBlog>
+    //private lateinit var roomPostList: List<LearnBlog>
+
+    private var isSaved by Delegates.notNull<Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +53,8 @@ class BlogViewFragment : Fragment() {
         activity1 = activity as MainActivity
         activity1.hideView()
         activity1.checkNetwork()
-         blog = arguments?.getSerializable("blog") as LearnBlog
-
+        val args = BlogViewFragmentArgs.fromBundle(requireArguments())
+        blog = args.blog
         checkBlogInRoom()
 
         binding.toolbar.setNavigationOnClickListener {
@@ -92,58 +100,108 @@ class BlogViewFragment : Fragment() {
 
 
         binding.bookmarkPost.setOnClickListener {
-            if (roomPostList.contains(blog)) {
-
-                //binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
-
-//                binding.bookmarkPost.playAnimation()
+            if (isSaved) {
                 viewModel.deletePost(blog)
-                binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f) //white
+                isSaved = false
+                setBookmark()
+                showDeleteSnackBar()
 
-                val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
-                    .setAction("UNDO") {
-                        viewModel.addPost(blog)
-
-                        binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
-                    }
-
-                snackbar.setDuration(3000);
-                snackbar.setTextColor(resources.getColor(R.color.black))
-                // set the background tint color for the snackbar
-                snackbar.setBackgroundTint(resources.getColor(R.color.white));
-                // set the action button text color of the snackbar however this is optional
-                // as all the snackbar wont have the action button
-                snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark));
-                snackbar.show();
             } else {
-//                binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
-//                binding.bookmarkPost.playAnimation()
                 viewModel.addPost(blog)
-                binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
-                val snackbar = Snackbar.make(binding.root, "Saved Blog", Snackbar.LENGTH_SHORT)
-                snackbar.setDuration(3000);
-                snackbar.setTextColor(resources.getColor(R.color.black))
-                // set the background tint color for the snackbar
-                snackbar.setBackgroundTint(resources.getColor(R.color.white));
-                // set the action button text color of the snackbar however this is optional
-                // as all the snackbar wont have the action button
-                snackbar.show();
+                isSaved = true
+                setBookmark()
+                showSavedSnackBar()
+
 
             }
+
 
         }
 
 
-
-        Log.d("blog", roomPostList.toString())
+//
     }
 
-    fun checkBlogInRoom(){
-        roomPostList = viewModel.readAllPosts.value!!
-        if (roomPostList.contains(blog)) {
-            binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f) //black
+    private fun showSavedSnackBar() {
+        val snackbar = Snackbar.make(binding.root, "Saved Blog", Snackbar.LENGTH_SHORT)
+        snackbar.duration = 3000
+        snackbar.setTextColor(resources.getColor(R.color.black))
+        // set the background tint color for the snackbar
+        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        val sv = snackbar.view
+        val lp = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        val height = binding.adView.height*2
+        val h = binding.root.height
+        lp.setMargins(0, h-height, 0, height)
+        sv.layoutParams = lp
+        Log.i("margin", h.toString())
+        Log.i("margin", height.toString())
+
+        snackbar.show()
+
+
+    }
+
+    private fun showDeleteSnackBar() {
+        val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
+            .setAction("UNDO") {
+                viewModel.addPost(blog)
+                isSaved = true
+                setBookmark()
+            }
+
+        snackbar.duration = 3000
+        snackbar.setTextColor(resources.getColor(R.color.black))
+        // set the background tint color for the snackbar
+        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        // set the action button text color of the snackbar however this is optional
+        // as all the snackbar wont have the action button
+        snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark))
+        val sv = snackbar.view
+        val lp = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        val height = binding.adView.height*2
+        val h = binding.root.height
+        lp.setMargins(0, h-height, 0, 0)
+
+        sv.layoutParams = lp
+        Log.i("margin", h.toString())
+        Log.i("margin", height.toString())
+        snackbar.show()
+    }
+
+    private fun setBookmark() {
+        if (isSaved) {
+
+            binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)  //white
+            binding.bookmarkPost.playAnimation()
+            Log.d("isSaved", isSaved.toString())
         } else {
+            binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f) //black
+            binding.bookmarkPost.playAnimation()
+            Log.d("isSaved", isSaved.toString())
+        }
+
+
+    }
+
+    private fun checkBlogInRoom() {
+        val roomPostList = viewModel.readAllPosts.value!!
+
+        Log.d("blog", roomPostList.toString())
+        if (roomPostList.contains(blog)) {
+            isSaved = true
+            binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f) //black
+            Log.d("blog", "black")
+        } else {
+            isSaved = false
             binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f) //white
+            Log.d("blog", "white")
 
         }
     }
@@ -156,4 +214,6 @@ private class MyBrowser : WebViewClient() {
         view.loadUrl(url)
         return true
     }
+
+
 }

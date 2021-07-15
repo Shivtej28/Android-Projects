@@ -77,10 +77,10 @@ class MainActivity : AppCompatActivity() {
         alertDialog.setTitle(getString(R.string.alertTitle))
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
         alertDialog.setMessage(getString(R.string.internet_not_connected))
-        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "OK",
-            DialogInterface.OnClickListener { dialog, which ->
-                alertDialog.dismiss()
-            })
+        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "OK"
+        ) { dialog, which ->
+            alertDialog.dismiss()
+        }
         alertDialog.show()
     }
 
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         val name = user.userName?.split(" ")
         Log.i("name", name?.get(0).toString())
         val n = name?.get(0)
-        binding.toolbarTextView.text = randomToolbarText[randomValue]+n
+        (randomToolbarText[randomValue]+n).also { binding.toolbarTextView.text = it }
     }
 
     fun hideView() {

@@ -1,7 +1,10 @@
 package com.shivtej.androidprojects.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
+@Parcelize
 data class Project(
     val title: String = "",
     val description: String = "",
@@ -17,4 +20,4 @@ data class Project(
     val ss7: String = "",
     val ss8: String = "",
     val ss9: String = "",
-) : Serializable
+) : Serializable, Parcelable

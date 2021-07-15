@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tvBasic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -27,6 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/ivBasicProjejct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -65,6 +67,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline">
 
         <TextView
+            android:id="@+id/tvIntermediate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -114,6 +117,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline1">
 
         <TextView
+            android:id="@+id/tvAdvanced"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"

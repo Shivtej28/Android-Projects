@@ -44,6 +44,7 @@ class ProjectDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity1 = activity as MainActivity
         activity1.projectView()
+        activity1.checkNetwork()
         project = arguments?.getSerializable("project") as Project
         Log.e("project", project.toString())
 

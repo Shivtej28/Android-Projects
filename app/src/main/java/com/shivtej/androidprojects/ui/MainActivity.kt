@@ -1,12 +1,15 @@
 package com.shivtej.androidprojects.ui
 
+import android.content.Context
+import android.content.DialogInterface
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -17,14 +20,9 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
-import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.models.User
-import com.shivtej.androidprojects.utils.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.sql.Time
 import kotlin.random.Random
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     lateinit var user: User
-
 
 
     companion object {
@@ -56,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+
         //if previously login
         val user = auth.currentUser
         if (user != null) {
@@ -65,6 +63,30 @@ class MainActivity : AppCompatActivity() {
 
         getRandomText()
 
+    }
+
+    fun checkNetwork() {
+        if (!checkInternetConnection()) {
+            showNetworkErrorDialogBox()
+        }
+    }
+
+    private fun showNetworkErrorDialogBox() {
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setTitle(getString(R.string.alertTitle))
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
+        alertDialog.setMessage(getString(R.string.internet_not_connected))
+        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "OK",
+            DialogInterface.OnClickListener { dialog, which ->
+                alertDialog.dismiss()
+            })
+        alertDialog.show()
+    }
+
+    fun checkInternetConnection(): Boolean {
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 
     fun getUser(uid: String) {

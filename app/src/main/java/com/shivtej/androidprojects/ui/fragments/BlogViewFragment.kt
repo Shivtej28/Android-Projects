@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.gms.ads.*
+import com.google.android.material.snackbar.Snackbar
+import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentBlogViewBinding
 import com.shivtej.androidprojects.models.LearnBlog
 import com.shivtej.androidprojects.ui.MainActivity
@@ -22,7 +24,7 @@ class BlogViewFragment : Fragment() {
 
     private lateinit var binding: FragmentBlogViewBinding
     private lateinit var activity1: MainActivity
-    private var like: Boolean = true
+    private lateinit var blog: LearnBlog
 
     private val viewModel: SavedPostViewModel by activityViewModels()
 
@@ -42,8 +44,10 @@ class BlogViewFragment : Fragment() {
 
         activity1 = activity as MainActivity
         activity1.hideView()
-        val blog = arguments?.getSerializable("blog") as LearnBlog
-        roomPostList = emptyList()
+        activity1.checkNetwork()
+         blog = arguments?.getSerializable("blog") as LearnBlog
+
+        checkBlogInRoom()
 
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
@@ -90,27 +94,58 @@ class BlogViewFragment : Fragment() {
         binding.bookmarkPost.setOnClickListener {
             if (roomPostList.contains(blog)) {
 
-                binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
-                binding.bookmarkPost.playAnimation()
+                //binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
+
+//                binding.bookmarkPost.playAnimation()
                 viewModel.deletePost(blog)
+                binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f) //white
+
+                val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
+                    .setAction("UNDO") {
+                        viewModel.addPost(blog)
+
+                        binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
+                    }
+
+                snackbar.setDuration(3000);
+                snackbar.setTextColor(resources.getColor(R.color.black))
+                // set the background tint color for the snackbar
+                snackbar.setBackgroundTint(resources.getColor(R.color.white));
+                // set the action button text color of the snackbar however this is optional
+                // as all the snackbar wont have the action button
+                snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark));
+                snackbar.show();
             } else {
-                binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
-                binding.bookmarkPost.playAnimation()
+//                binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
+//                binding.bookmarkPost.playAnimation()
                 viewModel.addPost(blog)
+                binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
+                val snackbar = Snackbar.make(binding.root, "Saved Blog", Snackbar.LENGTH_SHORT)
+                snackbar.setDuration(3000);
+                snackbar.setTextColor(resources.getColor(R.color.black))
+                // set the background tint color for the snackbar
+                snackbar.setBackgroundTint(resources.getColor(R.color.white));
+                // set the action button text color of the snackbar however this is optional
+                // as all the snackbar wont have the action button
+                snackbar.show();
 
             }
-        }
-
-        roomPostList = viewModel.readAllPosts.value!!
-        if (roomPostList.contains(blog)) {
-
-            binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f)
-        } else {
-            binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f)
 
         }
+
+
 
         Log.d("blog", roomPostList.toString())
+    }
+
+    fun checkBlogInRoom(){
+        roomPostList = viewModel.readAllPosts.value!!
+        if (roomPostList.contains(blog)) {
+            binding.bookmarkPost.setMinAndMaxProgress(0.5f, 1.0f) //black
+        } else {
+            binding.bookmarkPost.setMinAndMaxProgress(0.0f, 0.5f) //white
+
+        }
     }
 
 

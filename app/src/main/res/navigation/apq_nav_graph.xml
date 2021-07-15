@@ -72,6 +72,9 @@
         <argument
             android:name="project"
             app:argType="com.shivtej.androidprojects.models.Project" />
+        <action
+            android:id="@+id/action_projectFragment_to_projectListFragment"
+            app:destination="@id/projectListFragment" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -87,11 +90,25 @@
     <fragment
         android:id="@+id/projectDetailsFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProjectDetailsFragment"
-        android:label="ProjectDetailsFragment" />
+        android:label="ProjectDetailsFragment" >
+        <argument
+            android:name="project"
+            app:argType="com.shivtej.androidprojects.models.Project" />
+    </fragment>
     <fragment
         android:id="@+id/projectListFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.ProjectListFragment"
-        android:label="ProjectListFragment" />
+        android:label="ProjectListFragment" >
+        <argument
+            android:name="projectList"
+            app:argType="com.shivtej.androidprojects.models.Project[]" />
+        <action
+            android:id="@+id/action_projectListFragment_to_projectDetailsFragment"
+            app:destination="@id/projectDetailsFragment" />
+        <argument
+            android:name="projectName"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/questionFragment"
         android:name="com.shivtej.androidprojects.ui.fragments.QuestionFragment"

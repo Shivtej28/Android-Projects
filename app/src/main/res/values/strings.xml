@@ -70,4 +70,7 @@ If you’re setting a very long text that then you’re not actually showing on 
     <string name="next">Next</string>
     <string name="saved_articles">Saved Articles</string>
     <string name="articles">Articles</string>
+
+    <string name="alertTitle">Info</string>
+    <string name="internet_not_connected">Internet Not Available.Please Check Your Connection</string>
 </resources>

@@ -63,14 +63,14 @@ class LearnAdapter(private val onClicked: OnClicked) :
 
         holder.bookmark.setOnClickListener {
             if (roomPostList.contains(currentItem)) {
-                holder.bookmark.setMinAndMaxProgress(0.5f, 1.0f)
-                holder.bookmark.playAnimation()
+//                holder.bookmark.setMinAndMaxProgress(0.0f, 0.5f)
+//                holder.bookmark.playAnimation()
                 onClicked.deletePost(currentItem)
                 //currentItem.isSaved = false
             } else {
-                holder.bookmark.setMinAndMaxProgress(0.0f, 0.5f)
-                holder.bookmark.playAnimation()
-                onClicked.savePost(currentItem)
+//                holder.bookmark.setMinAndMaxProgress(0.5f, 1.0f)
+//                holder.bookmark.playAnimation()
+               onClicked.savePost(currentItem)
                 //currentItem.isSaved = true
             }
         }

@@ -18,7 +18,6 @@ import com.shivtej.androidprojects.adapters.ItemClicked
 import com.shivtej.androidprojects.adapters.ProjectAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectBinding
 import com.shivtej.androidprojects.models.Project
-import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
 import com.shivtej.androidprojects.viewModels.ProjectViewModel
 import kotlin.random.Random
@@ -35,7 +34,7 @@ class ProjectFragment : Fragment(), ItemClicked {
     private lateinit var basicAdapter: ProjectAdapter
     private lateinit var intermediateAdapter: ProjectAdapter
     private lateinit var advancedAdapter: ProjectAdapter
-    var user: User? = null
+    // var user: User? = null
 
     private lateinit var navController: NavController
     private val TAG = "ProjectFragment"
@@ -100,6 +99,30 @@ class ProjectFragment : Fragment(), ItemClicked {
         })
 
         getRandomText()
+
+        binding.basicLinearLayout.setOnClickListener {
+            val text = binding.tvBasic.text.toString()
+            goToProjectListFragment(basicProjectsList, text)
+        }
+
+        binding.intermediateLinearLayout.setOnClickListener {
+            val text = binding.tvIntermediate.text.toString()
+            goToProjectListFragment(intermediateProjectsList, text)
+        }
+
+        binding.advanceLinearLayout.setOnClickListener {
+            val text = binding.tvAdvanced.text.toString()
+            goToProjectListFragment(advanceProjectList, text)
+        }
+    }
+
+    private fun goToProjectListFragment(projectList: List<Project>, text: String) {
+        navController
+            .navigate(
+                ProjectFragmentDirections.actionProjectFragmentToProjectListFragment(
+                    projectList.toTypedArray(), text
+                )
+            )
     }
 
     private fun getRandomText() {
@@ -125,7 +148,11 @@ class ProjectFragment : Fragment(), ItemClicked {
     override fun onItemClicked(project: Project) {
         val bundle = Bundle()
         bundle.putSerializable("project", project)
-        navController.navigate(R.id.action_projectFragment_to_projectDetailsFragment, bundle)
+        navController.navigate(
+            ProjectFragmentDirections.actionProjectFragmentToProjectDetailsFragment(
+                project
+            )
+        )
     }
 
     override fun onResume() {

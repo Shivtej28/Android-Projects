@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.adapters.LearnAdapter
 import com.shivtej.androidprojects.adapters.OnClicked
@@ -53,11 +54,12 @@ class LearnFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity1 = activity as MainActivity
         activity1.showView()
+       activity1.checkNetwork()
         navController = Navigation.findNavController(view)
 
+        learnBlogList = emptyList()
 
-
-        binding.learnRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // getLearnBlogs()
 
 //        viewModel.getLearnBlog().observe(viewLifecycleOwner, Observer {
 //            learnBlogList = it
@@ -66,11 +68,19 @@ class LearnFragment : Fragment() {
 //            adapter.notifyDataSetChanged()
 //
 //        })
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         setUpRecyclerView()
+        getLearnBlogs()
         viewModel.readAllPosts.observe(viewLifecycleOwner, Observer {
             adapter.getRoomPostList(it)
+
         })
-        getLearnBlogs()
+
 
     }
 
@@ -85,10 +95,28 @@ class LearnFragment : Fragment() {
 
             override fun savePost(currentItem: LearnBlog) {
                 viewModel.addPost(currentItem)
+                Snackbar.make(binding.root, "Saved Blog", Snackbar.LENGTH_SHORT).show()
+
+                onStart()
             }
 
             override fun deletePost(currentItem: LearnBlog) {
                 viewModel.deletePost(currentItem)
+
+                val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
+                    .setAction("UNDO") {
+                        viewModel.addPost(currentItem)
+                        onStart()
+                    }
+                snackbar.setDuration(3000);
+                snackbar.setTextColor(resources.getColor(R.color.black))
+                // set the background tint color for the snackbar
+                snackbar.setBackgroundTint(resources.getColor(R.color.white));
+                // set the action button text color of the snackbar however this is optional
+                // as all the snackbar wont have the action button
+                snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark));
+                snackbar.show();
+                onStart()
             }
 
 

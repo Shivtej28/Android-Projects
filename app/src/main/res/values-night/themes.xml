@@ -13,6 +13,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarcolor</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="StatusBarColor" parent="Theme.AppCompat.DayNight">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarColorOrange</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="snackbarStyle">@style/MySnackbar</item>
     </style>

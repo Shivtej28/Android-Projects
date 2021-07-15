@@ -24,6 +24,5 @@ package com.shivtej.androidprojects.utils
         const val testBannerAd : String = "ca-app-pub-3940256099942544/6300978111"
 
         const val RC_SIGN_IN = 9001
-
     }
  }

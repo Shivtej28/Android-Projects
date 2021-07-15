@@ -103,7 +103,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:contentDescription="@string/donate"
                     android:src="@drawable/ic_baseline_bookmark_24"
-                    app:tint="@color/blue_btn" />
+                    app:tint="@color/card_blue" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -155,7 +155,7 @@
                     android:layout_margin="@dimen/_4sdp"
                     android:contentDescription="@string/donate"
                     android:src="@drawable/ic_donate"
-                    app:tint="@color/blue_btn" />
+                    app:tint="@color/card_blue" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -255,7 +255,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blue_btn" />
+                app:tint="@color/card_blue" />
 
             <TextView
                 android:layout_width="0dp"
@@ -301,7 +301,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blue_btn" />
+                app:tint="@color/card_blue" />
 
             <TextView
                 android:layout_width="0dp"
@@ -347,7 +347,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blue_btn" />
+                app:tint="@color/card_blue" />
 
             <TextView
                 android:layout_width="0dp"
@@ -393,7 +393,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blue_btn" />
+                app:tint="@color/card_blue" />
 
             <TextView
                 android:layout_width="0dp"
@@ -439,7 +439,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/blue_btn" />
+                app:tint="@color/card_blue" />
 
             <TextView
                 android:layout_width="0dp"

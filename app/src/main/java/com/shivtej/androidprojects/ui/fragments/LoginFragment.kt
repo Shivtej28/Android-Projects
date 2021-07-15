@@ -54,7 +54,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         toolbarText()
         navController = Navigation.findNavController(view)
         activity1 = activity as MainActivity
@@ -88,7 +87,6 @@ class LoginFragment : Fragment() {
             resetPasswordDialog(it)
         }
     }
-
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
@@ -146,6 +144,7 @@ class LoginFragment : Fragment() {
             binding.emailEt.requestFocus()
             return
         }
+
         if (binding.passwordEt.text.toString().isEmpty()) {
             binding.passwordEt.error = "Please enter password"
             binding.passwordEt.requestFocus()
@@ -188,7 +187,6 @@ class LoginFragment : Fragment() {
         val email = user.email
         val user = User(uid, name, email, 0)
         viewModel.addUserToFirebase(user)
-
     }
 
     private fun resetPasswordDialog(it: View) {
@@ -229,7 +227,6 @@ class LoginFragment : Fragment() {
                     runnable
                 )
             }
-
             handler.postDelayed(runnable, 2000)
         }
     }
@@ -244,7 +241,7 @@ class LoginFragment : Fragment() {
         } else if (time in (MainActivity.afternoon + 1) until MainActivity.evening) {
             Log.d("time", getString(R.string.good_afternoon))
             getString(R.string.good_afternoon)
-        } else{
+        } else {
             Log.d("time", getString(R.string.good_evening))
             getString(R.string.good_evening)
         }

@@ -18,11 +18,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.ActivityMainBinding
 import com.shivtej.androidprojects.models.User
 import kotlin.random.Random
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     lateinit var user: User
+    val TAG = "MainActivity"
 
 
     companion object {
@@ -61,10 +67,6 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.action_loginFragment_to_projectFragment)
 
         }
-
-
-
-    }
 
     fun checkNetwork() {
         if (!checkInternetConnection()) {

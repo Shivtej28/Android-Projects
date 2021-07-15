@@ -10,7 +10,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:layout_marginBottom="@dimen/_6sdp"
-        app:cardBackgroundColor="@color/blue_btn"
+        app:cardBackgroundColor="@color/card_blue"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"

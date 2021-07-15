@@ -42,8 +42,11 @@
     <color name="textBlue">#103876</color>
     <color name="grey">#9e9e9e</color>
     <color name="blue_btn">#287ce9</color>
+    <color name="blue_btn_dark">#0051b6</color>
     <color name="blue_light">#6fabff</color>
+    <color name="card_blue">#819ffd</color>
 
     <color name="statusBarcolor">#6635c4</color>
+    <color name="statusBarColorOrange">#c03732</color>
 
 </resources>

@@ -23,7 +23,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         applicationContext,
         applicationContext.getString(R.string.notification_channel_id)
     )
-        .setSmallIcon(R.drawable.appicon)
+        .setSmallIcon(R.drawable.logowithoutname)
         .setContentTitle(applicationContext.getString(R.string.app_name))
         .setContentText(messageBody)
         .setPriority(NotificationCompat.PRIORITY_HIGH)

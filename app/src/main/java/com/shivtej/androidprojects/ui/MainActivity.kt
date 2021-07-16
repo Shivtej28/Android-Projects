@@ -69,70 +69,70 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-        fun checkNetwork() {
-            if (!checkInternetConnection()) {
-                showNetworkErrorDialogBox()
-            }
+    fun checkNetwork() {
+        if (!checkInternetConnection()) {
+            showNetworkErrorDialogBox()
         }
+    }
 
-        private fun showNetworkErrorDialogBox() {
-            val alertDialog = AlertDialog.Builder(this).create()
-            alertDialog.setTitle(getString(R.string.alertTitle))
-            alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
-            alertDialog.setMessage(getString(R.string.internet_not_connected))
-            alertDialog.setButton(
-                DialogInterface.BUTTON_NEUTRAL, "OK"
-            ) { dialog, which ->
-                alertDialog.dismiss()
-            }
-            alertDialog.show()
+    private fun showNetworkErrorDialogBox() {
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setTitle(getString(R.string.alertTitle))
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert)
+        alertDialog.setMessage(getString(R.string.internet_not_connected))
+        alertDialog.setButton(
+            DialogInterface.BUTTON_NEUTRAL, "OK"
+        ) { dialog, which ->
+            alertDialog.dismiss()
         }
+        alertDialog.show()
+    }
 
-        fun checkInternetConnection(): Boolean {
-            val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-            return activeNetwork?.isConnectedOrConnecting == true
-        }
+    fun checkInternetConnection(): Boolean {
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetwork?.isConnectedOrConnecting == true
+    }
 
-        fun getUser(uid: String) {
-            val reference = Firebase.firestore.collection("User").document(uid)
-            reference.get()
-                .addOnSuccessListener {
-                    if (it != null) {
-                        user = it.toObject<User>()!!
-                        getRandomText()
-                        Log.i("user", it.data.toString())
+    fun getUser(uid: String) {
+        val reference = Firebase.firestore.collection("User").document(uid)
+        reference.get()
+            .addOnSuccessListener {
+                if (it != null) {
+                    user = it.toObject<User>()!!
+                    getRandomText()
+                    Log.i("user", it.data.toString())
 
-                    } else {
-                        Log.i("user", "error: ")
-                    }
+                } else {
+                    Log.i("user", "error: ")
                 }
-        }
+            }
+    }
 
 
-        private fun getRandomText() {
-            val randomToolbarText =
-                arrayOf("Hi,", "Hello,", "Namaste,\uD83D\uDE4F", "Hola,", "Hey,")
-            val randomValue = Random.nextInt(randomToolbarText.size)
-            val name = user.userName?.split(" ")
-            Log.i("name", name?.get(0).toString())
-            val n = name?.get(0)
-            (randomToolbarText[randomValue] + n).also { binding.toolbarTextView.text = it }
-        }
+    private fun getRandomText() {
+        val randomToolbarText =
+            arrayOf("Hi, ", "Hello, ", "Namaste, ", "Hola, ", "Hey, ")
+        val randomValue = Random.nextInt(randomToolbarText.size)
+        val name = user.userName?.split(" ")
+        Log.i("name", name?.get(0).toString())
+        val n = name?.get(0)
+        (randomToolbarText[randomValue] + n).also { binding.toolbarTextView.text = it }
+    }
 
-        fun hideView() {
-            binding.bottomNavBar.visibility = View.GONE
-            binding.toolbar.visibility = View.GONE
-        }
+    fun hideView() {
+        binding.bottomNavBar.visibility = View.GONE
+        binding.toolbar.visibility = View.GONE
+    }
 
-        fun showView() {
-            binding.bottomNavBar.visibility = View.VISIBLE
-            binding.toolbar.visibility = View.VISIBLE
-        }
+    fun showView() {
+        binding.bottomNavBar.visibility = View.VISIBLE
+        binding.toolbar.visibility = View.VISIBLE
+    }
 
-        fun projectView() {
-            binding.bottomNavBar.visibility = View.GONE
-            binding.toolbar.visibility = View.VISIBLE
-        }
+    fun projectView() {
+        binding.bottomNavBar.visibility = View.GONE
+        binding.toolbar.visibility = View.VISIBLE
+    }
 
 }

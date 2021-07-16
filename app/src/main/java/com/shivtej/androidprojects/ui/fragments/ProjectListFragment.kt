@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.shivtej.androidprojects.R
+import com.shivtej.androidprojects.adapters.IItemClicked
 import com.shivtej.androidprojects.adapters.ItemClicked
 import com.shivtej.androidprojects.adapters.ProjectAdapter
+import com.shivtej.androidprojects.adapters.ProjectListAdapter
 import com.shivtej.androidprojects.databinding.FragmentProjectListBinding
 import com.shivtej.androidprojects.models.Project
 import com.shivtej.androidprojects.ui.MainActivity
@@ -33,8 +35,6 @@ class ProjectListFragment : Fragment() {
     ): View {
         binding = FragmentProjectListBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
-//        activity1.findViewById<MaterialToolbar>(R.id.toolbar).visibility = View.VISIBLE
-//        activity1.findViewById<BottomNavigationView>(R.id.bottom_nav_bar).visibility = View.GONE
         return binding.root
     }
 
@@ -53,7 +53,7 @@ class ProjectListFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(list: ProjectListFragmentArgs) {
-        val adapter = ProjectAdapter(list.projectList.toList(), object : ItemClicked {
+        val adapter = ProjectListAdapter(list.projectList.toList(), object : IItemClicked {
             override fun onItemClicked(project: Project) {
                 navController.navigate(
                     ProjectListFragmentDirections.actionProjectListFragmentToProjectDetailsFragment(

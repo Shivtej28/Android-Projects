@@ -2,6 +2,7 @@ package com.shivtej.androidprojects.ui.fragments
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -43,6 +45,7 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         activity1 = activity as MainActivity
         activity1.hideView()
+
         return binding.root
     }
 
@@ -50,10 +53,12 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
-
+        activity1.checkNetwork()
         auth = FirebaseAuth.getInstance()
 
         binding.createAccount.setOnClickListener {
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
             signUpUser()
         }
 
@@ -131,7 +136,7 @@ class SignUpFragment : Fragment() {
         if (user != null) {
             addUserToFirebase(user)
             navController.navigate(R.id.action_signUpFragment_to_projectFragment)
-            notificationManager.sendNotification("Thanks For Using Your App", requireContext())
+            notificationManager.sendNotification("Thank you for joining us...", requireContext())
         }
 
     }

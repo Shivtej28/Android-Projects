@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -41,34 +42,12 @@ class SavedPostFragment : Fragment(), OnClicked {
         navController = Navigation.findNavController(view)
         (activity as MainActivity).hideView()
 
+        binding.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
     private fun setUpRecyclerView() {
-//        adapter = LearnAdapter(object : OnClicked {
-//            override fun onLearnBlogClicked(currentItem: LearnBlog) {
-//                val bundle = Bundle()
-//                bundle.putSerializable("blog", currentItem)
-//                navController.navigate(R.id.action_savedPostFragment_to_blogViewFragment, bundle)
-//            }
-//
-//            override fun savePost(currentItem: LearnBlog) {
-//
-//                viewModel.addPost(currentItem)
-//                adapter.notifyDataSetChanged()
-//            }
-//
-//            override fun deletePost(currentItem: LearnBlog) {
-//                viewModel.deletePost(currentItem)
-//                Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
-//                    .setAction("UNDO") {
-//                        viewModel.addPost(currentItem)
-//                        adapter.notifyDataSetChanged()
-//                    }.show()
-//
-//            }
-//
-//
-//        })
         adapter = LearnAdapter(this)
 
         binding.savedLearnBlog.layoutManager = LinearLayoutManager(requireContext())
@@ -89,11 +68,19 @@ class SavedPostFragment : Fragment(), OnClicked {
 
     override fun deletePost(currentItem: LearnBlog) {
         viewModel.deletePost(currentItem)
-        Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
+        val snackbar = Snackbar.make(binding.root, "Deleted Blog", Snackbar.LENGTH_SHORT)
             .setAction("UNDO") {
                 viewModel.addPost(currentItem)
-               onStart()
-            }.show()
+                onStart()
+            }
+        snackbar.duration = 3000
+        snackbar.setTextColor(resources.getColor(R.color.black))
+        // set the background tint color for the snackbar
+        snackbar.setBackgroundTint(resources.getColor(R.color.light))
+        // set the action button text color of the snackbar however this is optional
+        // as all the snackbar wont have the action button
+        snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark))
+        snackbar.show()
     }
 
     override fun onStart() {

@@ -127,15 +127,15 @@ class BlogViewFragment : Fragment() {
         snackbar.duration = 3000
         snackbar.setTextColor(resources.getColor(R.color.black))
         // set the background tint color for the snackbar
-        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        snackbar.setBackgroundTint(resources.getColor(R.color.light))
         val sv = snackbar.view
         val lp = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
-        val height = binding.adView.height*2
+        val height = binding.adView.height * 2
         val h = binding.root.height
-        lp.setMargins(0, h-height, 0, height)
+        lp.setMargins(0, h - height, 0, height)
         sv.layoutParams = lp
         Log.i("margin", h.toString())
         Log.i("margin", height.toString())
@@ -156,7 +156,7 @@ class BlogViewFragment : Fragment() {
         snackbar.duration = 3000
         snackbar.setTextColor(resources.getColor(R.color.black))
         // set the background tint color for the snackbar
-        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        snackbar.setBackgroundTint(resources.getColor(R.color.light))
         // set the action button text color of the snackbar however this is optional
         // as all the snackbar wont have the action button
         snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark))
@@ -165,9 +165,9 @@ class BlogViewFragment : Fragment() {
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
-        val height = binding.adView.height*2
+        val height = binding.adView.height * 2
         val h = binding.root.height
-        lp.setMargins(0, h-height, 0, 0)
+        lp.setMargins(0, h - height, 0, 0)
 
         sv.layoutParams = lp
         Log.i("margin", h.toString())

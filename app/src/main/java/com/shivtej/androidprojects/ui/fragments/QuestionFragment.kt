@@ -343,7 +343,7 @@ class QuestionFragment : Fragment(), View.OnClickListener {
 
     private fun startTimer() {
         //CountDown Timer
-        timer = object : CountDownTimer(5000, 1000) {
+        timer = object : CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 Log.d("Timer", millisUntilFinished.toString())
                 var sec = millisUntilFinished / 1000

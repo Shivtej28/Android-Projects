@@ -1,6 +1,7 @@
 package com.shivtej.androidprojects.ui.fragments
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -49,6 +52,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -57,6 +61,7 @@ class LoginFragment : Fragment() {
         toolbarText()
         navController = Navigation.findNavController(view)
         activity1 = activity as MainActivity
+        activity1.checkNetwork()
         auth = FirebaseAuth.getInstance()
         //activity1.hideView()
         //if previously login
@@ -64,6 +69,8 @@ class LoginFragment : Fragment() {
         //updateUI(user)
 
         binding.loginBtn.setOnClickListener {
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
             login()
         }
 
@@ -129,7 +136,7 @@ class LoginFragment : Fragment() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG_GOOGLE, "signInWithCredential:failure", task.exception)
-                    updateUI(null)
+
                 }
             }
     }
@@ -165,11 +172,8 @@ class LoginFragment : Fragment() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        context, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    updateUI(null)
+                    Toast.makeText(context, "Please Enter Valid Credentials", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
     }

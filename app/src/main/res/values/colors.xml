@@ -45,6 +45,7 @@
     <color name="blue_btn_dark">#0051b6</color>
     <color name="blue_light">#6fabff</color>
     <color name="card_blue">#819ffd</color>
+    <color name="light">#e1f5fe</color>
 
     <color name="statusBarcolor">#6635c4</color>
     <color name="statusBarColorOrange">#c03732</color>

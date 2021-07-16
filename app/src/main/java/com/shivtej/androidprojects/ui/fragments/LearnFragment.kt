@@ -203,7 +203,7 @@ class LearnFragment : Fragment() {
         snackbar.duration = 3000
         snackbar.setTextColor(resources.getColor(R.color.black))
         // set the background tint color for the snackbar
-        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        snackbar.setBackgroundTint(resources.getColor(R.color.light))
         val sv = snackbar.view
         val lp = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -231,7 +231,7 @@ class LearnFragment : Fragment() {
         snackbar.duration = 3000
         snackbar.setTextColor(resources.getColor(R.color.black))
         // set the background tint color for the snackbar
-        snackbar.setBackgroundTint(resources.getColor(R.color.white))
+        snackbar.setBackgroundTint(resources.getColor(R.color.light))
         // set the action button text color of the snackbar however this is optional
         // as all the snackbar wont have the action button
         snackbar.setActionTextColor(resources.getColor(android.R.color.holo_red_dark))

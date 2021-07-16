@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -17,23 +16,12 @@ import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.razorpay.Checkout
-import com.razorpay.PaymentData
-import com.razorpay.PaymentResultWithDataListener
 import com.shivtej.androidprojects.R
 import com.shivtej.androidprojects.databinding.FragmentProfileBinding
-import com.shivtej.androidprojects.models.Order
-import com.shivtej.androidprojects.models.PaymentInterface
 import com.shivtej.androidprojects.models.User
 import com.shivtej.androidprojects.ui.MainActivity
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class ProfileFragment : Fragment(), PaymentResultWithDataListener {
+class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var activity1: MainActivity
@@ -41,10 +29,7 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
     private var reviewInfo: ReviewInfo? = null
     private lateinit var navController: NavController
     var user: User? = null
-    //private val viewModel: ProjectViewModel by activityViewModels()
-    private lateinit var retrofit: Retrofit
-    private lateinit var retroInterface: PaymentInterface
-    private var visible: Boolean = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +47,6 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         navController = Navigation.findNavController(view)
         val auth = Firebase.auth
 
-        Checkout.preload(context)
 
         if (user == null) {
             user = activity1.user
@@ -70,32 +54,6 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         setData()
 
         initReviews()
-
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.43.156:3000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        retroInterface = retrofit.create(PaymentInterface::class.java)
-
-        binding.donateCardView.setOnClickListener {
-            if (!visible) {
-                binding.paymentLayout.visibility = View.VISIBLE
-                visible = true
-            } else {
-                binding.paymentLayout.visibility = View.GONE
-                visible = false
-            }
-        }
-
-        binding.payBtn.setOnClickListener {
-            val amount = binding.amountEditText.text.toString()
-
-            if (amount.isEmpty()) {
-                return@setOnClickListener
-            }
-            getOrderId(amount)
-        }
 
         binding.rateUsCardView.setOnClickListener {
             askForReview()
@@ -146,42 +104,6 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         }
     }
 
-    private fun getOrderId(amount: String) {
-
-        val map = HashMap<String, String>()
-        map["amount"] = amount
-
-        retroInterface.getOrderId(map).enqueue(object : Callback<Order> {
-            override fun onResponse(call: Call<Order>, response: Response<Order>) {
-                if (response.body() != null) {
-                    initiatePayment(amount, response.body()!!)
-                }
-            }
-
-            override fun onFailure(call: Call<Order>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
-            }
-
-        })
-    }
-
-    private fun initiatePayment(amount: String, order: Order) {
-
-        val checkout = Checkout()
-        checkout.setKeyID(order.getKeyId())
-
-        checkout.setImage(R.drawable.logowithoutname)
-
-        val paymentOptions = JSONObject()
-        paymentOptions.put("Name", "Android Projects and Quizzes")
-        paymentOptions.put("amount", amount)
-        paymentOptions.put("order_id", order.getOrderId())
-        paymentOptions.put("currency", "INR")
-        paymentOptions.put("description", "Thanks You for supporting us!!")
-
-        checkout.open(activity1, paymentOptions)
-
-    }
 
     private fun setData() {
         val name = user!!.userName.toString()
@@ -219,27 +141,6 @@ class ProfileFragment : Fragment(), PaymentResultWithDataListener {
         }
     }
 
-    override fun onPaymentSuccess(p0: String?, p1: PaymentData?) {
 
-        val map = HashMap<String, String>()
-        map["order_id"] = p1!!.orderId
-        map["pay_id"] = p1.paymentId
-        map["signature"] = p1.signature
-
-        retroInterface.updateTransaction(map).enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                if (response.body().equals("success")) {
-                    Toast.makeText(context, "Payment Successful", Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-
-    override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
-        Toast.makeText(context, "Payment Failed", Toast.LENGTH_LONG).show()
-    }
 }
+

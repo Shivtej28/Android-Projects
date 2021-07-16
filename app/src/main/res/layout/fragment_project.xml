@@ -20,10 +20,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_weight="1"
+            android:elevation="@dimen/_6sdp"
             android:fontFamily="@font/montserratsemibold"
             android:text="@string/basic"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,6 +44,7 @@
         android:id="@+id/basic_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_4sdp"
         android:layout_gravity="bottom"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/guideline"
@@ -75,7 +77,7 @@
             android:fontFamily="@font/montserratsemibold"
             android:text="@string/intermediate"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,6 +96,7 @@
         android:id="@+id/intermediate_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_4sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +128,7 @@
             android:fontFamily="@font/montserratsemibold"
             android:text="@string/advance"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -144,6 +147,7 @@
         android:id="@+id/advance_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_4sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

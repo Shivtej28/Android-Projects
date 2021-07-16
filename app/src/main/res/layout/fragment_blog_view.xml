@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:navigationIconTint="@color/black">
+        app:navigationIconTint="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserratsemibolditalic"
                 android:text="@string/feed_articles"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@android:color/transparent"
-                app:tint="@color/black"
+                app:tint="@color/white"
                 android:contentDescription="@string/share_with_friends"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/bookmark_post"
@@ -51,6 +51,7 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                app:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
